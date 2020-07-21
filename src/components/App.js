@@ -1,17 +1,19 @@
 import '../App.css';
 import React, { Component } from 'react';
-import { Route, Switch, Redirect } from "react-router-dom";
+import { BrowserRouter as Router, Route, Switch, Redirect, NavLink } from "react-router-dom";
 import api from "../services/api";
 import Navbar from './Navbar';
 import Signup from './Signup';
 import Login from './Login';
 import About from './About';
+import Profile from './Profile';
+import Diary from './Diary';
 
 export default class App extends Component {
   state = { 
     auth: { 
       currentUser: {} 
-    } 
+    }
   };
 
   componentDidMount() {
@@ -25,10 +27,6 @@ export default class App extends Component {
     }
   }
 
-  handleSignup = () => {
-    console.log("signup")
-  }
-
   handleLogin = (user) => {
     const currentUser = { currentUser: user };
     localStorage.setItem("token", user.token);
@@ -40,41 +38,23 @@ export default class App extends Component {
     this.setState({ auth: { currentUser: {} } });
   };
 
-
   render () {
     return (
-      <div className="App">
-        <h1>Hello Homepage</h1>
-        <Navbar 
-          title="Diary Book"
-          currentUser={this.state.auth.currentUser}
-          handleLogout={this.handleLogout}
-        />
+      <Router>
+        <h1>Dear Diary</h1>
         <div>
-          <Switch>
-            <Route
-              path="/signup"
-              render={(routerProps) => {
-                return ( <Signup {...routerProps} handleLogin={this.handleSignup} /> );
-            }}
-            />
-            <Route
-              path="/login"
-              render={(routerProps) => {
-                return ( <Login {...routerProps} handleLogin={this.handleLogin} /> );
-              }}
-            />
-            <Route path="/" component={About} />
-            <Route
-              path="/"
-              render={() => {
-                const loggedIn = !!this.state.auth.currentUser.id;
-                return ( loggedIn ? <About /> : <Redirect to="/login" /> );
-              }}
-            />
-          </Switch>
+          <Navbar currentUser={this.state.auth.currentUser} handleLogout={this.handleLogout} />
+          <Route exact path="/signup" component={Signup} />
+          <Route exact path="/login" render={(routerProps) => <Login {...routerProps} handleLogin={this.handleLogin} /> } />
+          <Route exact path="/" render={() => {
+              const loggedIn = !!this.state.auth.currentUser.id;
+              return ( loggedIn ? (<div>{`Hello ${this.state.auth.currentUser.username}`}</div>) : <Redirect to="/login" /> );
+          }}/>
+          <Route exact path="/about" component={About} />
+          <Route exact path="/profile" component={Profile} />
+          <Route exact path="/diary" component={Diary} />
         </div>
-      </div>
+      </Router>
     )
   }
 }

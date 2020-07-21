@@ -8,11 +8,21 @@ const headers = {
     Authorization: token,
 };
 
-const login = (username, password) => {
-    return fetch(`${API_ROOT}/auth/`, {
+const signup = (userInfo) => {
+    return fetch(`${API_ROOT}/users/`, {
+        method: 'POST',
+        headers: {
+            'Content-Type': 'application/json',
+        },
+        body: JSON.stringify(userInfo)
+    })
+};
+
+const login = (userInfo) => {
+    return fetch(`${API_ROOT}/login/`, {
         method: 'POST',
         headers: headers,
-        body: JSON.stringify({ username, password }),
+        body: JSON.stringify(userInfo),
     }).then((response) => response.json());
 };
 
@@ -24,6 +34,7 @@ const getCurrentUser = () => {
 
 export default {
     auth: {
+      signup: signup,
       login: login,
       getCurrentUser: getCurrentUser
     }

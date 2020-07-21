@@ -4,54 +4,54 @@ import api from '../services/api';
 export default class Login extends Component {
     state = {
         error: false,
-        fields: {
+        userInfo: {
             username: "",
-            password: "",
+            password: ""
       },
     }
 
     handleChange = (event) => {
-        const newFields = { ...this.state.fields, [event.target.name]: event.target.value };
-        this.setState({ fields: newFields });
+        const loginInfo = { ...this.state.userInfo, [event.target.name]: event.target.value };
+        this.setState({ userInfo: loginInfo });
     }
 
     handleSubmit = (event) => {
         event.preventDefault();
-        api.auth.login(this.state.fields.username, this.state.fields.password)
+        const userInfo = {...this.state.userInfo}
+        this.loginUser(userInfo)
+    }
+
+    loginUser = (userInfo) => {
+        api.auth.login(userInfo)
           .then((response) => {
-              if (response.error) {
-                this.setState({ error: true });
-              } else {
-                this.props.handleLogin(response);
-                this.props.history.push('/');
-              }
+            if (response.error) {
+              this.setState({ error: true });
+            } else {
+              this.props.handleLogin(response);
+              this.props.history.push('/');
+            }
           });
     }
 
     render () {
-        const { fields } = this.state;
-
+        // const { userInfo } = this.state;
         return (
             <div>
-                {this.state.error ? <h2>Please Try Again</h2> : null}
+                {this.state.error ? <p>Incorrect username or password, please Try Again</p> : null}
                 <div>
-                    <form onSubmit={this.handleSubmit}>
+                    <form onChange={this.handleChange} onSubmit={this.handleSubmit}>
                         <div>
-                            {/* <label>Username</label> */}
+                            <label>Username</label>
                             <input 
                                 name="username" 
                                 placeholder="username"
-                                value={fields.username}
-                                onChange={this.handleChange}
                             />
                         </div>
                         <div>
-                            {/* <label>Password</label> */}
+                            <label>Password</label>
                             <input 
                                 name="password" 
                                 placeholder="password"
-                                value={fields.password}
-                                onChange={this.handleChange}
                             />
                         </div>
                         <button type="submit">Login</button>
