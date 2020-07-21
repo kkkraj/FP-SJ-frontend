@@ -32,10 +32,17 @@ const getCurrentUser = () => {
     }).then((response) => response.json());
 };
 
+const deleteUser = (user) => {
+    return fetch(`${API_ROOT}/users/${user.id}`, {
+        method: 'DELETE'
+    })
+};
+
 export default {
     auth: {
       signup: signup,
       login: login,
-      getCurrentUser: getCurrentUser
+      getCurrentUser: getCurrentUser,
+      deleteUser: deleteUser
     }
 };
