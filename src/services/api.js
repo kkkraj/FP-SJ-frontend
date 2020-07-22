@@ -38,11 +38,20 @@ const deleteUser = (user) => {
     })
 };
 
+const updateUser = (user) => {
+    return fetch(`${API_ROOT}/users/${user.id}`, {
+        method: "PATCH",
+        headers: headers,
+        body: JSON.stringify(user)
+    }).then((response) => response.json());
+};
+
 export default {
     auth: {
       signup: signup,
       login: login,
       getCurrentUser: getCurrentUser,
-      deleteUser: deleteUser
+      deleteUser: deleteUser,
+      updateUser: updateUser
     }
 };
