@@ -43,6 +43,7 @@ export default class Signup extends Component {
                         <div>
                             <label>Name</label>
                             <input 
+                              type="text" 
                               name="name" 
                               placeholder="name"
                             />
@@ -50,6 +51,7 @@ export default class Signup extends Component {
                         <div>
                             <label>Email</label>
                             <input 
+                              type="email" 
                               name="email" 
                               placeholder="email"
                             />
@@ -57,6 +59,7 @@ export default class Signup extends Component {
                         <div>
                             <label>Username</label>
                             <input 
+                              type="text" 
                               name="username" 
                               placeholder="username"
                             />
@@ -64,6 +67,7 @@ export default class Signup extends Component {
                         <div>
                             <label>Password</label>
                             <input 
+                              type="password" 
                               name="password" 
                               placeholder="password"
                             />

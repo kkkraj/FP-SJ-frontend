@@ -29,7 +29,7 @@ export default class App extends Component {
 
   handleLogin = (user) => {
     const currentUser = { currentUser: user };
-    localStorage.setItem("token", user.token);
+    localStorage.setItem("token", user.jwt);
     this.setState({ auth: currentUser });
   }
 
@@ -67,7 +67,7 @@ export default class App extends Component {
               return ( loggedIn ? (<div>{`Hello ${this.state.auth.currentUser.name}`}</div>) : <Redirect to="/login" /> );
           }}/>
           <Route exact path="/about" component={About} />
-          <Route exact path="/profile" render={() => <Profile currentUser={this.state.auth.currentUser} handleDeleteUser={this.handleDeleteUser} />} />
+          <Route exact path="/profile" render={() => <Profile currentUser={this.state.auth.currentUser} handleDeleteUser={this.handleDeleteUser} handleUpdateUser={this.handleUpdateUser}/>} />
           <Route exact path="/diary" render={() => <Diary currentUser={this.state.auth.currentUser} />} />
           <Route exact path="/diarybook" render={() => <Diarybook currentUser={this.state.auth.currentUser} />} />
         </div>

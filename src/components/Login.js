@@ -41,7 +41,8 @@ export default class Login extends Component {
                     <form onChange={this.handleChange} onSubmit={this.handleSubmit}>
                         <div>
                             <label>Username</label>
-                            <input 
+                            <input
+                                type="text" 
                                 name="username" 
                                 placeholder="username"
                             />
@@ -49,6 +50,7 @@ export default class Login extends Component {
                         <div>
                             <label>Password</label>
                             <input 
+                                // type="password" 
                                 name="password" 
                                 placeholder="password"
                             />
