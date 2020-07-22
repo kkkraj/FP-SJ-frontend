@@ -6,6 +6,7 @@ export default class Signup extends Component {
         error: false,
         user: {
             name: "",
+            email: "",
             username: "",
             password: ""
         }
@@ -44,6 +45,13 @@ export default class Signup extends Component {
                             <input 
                               name="name" 
                               placeholder="name"
+                            />
+                        </div>
+                        <div>
+                            <label>Email</label>
+                            <input 
+                              name="email" 
+                              placeholder="email"
                             />
                         </div>
                         <div>

@@ -4,7 +4,11 @@ export default class Profile extends Component {
     render () {
         return (
             <div>
-                Profile Page
+                <h2>Profile Page</h2>
+                <p>Name: {this.props.currentUser.name}</p>
+                <p>Email: {this.props.currentUser.email}</p>
+                <p>Username: {this.props.currentUser.username}</p>
+                <button onClick={() => {this.props.handleDeleteUser(this.props.currentUser)}}>Delete Account</button>
             </div>
         )
     }

@@ -28,14 +28,21 @@ const login = (userInfo) => {
 
 const getCurrentUser = () => {
     return fetch(`${API_ROOT}/current_user/`, {
-      headers: headers,
+        headers: headers,
     }).then((response) => response.json());
+};
+
+const deleteUser = (user) => {
+    return fetch(`${API_ROOT}/users/${user.id}`, {
+        method: 'DELETE'
+    })
 };
 
 export default {
     auth: {
       signup: signup,
       login: login,
-      getCurrentUser: getCurrentUser
+      getCurrentUser: getCurrentUser,
+      deleteUser: deleteUser
     }
 };

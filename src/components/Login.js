@@ -34,7 +34,6 @@ export default class Login extends Component {
     }
 
     render () {
-        // const { userInfo } = this.state;
         return (
             <div>
                 {this.state.error ? <p>Incorrect username or password, please Try Again</p> : null}
