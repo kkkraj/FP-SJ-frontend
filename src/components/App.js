@@ -8,6 +8,7 @@ import Login from './Login';
 import About from './About';
 import Profile from './Profile';
 import Diary from './Diary';
+import Diarybook from './Diarybook'
 
 export default class App extends Component {
   state = { 
@@ -18,7 +19,6 @@ export default class App extends Component {
 
   componentDidMount() {
     const token = localStorage.getItem("token");
-
     if (token) {
       api.auth.getCurrentUser().then((user) => {
         const currentUser = { currentUser: user };
@@ -57,7 +57,7 @@ export default class App extends Component {
   render () {
     return (
       <Router>
-        <h1>Dear Diary</h1>
+        <h1>My Journal</h1>
         <div>
           <Navbar currentUser={this.state.auth.currentUser} handleLogout={this.handleLogout} />
           <Route exact path="/signup" component={Signup} />
@@ -68,7 +68,8 @@ export default class App extends Component {
           }}/>
           <Route exact path="/about" component={About} />
           <Route exact path="/profile" render={() => <Profile currentUser={this.state.auth.currentUser} handleDeleteUser={this.handleDeleteUser} />} />
-          <Route exact path="/diary" component={Diary} />
+          <Route exact path="/diary" render={() => <Diary currentUser={this.state.auth.currentUser} />} />
+          <Route exact path="/diarybook" render={() => <Diarybook currentUser={this.state.auth.currentUser} />} />
         </div>
       </Router>
     )

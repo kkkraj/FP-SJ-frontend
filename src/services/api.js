@@ -28,7 +28,7 @@ const login = (userInfo) => {
 
 const getCurrentUser = () => {
     return fetch(`${API_ROOT}/current_user/`, {
-      headers: headers,
+        headers: headers,
     }).then((response) => response.json());
 };
 
