@@ -1,17 +1,23 @@
 import React, {Component} from 'react';
 
 const DiariesUrl = "http://localhost:3000/diary_entries/";
+const UserMoodURL = "http://localhost:3000/user_moods";
 
 export default class Diarybook extends Component {
     state = {
         diaries: [],
-        currentUserId: this.props.currentUser.id
+        currentUserId: this.props.currentUser.id,
+        userMoods: []
     }
 
     componentDidMount() {
         fetch(DiariesUrl)
           .then((response) => response.json())
           .then((dariesData) => this.setState({diaries: dariesData}))
+
+        fetch(UserMoodURL)
+          .then((response) => response.json())
+          .then((moodsData) => this.setState({userMoods: moodsData}))
     }
 
     handleDeleteDiary = (diary) => {
@@ -42,6 +48,10 @@ export default class Diarybook extends Component {
                         </div>
                     ) : null
                 ))}
+                <h3>Moods Index</h3>
+                <p>+++ Display Mood's Name not Id ???</p>
+                <p>+++ Extract date and Group Diary Entry and Moods Together</p>
+                {this.state.userMoods.map((mood) => <ul><li>{mood.id}</li></ul>)}
             </div>
         )
     }

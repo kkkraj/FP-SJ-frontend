@@ -1,5 +1,6 @@
 import React, {Component} from 'react';
 import moment from 'moment';
+import Moods from './Moods'
 
 export default class Diary extends Component {
     state = {
@@ -34,13 +35,16 @@ export default class Diary extends Component {
     render () {
         return (
             <div>
-                {moment().format('dddd LL, LT')}
-                <h2>Today Journal</h2>
-                <form onSubmit={this.handleSubmit}>
-                  <textarea name="content" placeholder="Begin Today Journal Here!" onChange={this.handleChange} style={{height: 500, width: 500}} />
-                  <br/>
-                  <input type="submit" value="Submit" />
-                </form>
+                <div>
+                    {moment().format('dddd LL, LT')}
+                    <h2>Today Journal</h2>
+                    <form onSubmit={this.handleSubmit}>
+                    <textarea name="content" placeholder="Begin Today Journal Here!" onChange={this.handleChange} style={{height: 500, width: 500}} />
+                    <br/>
+                    <input type="submit" value="Submit" />
+                    </form>
+                </div>
+                <Moods currentUserId={this.state.diary_entry.user_id} />
             </div>
         )
     }

@@ -4,7 +4,6 @@ import { NavLink, withRouter } from 'react-router-dom';
 class Navbar extends Component {
     render () {
         const loggedIn = !!this.props.currentUser.id;
-
         return (
             <div style={{ borderBottom: '2px solid black', paddingBottom: '15px', marginBottom: '15px' }}>
                 {loggedIn ? (
