@@ -1,26 +1,25 @@
 import React, { Component } from 'react';
 import { NavLink, withRouter } from 'react-router-dom';
+import 'materialize-css/dist/css/materialize.min.css';
 
 class Navbar extends Component {
     render () {
-        const loggedIn = !!this.props.currentUser.id;
         return (
-            <div style={{ borderBottom: '2px solid black', paddingBottom: '15px', marginBottom: '15px' }}>
-                {loggedIn ? (
-                    <div>
-                        <NavLink style={{ marginRight: '10px' }} to="/about">
-                            About
+            <div id="nav">
+                    <div className="nav-wrapper">
+                        <NavLink style={{ marginRight: '30px' }} to="/about">
+                            SPACE JOURNAL
                         </NavLink>
 
-                        <NavLink style={{ marginRight: '10px' }} to="/diary">
+                        <NavLink style={{ marginRight: '30px' }} to="/diary">
                             New Diary
                         </NavLink>
 
-                        <NavLink style={{ marginRight: '10px' }} to="/diarybook">
+                        <NavLink style={{ marginRight: '30px' }} to="/diarybook">
                             Diary Book
                         </NavLink>
 
-                        <NavLink style={{ marginRight: '10px' }} to="/profile">
+                        <NavLink style={{ marginRight: '30px' }} to="/profile">
                             Profile
                         </NavLink>
 
@@ -29,17 +28,6 @@ class Navbar extends Component {
                             this.props.handleLogout()
                         }}>Log Out</a>
                     </div>
-                ) : (
-                    <div>
-                        <NavLink style={{ marginRight: '10px' }}  to="/signup">
-                          Sign Up
-                        </NavLink>
-
-                        <NavLink to="/login">
-                          Log In
-                        </NavLink>
-                    </div>
-                )}
             </div>
         )
     }

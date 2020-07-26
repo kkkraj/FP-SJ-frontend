@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
 import api from '../services/api';
+import 'materialize-css/dist/css/materialize.min.css';
 
 export default class Login extends Component {
     state = {
@@ -36,26 +37,25 @@ export default class Login extends Component {
     render () {
         return (
             <div>
-                {this.state.error ? <p>Incorrect username or password, please Try Again</p> : null}
+                {this.state.error ? <p style={{color: "Chocolate"}}>Incorrect username or password, please Try Again</p> : null}
                 <div>
                     <form onChange={this.handleChange} onSubmit={this.handleSubmit}>
-                        <div>
-                            <label>Username</label>
-                            <input
-                                type="text" 
-                                name="username" 
-                                placeholder="username"
-                            />
+                        <div className="row">
+                            <div className="input-field col s3">
+                                <div>
+                                    <input type="text" name="username" />
+                                    <label className="active">Username</label>
+                                </div>
+                                <div>
+                                    <input type="password" name="password" />
+                                    <label className="active">Password</label>
+                                </div>
+                                <br/>
+                                <div>
+                                    <button className="waves-effect waves-light btn" type="submit">Login</button>
+                                </div>
+                            </div>
                         </div>
-                        <div>
-                            <label>Password</label>
-                            <input 
-                                // type="password" 
-                                name="password" 
-                                placeholder="password"
-                            />
-                        </div>
-                        <button type="submit">Login</button>
                     </form>
                 </div>
             </div>

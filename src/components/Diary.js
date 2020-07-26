@@ -1,6 +1,8 @@
 import React, {Component} from 'react';
 import moment from 'moment';
-import Moods from './Moods'
+import Moods from './Moods';
+import Acitities from './Acitities';
+import EmojiPicker from './EmojiPicker';
 
 export default class Diary extends Component {
     state = {
@@ -17,7 +19,6 @@ export default class Diary extends Component {
 
     handleSubmit = (event) => {
         event.preventDefault();
-        console.log({...this.state})
         const diaryEntry = {...this.state}
         this.createNewDiaryEntry(diaryEntry)
     }
@@ -44,7 +45,9 @@ export default class Diary extends Component {
                     <input type="submit" value="Submit" />
                     </form>
                 </div>
+                <EmojiPicker />
                 <Moods currentUserId={this.state.diary_entry.user_id} />
+                <Acitities currentUserId={this.state.diary_entry.user_id} />
             </div>
         )
     }

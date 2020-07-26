@@ -16,7 +16,7 @@ export default class Moods extends Component {
     }
 
     handleMoodClick = (mood) => {
-        console.log(`${mood.mood_name} clicked`)
+        // console.log(`${mood.mood_name} clicked`)
         fetch(userMoodURL, {
             method: 'POST',
             headers: {
