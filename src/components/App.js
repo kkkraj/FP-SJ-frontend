@@ -45,10 +45,11 @@ export default class App extends Component {
   handleLogin = (user) => {
     const currentUser = { currentUser: user };
     localStorage.setItem("token", user.jwt);
-    this.setState({ 
-      loggedIn: true,
-      auth: currentUser 
-    });
+    // this.setState({ 
+    //   loggedIn: true,
+    //   auth: currentUser 
+    // });
+    this.setState({ auth: currentUser });
   }
 
   handleLogout = () => {
@@ -84,9 +85,12 @@ export default class App extends Component {
   }
 
   render () {
+    const loggedIn = !!this.state.auth.currentUser.id;
+    console.log(`logged-in? ${loggedIn}`)
+    console.log(`current user id: ${this.state.auth.currentUser.id}`)
     return (
       <div>
-        {this.state.loggedIn ? 
+        { loggedIn ? 
           <Welcome 
               loading={this.state.loading} 
               loggedOut={this.state.loggedOut}

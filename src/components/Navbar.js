@@ -7,20 +7,20 @@ class Navbar extends Component {
         return (
             <div id="nav">
                     <div className="nav-wrapper">
-                        <NavLink style={{ marginRight: '30px' }} to="/about">
-                            SPACE JOURNAL
+                        <NavLink to="/about">
+                            Home
                         </NavLink>
 
-                        <NavLink style={{ marginRight: '30px' }} to="/diary">
+                        <NavLink to="/diary">
                             New Diary
                         </NavLink>
 
-                        <NavLink style={{ marginRight: '30px' }} to="/diarybook">
+                        <NavLink to="/diarybook">
                             Diary Book
                         </NavLink>
 
-                        <NavLink style={{ marginRight: '30px' }} to="/profile">
-                            Profile
+                        <NavLink to="/profile">
+                            Account
                         </NavLink>
 
                         <a onClick={() => {

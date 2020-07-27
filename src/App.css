@@ -1,4 +1,4 @@
-@import url('https://fonts.googleapis.com/css2?family=Abril+Fatface&family=Galada&family=Gravitas+One&family=Kranky&family=Limelight&family=MuseoModerno:wght@500&family=Oleo+Script&family=Oleo+Script+Swash+Caps&family=Raleway:wght@100;300&family=Rozha+One&family=Sacramento&family=Vast+Shadow&family=Vidaloka&family=Yeseva+One&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Abril+Fatface&family=Galada&family=Gravitas+One&family=Kranky&family=Limelight&family=MuseoModerno:wght@500&family=Oleo+Script&family=Oleo+Script+Swash+Caps&family=Raleway:wght@100;300&family=Rozha+One&family=Sacramento&family=Vast+Shadow&family=Vidaloka&family=Yeseva+One&family=Baloo+Tamma+2:wght@500&display=swap');
 
 #homeimg img {
   margin: 0;
@@ -37,9 +37,40 @@
   /* font-family: 'Abril Fatface', cursive; */
   /* font-family: 'Rozha One', serif; */
 
-#nav {
-  padding-left: 40px;
-  padding-top: 30px;
-  padding-bottom: 15px;
-  margin-bottom: 15px;
+#nav .nav-wrapper {
+  padding-top: 80px;
+  float: none;
+  position: absolute;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  font-size: 17px;
 }
+
+.nav-wrapper a {
+  font-family: 'Baloo Tamma 2', cursive;
+  color: rgb(98, 104, 110);
+  margin-right: 80px;
+}
+
+.nav-wrapper a:hover {
+  color: darksalmon;
+}
+
+#about #hello {
+  font-family: 'Raleway', sans-serif;
+  text-align: center;
+  padding-top: 150px;
+  font-size: 25px;
+}
+
+/* #about #greeting {
+  max-width: 100%;
+  max-height: 100%;
+  margin: auto;
+} */
+
+/* #about #hello {
+  font-family: 'Raleway', sans-serif;
+  font-size: 25px;
+  float: center;
+} */
