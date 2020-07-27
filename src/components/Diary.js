@@ -2,7 +2,8 @@ import React, {Component} from 'react';
 import moment from 'moment';
 import Moods from './Moods';
 import Acitities from './Acitities';
-import EmojiPicker from './EmojiPicker';
+import { Form, TextArea } from 'semantic-ui-react';
+// import EmojiPicker from './EmojiPicker';
 
 export default class Diary extends Component {
     state = {
@@ -35,17 +36,16 @@ export default class Diary extends Component {
 
     render () {
         return (
-            <div>
-                <div>
-                    {moment().format('dddd LL, LT')}
-                    <h2>Today Journal</h2>
-                    <form onSubmit={this.handleSubmit}>
-                    <textarea name="content" placeholder="Begin Today Journal Here!" onChange={this.handleChange} style={{height: 500, width: 500}} />
+            <div id="diary">
+                <div className="text" id="datetime">{moment().format('dddd LL, LT')}</div>
+                <br/>
+                {/* <h3 className="text">Today Journal</h3> */}
+                <form className="ui form" onSubmit={this.handleSubmit}>
+                    <textarea placeholder="Begin Today Journal Here!" name="content" onChange={this.handleChange} style={{height: 100, width: 500}} />
                     <br/>
                     <input type="submit" value="Submit" />
-                    </form>
-                </div>
-                <EmojiPicker />
+                </form>
+                {/* <EmojiPicker /> */}
                 <Moods currentUserId={this.state.diary_entry.user_id} />
                 <Acitities currentUserId={this.state.diary_entry.user_id} />
             </div>

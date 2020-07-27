@@ -16,6 +16,7 @@ export default class Welcome extends Component {
             { this.props.loading ? (<div className="progress"><div className="indeterminate"></div></div>) : (
                 <div>
                     <Navbar handleLogout={this.props.handleLogout} />
+                    <br/>
                     <Route exact path="/about" render={() => <About currentUser={this.props.currentUser} />} />
                     <Route exact path="/diary" render={() => <Diary currentUser={this.props.currentUser} />} />
                     <Route exact path="/diarybook" render={() => <Diarybook currentUser={this.props.currentUser} />} />
