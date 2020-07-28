@@ -99,8 +99,6 @@ button.waves-effect.waves-light.btn {
 }
 
 #float {
-  /* padding: 20px; */
-  /* border-radius: 20px; */
   border-top-left-radius: 20px;
   border-top-right-radius: 20px;
 }
@@ -115,7 +113,11 @@ button.waves-effect.waves-light.btn {
   height: 600px;
   border-radius: 20px;
   background-color: rgb(255, 250, 236);
-  box-shadow: 15px 15px 15px rgb(187, 187, 187);
+  box-shadow: 10px 15px 20px rgb(187, 187, 187);
+}
+
+#about {
+  text-align: center;
 }
 
 #aboutimg {
@@ -129,20 +131,20 @@ button.waves-effect.waves-light.btn {
   border-radius: 15px;
 }
 
-div#calendar {
-  display: block;
-  margin-left: auto;
-  margin-right: auto;
-}
-
 div#weather {
   width: 400px;
-  height: 300px;
-  box-shadow: 15px 15px 15px rgb(187, 187, 187);
+  height: 295px;
+  box-shadow: 10px 15px 20px rgb(187, 187, 187);
   border-radius: 15px;
   padding-top: 20px;
   display: block;
   margin-left: auto;
   margin-right: auto;
   text-align: center;
+}
+
+#myclock {
+  /* display: block; */
+  margin-left: auto;
+  margin-right: auto;
 }

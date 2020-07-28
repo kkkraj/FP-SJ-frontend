@@ -1,8 +1,11 @@
 import React, {Component} from 'react';
 import Calendar from 'react-calendar';
-import bnn from '../images/bn2.png';
 import '../Calendar.css';
-import Weather from './Weather'
+import Weather from './Weather';
+import MyClock from './MyClock';
+import moment from 'moment';
+import 'bootstrap/dist/css/bootstrap.min.css';
+import {Container, Row, Col} from 'react-bootstrap';
 
 export default class About extends Component {
     state = {
@@ -16,14 +19,28 @@ export default class About extends Component {
     render () {
         return (
             <div id="about">
-                <div>
-                    {/* <img id="aboutimg" src={bnn} alt="hi astronaut" /> */}
-                    <h3 id="hello">{`Hello, ${this.props.currentUser.name}`}</h3>
-                </div>
-                <div id="calendar">
-                    <Calendar onChange={this.onChange} value={this.state.date} />
-                </div><br/>
-                <div><Weather /></div>
+                <h3 id="hello">{`Hello, ${this.props.currentUser.name}`}</h3>
+                <br/>
+                <Container>
+                    <Row>
+                        <Col xs={12} md={5}></Col>
+                        <Col xs={12} md={2}><MyClock /></Col>
+                        <Col xs={12} md={5}></Col>
+                    </Row>
+                </Container>
+                <br/>
+                <Container>
+                    <Row>
+                        <Col xs={12} md={1}></Col>
+                        <Col id="calendar" xs={12} md={5}>
+                            <Calendar onChange={this.onChange} value={this.state.date} />
+                        </Col>
+                        <Col xs={12} md={5}>
+                            <Weather />
+                        </Col>
+                        <Col xs={12} md={1}></Col>
+                    </Row>
+                </Container>
             </div>
         )
     }
