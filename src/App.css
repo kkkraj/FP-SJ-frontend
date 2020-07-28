@@ -64,10 +64,12 @@ button.waves-effect.waves-light.btn {
 
 #about #hello {
   font-family: 'Raleway', sans-serif;
+  font-weight: bold;
   text-align: center;
   padding-top: 50px;
-  padding-bottom: 50px;
-  font-size: 25px;
+  padding-bottom: 30px;
+  letter-spacing: 3px;
+  color: rgb(17, 81, 146);
 }
 
 /* #about #greeting {
@@ -113,33 +115,34 @@ button.waves-effect.waves-light.btn {
   height: 600px;
   border-radius: 20px;
   background-color: rgb(255, 250, 236);
-  box-shadow: 15px 15px 25px rgb(187, 187, 187);
+  box-shadow: 15px 15px 15px rgb(187, 187, 187);
 }
 
+#aboutimg {
+  width: 62%;
+  height: auto;
+  display: block;
+  margin-top: 50px;
+  margin-left: auto;
+  margin-right: auto;
+  box-shadow: 15px 15px 15px rgb(187, 187, 187);
+  border-radius: 15px;
+}
 
+div#calendar {
+  display: block;
+  margin-left: auto;
+  margin-right: auto;
+}
 
-.split {
-  height: 100%;
-  width: 50%;
-  position: fixed;
-  z-index: 1;
-  top: 0;
-  overflow-x: hidden;
+div#weather {
+  width: 400px;
+  height: 300px;
+  box-shadow: 15px 15px 15px rgb(187, 187, 187);
+  border-radius: 15px;
   padding-top: 20px;
-}
-
-.left {
-  left: 10;
-}
-
-.right {
-  right: 10;
-}
-
-.centered {
-  position: absolute;
-  top: 50%;
-  left: 50%;
-  transform: translate(-50%, -50%);
+  display: block;
+  margin-left: auto;
+  margin-right: auto;
   text-align: center;
 }
