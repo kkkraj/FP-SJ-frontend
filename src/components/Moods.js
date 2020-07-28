@@ -31,16 +31,16 @@ export default class Moods extends Component {
 
     render () {
         return ( 
-            <div className="moodsdiv" style={{width: '100%', height: '100%'}}>
-                <h3 className="text">How are you today?</h3>
-                    <div>
-                        { this.state.moods.map((mood) => 
-                                <div key={mood.id} style={{float: 'left'}} className="imgcolumn">
-                                    <img style={{width: '100px', height: 'auto'}} src={mood.mood_url} onClick={() => this.handleMoodClick(mood)} />
-                                    <p className="text">{mood.mood_name}</p>
-                                </div>
-                        )}
-                    </div>
+            <div style={{textAlign: 'center'}}>
+                {/* <h4 className="text">Today Moods</h4> */}
+                <div className="moodsdiv" style={{textAlign: 'center', display: 'grid', gridTemplateColumns: 'repeat(4, 1fr)'}}>
+                    { this.state.moods.map((mood) => 
+                        <div key={mood.id}>
+                            <img style={{width: '80px', height: 'auto', borderRadius: '100px'}} src={mood.mood_url} onClick={() => this.handleMoodClick(mood)} />
+                            <p className="text" style={{fontSize: '14px'}}>{mood.mood_name}</p>
+                        </div>
+                    )}
+                </div>
             </div>
         )
     }

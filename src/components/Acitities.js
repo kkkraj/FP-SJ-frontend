@@ -31,14 +31,16 @@ export default class Acitities extends Component {
 
     render () {
         return (
-            <div>
-                <h2 className="text">Activities you have done today</h2>
-                {this.state.activities.map((activity) => 
-                    <div key={activity.id}>
-                        <img style={{width: '80px', height: 'auto', border: '2px solid black', borderRadius: '10px'}} src={activity.activity_url} onClick={() => this.handleActivityClick(activity)} />
-                        <p>{activity.activity_name}</p>
-                    </div>
-                )}
+            <div style={{textAlign: 'center'}}>
+                {/* <h4 className="text">Today Activities</h4> */}
+                <div className="actvdiv" style={{textAlign: 'center', display: 'grid', gridTemplateColumns: 'repeat(8, 1fr)'}}>
+                    {this.state.activities.map((activity) => 
+                        <div key={activity.id} style={{paddingTop: '7.5px'}}>
+                            <img style={{width: '60px', height: 'auto', border: '2px solid black', borderRadius: '100px'}} src={activity.activity_url} onClick={() => this.handleActivityClick(activity)} />
+                            <p className="text" style={{fontSize: '14px', paddingTop: '11px'}}>{activity.activity_name}</p>
+                        </div>
+                    )}
+                </div>
             </div>
         )
     }

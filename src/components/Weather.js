@@ -30,10 +30,10 @@ export default class Weather extends Component {
     render() {
         return (
             <div id="weather">
-                <h4 className="text" style={{fontWeight: 'bold', color: 'coral'}}>{this.state.city}</h4>
+                <h5 className="text" style={{fontWeight: 'bold', color: 'coral'}}>{this.state.city}</h5>
                 <img style={{borderRadius: '100px'}} src={this.state.iconUrl} alt="weather icon" />
                 <p style={{fontSize: '17px'}} className="text">{this.state.description}</p>
-                <h4 className="text" style={{fontWeight: 'bold', color: 'dimgray'}}>{Math.round(this.state.temp / 5.2)} °F</h4>
+                <h5 className="text" style={{fontWeight: 'bold', color: 'dimgray'}}>{Math.round((this.state.temp - 273.15) * 1.8 + 32)} °F</h5>
                 <br/>
                 <h6 className="text">humidity {this.state.humidity} % | wind {this.state.windSpeed} mph</h6>
             </div>

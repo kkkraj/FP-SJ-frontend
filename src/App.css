@@ -43,7 +43,7 @@ button.waves-effect.waves-light.btn {
   /* font-family: 'Rozha One', serif; */
 
 #nav .nav-wrapper {
-  padding-top: 50px;
+  padding-top: 30px;
   /* float: none;
   position: absolute;
   left: 50%;
@@ -89,7 +89,7 @@ button.waves-effect.waves-light.btn {
 }
 
 #diary {
-  padding-top: 80px;
+  padding-top: 40px;
   text-align: center;
 }
 
@@ -144,7 +144,36 @@ div#weather {
 }
 
 #myclock {
-  /* display: block; */
   margin-left: auto;
   margin-right: auto;
+}
+
+textarea::placeholder {
+  color: rgb(240, 208, 178);
+}
+
+.diaryheader {
+  font-family: 'Raleway', sans-serif;
+  font-weight: bold;
+  color: rgb(104, 187, 183);
+}
+
+.moodsdiv {
+  /* box-shadow: 5px 10px 20px rgb(187, 187, 187); */
+  background: rgb(238, 243, 243);
+  border-radius: 15px;
+  padding: 8px 0px 0px 0px;
+}
+
+.actvdiv {
+  /* box-shadow: 5px 10px 20px rgb(187, 187, 187); */
+  background: rgb(238, 243, 243);
+  border-radius: 15px;
+  padding: 8px 8px 2px 8px;
+}
+
+#entry {
+  /* box-shadow: 5px 10px 20px rgb(187, 187, 187); */
+  border-radius: 15px;
+  padding: 10px 8px 15px 8px;
 }
