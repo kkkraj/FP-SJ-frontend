@@ -32,8 +32,13 @@ export default class Acitities extends Component {
     render () {
         return (
             <div>
-                <h2>Activities List</h2>
-                {this.state.activities.map((activity) => <button key={activity.id} onClick={() => this.handleActivityClick(activity)}>{activity.activity_name}</button>)}
+                <h2 className="text">Activities you have done today</h2>
+                {this.state.activities.map((activity) => 
+                    <div key={activity.id}>
+                        <img style={{width: '80px', height: 'auto', border: '2px solid black', borderRadius: '10px'}} src={activity.activity_url} onClick={() => this.handleActivityClick(activity)} />
+                        <p>{activity.activity_name}</p>
+                    </div>
+                )}
             </div>
         )
     }

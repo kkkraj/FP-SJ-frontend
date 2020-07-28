@@ -1,5 +1,9 @@
 import React, {Component} from 'react';
 import UpdateAccount from './UpdateAccount';
+import float from '../images/float.png';
+import 'materialize-css/dist/css/materialize.min.css';
+import 'bootstrap/dist/css/bootstrap.min.css';
+import {Container, Row, Col, Image} from 'react-bootstrap'
 
 export default class Profile extends Component {
     state = {
@@ -7,21 +11,48 @@ export default class Profile extends Component {
     }
 
     handleUpdate = () => {
-        console.log("update clicked")
+        // console.log("update clicked")
         this.setState({ updateClick: true })
     }
 
     render () {
         return (
-            <div>
-                <h2>Profile Page</h2>
-                <p>Name: {this.props.currentUser.name}</p>
-                <p>Email: {this.props.currentUser.email}</p>
-                <p>Username: {this.props.currentUser.username}</p>
-                <button onClick={this.handleUpdate}>Update Account</button>
-                <button onClick={() => {this.props.handleDeleteUser(this.props.currentUser)}}>Delete Account</button>
-                {this.state.updateClick === true ? <UpdateAccount currentUser={this.props.currentUser} handleUpdate={this.handleUpdate} /> : null}
-            </div>
+            <Container className="profile">
+                <Row>
+                    <Col xs={12} md={1}></Col>
+                    <Col id="one" xs={12} md={5}>
+                        <Image id="float" src={float} alt="floating Astronauts" fluid />
+                        <br/><br/>
+                        <h2 className="text" style={{letterSpacing: '3px', fontWeight: 'bold', color: 'DimGrey'}}>{this.props.currentUser.name}</h2>
+                        <br/>
+                        <table style={{tableLayout: 'auto', width: 'auto', float: 'center', marginLeft: 'auto', marginRight: 'auto'}}>
+                            <tbody>
+                                <tr>
+                                    <td className="text" style={{fontSize: '16px', fontWeight: 'bold'}}>Name</td>
+                                    <td className="text" style={{fontSize: '16px'}}>{this.props.currentUser.name}</td>
+                                </tr>
+                                <tr>
+                                    <td className="text" style={{fontSize: '16px', fontWeight: 'bold'}}>Email</td>
+                                    <td className="text" style={{fontSize: '16px'}}>{this.props.currentUser.email}</td>
+                                </tr>
+                                <tr>
+                                    <td className="text" style={{fontSize: '16px', fontWeight: 'bold'}}>Username</td>
+                                    <td className="text" style={{fontSize: '16px'}}>{this.props.currentUser.username}</td>
+                                </tr>
+                            </tbody>
+                        </table>
+                        <br/><br/>
+                        <button style={{backgroundColor: 'LightSalmon'}} className="waves-effect waves-light btn-small" onClick={() => {this.props.handleDeleteUser(this.props.currentUser)}}>Delete Account</button>
+                    </Col>
+                    <Col xs={12} md={1}></Col>
+                    <Col xs={12} md={4}>
+                        {/* <button className="waves-effect waves-light btn" onClick={this.handleUpdate}>Update Account</button> */}
+                        <a className="btn-floating btn-large waves-effect waves-light  deep-orange lighten-2" onClick={this.handleUpdate}><i className="material-icons">settings</i></a>
+                        {this.state.updateClick === true ? <UpdateAccount currentUser={this.props.currentUser} handleUpdate={this.handleUpdate} /> : null}
+                    </Col>
+                    <Col xs={12} md={1}></Col>
+                </Row>
+            </Container>
         )
     }
 }

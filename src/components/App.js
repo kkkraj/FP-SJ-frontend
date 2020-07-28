@@ -89,7 +89,7 @@ export default class App extends Component {
     console.log(`logged-in? ${loggedIn}`)
     console.log(`current user id: ${this.state.auth.currentUser.id}`)
     return (
-      <div>
+      <div id="app">
         { loggedIn ? 
           <Welcome 
               loading={this.state.loading} 

@@ -40,14 +40,17 @@ export default class Diary extends Component {
                 <div className="text" id="datetime">{moment().format('dddd LL, LT')}</div>
                 <br/>
                 {/* <h3 className="text">Today Journal</h3> */}
-                <form className="ui form" onSubmit={this.handleSubmit}>
-                    <textarea placeholder="Begin Today Journal Here!" name="content" onChange={this.handleChange} style={{height: 100, width: 500}} />
-                    <br/>
-                    <input type="submit" value="Submit" />
-                </form>
-                {/* <EmojiPicker /> */}
                 <Moods currentUserId={this.state.diary_entry.user_id} />
+                <br/>
                 <Acitities currentUserId={this.state.diary_entry.user_id} />
+                <br/>
+                <div>
+                    <form className="ui form" onSubmit={this.handleSubmit}>
+                        <textarea placeholder="Begin Today Journal Here!" name="content" onChange={this.handleChange} style={{height: 100, width: 500}} />
+                        <br/>
+                        <input type="submit" value="Submit" />
+                    </form>
+                </div>
             </div>
         )
     }

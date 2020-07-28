@@ -12,7 +12,7 @@ class Navbar extends Component {
                         </NavLink>
 
                         <NavLink style={{ marginRight: '80px' }} to="/diary">
-                            New Diary
+                            New Entry
                         </NavLink>
 
                         <NavLink style={{ marginRight: '80px' }} to="/diarybook">

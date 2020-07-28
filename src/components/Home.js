@@ -6,7 +6,7 @@ import 'materialize-css/dist/css/materialize.min.css';
 export default class Home extends Component {
     render () {
         return (
-            <div>
+            <div id="home">
                 <div className="col s6" id="homeimg">
                     <img src={bg} alt="astronaut riding a whale"/>
                 </div>
