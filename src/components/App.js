@@ -18,9 +18,6 @@ export default class App extends Component {
       currentUser: {} 
     },
     loading: true,
-    signup: false,
-    loggedIn: false,
-    loggedOut: false,
     user: {
         name: "",
         email: "",
@@ -45,17 +42,12 @@ export default class App extends Component {
   handleLogin = (user) => {
     const currentUser = { currentUser: user };
     localStorage.setItem("token", user.jwt);
-    // this.setState({ 
-    //   loggedIn: true,
-    //   auth: currentUser 
-    // });
     this.setState({ auth: currentUser });
   }
 
   handleLogout = () => {
     localStorage.removeItem("token");
     this.setState({ 
-      loggedOut: true,
       auth: { currentUser: {} } 
     });
   };
@@ -93,7 +85,6 @@ export default class App extends Component {
         { loggedIn ? 
           <Welcome 
               loading={this.state.loading} 
-              loggedOut={this.state.loggedOut}
               currentUser={this.state.auth.currentUser}
               handleLogout={this.handleLogout}
               handleDeleteUser={this.handleDeleteUser}
@@ -102,7 +93,6 @@ export default class App extends Component {
           <Home 
               loading={this.state.loading}
               loggedIn={this.state.loggedIn}
-              signup={this.state.signup}
               user={this.state.user} 
               currentUser={this.state.auth.currentUser}
               handleChange={this.handleChange} 
@@ -113,28 +103,6 @@ export default class App extends Component {
           />
         }
       </div>
-
-
-      
-      // <Router>
-      //   <h1>Space Journal</h1>
-      //   { this.state.loading ? (<div>loading</div>) : (
-      //     <div>
-      //         <Navbar currentUser={this.state.auth.currentUser} handleLogout={this.handleLogout} />
-      //         <Route exact path="/signup" component={Signup} />
-      //         <Route exact path="/login" render={(routerProps) => <Login {...routerProps} handleLogin={this.handleLogin} /> } />
-      //             <Route exact path="/" render={() => {
-      //                 const loggedIn = !!this.state.auth.currentUser.id;
-      //                 return ( loggedIn ? (<div>{`Hello ${this.state.auth.currentUser.name}`}</div>) : <Redirect to="/login" /> );
-      //             }}/>
-      //         <Route exact path="/about" component={About} />
-      //         <Route exact path="/profile" render={() => <Profile currentUser={this.state.auth.currentUser} handleDeleteUser={this.handleDeleteUser} handleUpdateUser={this.handleUpdateUser}/>} />
-      //         <Route exact path="/diary" render={() => <Diary currentUser={this.state.auth.currentUser} />} />
-      //         <Route exact path="/diarybook" render={() => <Diarybook currentUser={this.state.auth.currentUser} />} />
-      //       </div>
-      //     )
-      //   }
-      // </Router>
     )
   }
 }

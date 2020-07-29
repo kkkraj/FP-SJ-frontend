@@ -1,15 +1,23 @@
 @import url('https://fonts.googleapis.com/css2?family=Abril+Fatface&family=Galada&family=Gravitas+One&family=Kranky&family=Limelight&family=MuseoModerno:wght@500&family=Oleo+Script&family=Oleo+Script+Swash+Caps&family=Raleway:wght@100;300&family=Rozha+One&family=Sacramento&family=Vast+Shadow&family=Vidaloka&family=Yeseva+One&family=Baloo+Tamma+2:wght@500&display=swap');
 
-#homeimg img {
-  margin: 0;
+#homeimg {
+  /* margin: 0;
   height: 100%;
   width: 53%;    
-  float: right;
+  float: right; */
+  background-image: url(./images/bg.png);
+  width: 60vw;
+  height: 100vh;
+  position: absolute;
+  right: 0;
+  background-position: left;
+  background-repeat: no-repeat;
+  object-fit: cover;
 }
 
 #intro {
   padding-top: 10px;
-  padding-left: 70px;
+  /* padding-left: 70px; */
   font-family: 'Raleway', sans-serif;
 }
 
@@ -178,4 +186,27 @@ textarea::placeholder {
 
 #entries {
   padding-top: 50px;
+}
+
+.booheaders {
+  color:rgb(104, 187, 183);
+  font-weight: bold;
+}
+
+.detail-header {
+  /* border-bottom: solid 1px PeachPuff; */
+  border-bottom: solid 1px rgb(229, 247, 229);
+}
+
+a#logout {
+  color:  rgb(98, 104, 110);
+  cursor: pointer;
+}
+
+a#logout:hover {
+  color: indianred;
+}
+
+li#diary-content {
+  text-align: justify;
 }

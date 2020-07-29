@@ -29,7 +29,7 @@ export default class Login extends Component {
               this.setState({ error: true });
             } else {
               this.props.handleLogin(response);
-              this.props.history.push('/');
+              this.props.history.push('/about');
             }
           });
     }

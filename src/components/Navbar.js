@@ -23,7 +23,7 @@ class Navbar extends Component {
                             Account
                         </NavLink>
 
-                        <a onClick={() => {
+                        <a id="logout" onClick={() => {
                             this.props.history.push('/login')
                             this.props.handleLogout()
                         }}>Log Out</a>

@@ -1,19 +1,15 @@
 import React, {Component} from 'react';
-import { BrowserRouter as Router, Route, Redirect} from "react-router-dom";
+import { BrowserRouter as Router, Route} from "react-router-dom";
 import Navbar from './Navbar';
-import Signup from './Signup';
-import Login from './Login';
 import About from './About';
 import Profile from './Profile';
 import Diary from './Diary';
 import Entries from './Entries';
-import Home from './Home';
 
 export default class Welcome extends Component {
     render () {
         return (
-        <Router>
-            { this.props.loading ? (<div className="progress"><div className="indeterminate"></div></div>) : (
+            this.props.loading ? (<div className="progress"><div className="indeterminate"></div></div>) : (
                 <div>
                     <Navbar handleLogout={this.props.handleLogout} />
                     <br/>
@@ -22,8 +18,7 @@ export default class Welcome extends Component {
                     <Route exact path="/entries" render={() => <Entries currentUser={this.props.currentUser} />} />
                     <Route exact path="/profile" render={() => <Profile currentUser={this.props.currentUser} handleDeleteUser={this.props.handleDeleteUser} />} />
                 </div>
-            )}
-        </Router>
+            )
         )
     }
 }

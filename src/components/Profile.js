@@ -11,7 +11,6 @@ export default class Profile extends Component {
     }
 
     handleUpdate = () => {
-        // console.log("update clicked")
         this.setState({ updateClick: true })
     }
 
@@ -46,8 +45,7 @@ export default class Profile extends Component {
                     </Col>
                     <Col xs={12} md={1}></Col>
                     <Col xs={12} md={4}>
-                        {/* <button className="waves-effect waves-light btn" onClick={this.handleUpdate}>Update Account</button> */}
-                        <a className="btn-floating btn-large waves-effect waves-light  deep-orange lighten-2" onClick={this.handleUpdate}><i className="material-icons">settings</i></a>
+                        <a className="btn-floating btn-large waves-effect waves-light deep-orange lighten-3" onClick={this.handleUpdate}><i className="material-icons">settings</i></a>
                         {this.state.updateClick === true ? <UpdateAccount currentUser={this.props.currentUser} handleUpdate={this.handleUpdate} /> : null}
                     </Col>
                     <Col xs={12} md={1}></Col>

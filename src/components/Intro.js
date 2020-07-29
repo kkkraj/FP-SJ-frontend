@@ -82,10 +82,8 @@ export default class Intro extends Component {
     /////////////////////////////////////////////////////////////////////
 
     render () {
-        // const loggedIn = !!this.state.auth.currentUser.id;
         return (
-            <Router>
-                { this.props.loading ? (<div className="progress"><div className="indeterminate"></div></div>) : (
+            this.props.loading ? (<div className="progress"><div className="indeterminate"></div></div>) : (
                     <div id="intro">
                         <p id="welcome">Welcome To</p>
                         <p className="logo">SPACE JOURNAL</p>
@@ -104,8 +102,7 @@ export default class Intro extends Component {
                         <Route exact path="/login" render={(routerProps) => <Login {...routerProps} handleLogin={this.props.handleLogin} /> } />
                         <Route exact path="/" render={() => this.props.signup ? null : <Redirect to="/signup" />} />
                     </div>
-                )}
-            </Router>
+            )
         )
     }
 }

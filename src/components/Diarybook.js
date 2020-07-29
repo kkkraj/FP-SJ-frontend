@@ -52,33 +52,60 @@ export default class Diarybook extends Component {
     render () {
         return (
             <div className="text">
-                <h2>Diary Index</h2>
-                <div>
-                    {this.state.diaries.map((diary) => (
-                        diary.user_id === this.state.currentUserId ? (
+                <div className="detail-header">
+                    <h4 className="booheaders">Journal</h4>
+                    {this.state.diaries.map((diary) => {
+                        const date1 = new Date(diary.created_at);
+                        const date2 = date1.getDate();
+                        const month = date1.getMonth();
+                        const year = date1.getFullYear();
+                        const formatted = year + '-' + month + '-' + date2;
+                        return diary.user_id === this.state.currentUserId && formatted === this.props.selectedDate ? (
                             <div key={diary.id}>
                                 <ul>
-                                    <li>{diary.created_at}</li>
-                                    <li>{diary.content}</li>
-                                    <li>user id: {diary.user_id}</li>
-                                    <button className="btn-floating btn-small waves-effect waves-light blue-grey lighten-3" onClick={() => {this.handleDeleteDiary(diary)}}><i className="material-icons">clear</i></button>
+                                    <li id="diary-content">{diary.content}</li>
+                                    <button style={{width: '30px', height: '30px', marginTop: '10px'}} className="btn-floating btn-small waves-effect waves-light deep-orange lighten-4" onClick={() => {this.handleDeleteDiary(diary)}}><i className="material-icons">clear</i></button>
                                 </ul>
                             </div>
                         ) : null
-                    ))}
+                    })}
                 </div>
-                <h3>Moods Index</h3>
+                <br/>
+                <div className="detail-header">
+                    <h4 className="booheaders">Moods</h4>
                     {this.state.userMoods.map((userMood) => 
                         this.state.moodsList.map((mood) => {
-                            return userMood.mood_id === mood.id && userMood.user_id === this.state.currentUserId ? (<ul key={mood.id}><li>{mood.mood_name}</li>{userMood.created_at}</ul>) : null
+                            const date1 = new Date(userMood.created_at);
+                            const date2 = date1.getDate();
+                            const month = date1.getMonth();
+                            const year = date1.getFullYear();
+                            const formatted = year + '-' + month + '-' + date2;
+                            return userMood.mood_id === mood.id && userMood.user_id === this.state.currentUserId && formatted === this.props.selectedDate ? (
+                                <ul key={mood.id}>
+                                    <li><img style={{width: '30px', height: 'auto'}} src={mood.mood_url}/> {mood.mood_name}</li>
+                                </ul>
+                            ) : null
                         })
                     )}
-                <h3>Activities Index</h3>
+                </div>
+                <br/>
+                <div className="detail-header">
+                    <h4 className="booheaders">Activities</h4>
                     {this.state.userActivities.map((userActivity) =>
                         this.state.activitiesList.map((activity) => {
-                            return userActivity.activity_id === activity.id && userActivity.user_id === this.state.currentUserId ? (<ul key={activity.id}><li>{activity.activity_name}</li>{userActivity.created_at}</ul>) : null
+                            const date1 = new Date(userActivity.created_at);
+                            const date2 = date1.getDate();
+                            const month = date1.getMonth();
+                            const year = date1.getFullYear();
+                            const formatted = year + '-' + month + '-' + date2;
+                            return userActivity.activity_id === activity.id && userActivity.user_id === this.state.currentUserId && formatted === this.props.selectedDate ? (
+                                <ul key={activity.id}>
+                                    <li><img style={{width: '30px', height: 'auto'}} src={activity.activity_url}/> {activity.activity_name}</li>
+                                </ul>
+                            ) : null
                         })
                     )}
+                </div>
             </div>
         )
     }
