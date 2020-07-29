@@ -23,7 +23,7 @@ export default class Profile extends Component {
                     <Col id="one" xs={12} md={5}>
                         <Image id="float" src={float} alt="floating Astronauts" fluid />
                         <br/><br/>
-                        <h2 className="text" style={{letterSpacing: '3px', fontWeight: 'bold', color: 'DimGrey'}}>{this.props.currentUser.name}</h2>
+                        <h3 className="text" style={{letterSpacing: '3px', fontWeight: 'bold', color: 'DimGrey'}}>{this.props.currentUser.name}</h3>
                         <br/>
                         <table style={{tableLayout: 'auto', width: 'auto', float: 'center', marginLeft: 'auto', marginRight: 'auto'}}>
                             <tbody>

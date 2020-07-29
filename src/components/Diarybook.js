@@ -51,7 +51,7 @@ export default class Diarybook extends Component {
 
     render () {
         return (
-            <div>
+            <div className="text">
                 <h2>Diary Index</h2>
                 <div>
                     {this.state.diaries.map((diary) => (
@@ -61,7 +61,7 @@ export default class Diarybook extends Component {
                                     <li>{diary.created_at}</li>
                                     <li>{diary.content}</li>
                                     <li>user id: {diary.user_id}</li>
-                                    <button onClick={() => {this.handleDeleteDiary(diary)}}>Delete</button>
+                                    <button className="btn-floating btn-small waves-effect waves-light blue-grey lighten-3" onClick={() => {this.handleDeleteDiary(diary)}}><i className="material-icons">clear</i></button>
                                 </ul>
                             </div>
                         ) : null

@@ -44,10 +44,6 @@ button.waves-effect.waves-light.btn {
 
 #nav .nav-wrapper {
   padding-top: 30px;
-  /* float: none;
-  position: absolute;
-  left: 50%;
-  transform: translate(-50%, -50%); */
   text-align: center;
   font-size: 17px;
 }
@@ -72,18 +68,6 @@ button.waves-effect.waves-light.btn {
   color: rgb(17, 81, 146);
 }
 
-/* #about #greeting {
-  max-width: 100%;
-  max-height: 100%;
-  margin: auto;
-} */
-
-/* #about #hello {
-  font-family: 'Raleway', sans-serif;
-  font-size: 25px;
-  float: center;
-} */
-
 .text {
   font-family: 'Raleway', sans-serif;
 }
@@ -91,11 +75,6 @@ button.waves-effect.waves-light.btn {
 #diary {
   padding-top: 40px;
   text-align: center;
-}
-
-#datetime {
-  font-size: larger;
-  color: darkblue;
 }
 
 #float {
@@ -131,6 +110,16 @@ button.waves-effect.waves-light.btn {
   border-radius: 15px;
 }
 
+#datetime {
+  padding-top: 20px;
+  font-size: larger;
+  color: darkblue;
+  width: 400px;
+  height: 295px;
+  box-shadow: 10px 15px 20px rgb(187, 187, 187);
+  border-radius: 15px;
+}
+
 div#weather {
   width: 400px;
   height: 295px;
@@ -149,25 +138,26 @@ div#weather {
 }
 
 textarea::placeholder {
-  color: rgb(240, 208, 178);
+  color: rgb(230, 199, 168);
 }
 
 .diaryheader {
   font-family: 'Raleway', sans-serif;
   font-weight: bold;
   color: rgb(104, 187, 183);
+  letter-spacing: 1px;
 }
 
 .moodsdiv {
   /* box-shadow: 5px 10px 20px rgb(187, 187, 187); */
-  background: rgb(238, 243, 243);
+  /* background: rgb(238, 243, 243); */
   border-radius: 15px;
   padding: 8px 0px 0px 0px;
 }
 
 .actvdiv {
   /* box-shadow: 5px 10px 20px rgb(187, 187, 187); */
-  background: rgb(238, 243, 243);
+  /* background: rgb(238, 243, 243); */
   border-radius: 15px;
   padding: 8px 8px 2px 8px;
 }
@@ -176,4 +166,16 @@ textarea::placeholder {
   /* box-shadow: 5px 10px 20px rgb(187, 187, 187); */
   border-radius: 15px;
   padding: 10px 8px 15px 8px;
+}
+
+.moods:hover {
+  font-weight: bolder;
+}
+
+.actvs:hover {
+  font-weight: bolder;
+}
+
+#entries {
+  padding-top: 50px;
 }

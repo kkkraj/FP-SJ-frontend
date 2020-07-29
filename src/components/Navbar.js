@@ -15,8 +15,8 @@ class Navbar extends Component {
                             New Entry
                         </NavLink>
 
-                        <NavLink style={{ marginRight: '80px' }} to="/diarybook">
-                            Diary Book
+                        <NavLink style={{ marginRight: '80px' }} to="/entries">
+                            All Entries
                         </NavLink>
 
                         <NavLink style={{ marginRight: '80px' }} to="/profile">

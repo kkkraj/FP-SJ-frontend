@@ -45,17 +45,17 @@
 .react-calendar__navigation button {
   padding-top: 12px;
   min-width: 44px;
-  background: none;
+  background: FloralWhite;
   font-size: 21px;
   color: coral;
   font-weight: 500;
 }
 .react-calendar__navigation button:enabled:hover,
 .react-calendar__navigation button:enabled:focus {
-  background-color: #e6e6e6;
+  background-color: rgb(247, 247, 247);
 }
 .react-calendar__navigation button[disabled] {
-  background-color: #f0f0f0;
+  background-color: rgb(247, 247, 247);
 }
 .react-calendar__month-view__weekdays {
   text-align: center;
@@ -99,7 +99,7 @@
 }
 .react-calendar__tile:enabled:hover,
 .react-calendar__tile:enabled:focus {
-  background-color: #e6e6e6;
+  background-color: rgb(247, 247, 247);
 }
 .react-calendar__tile--now {
   background: linen;

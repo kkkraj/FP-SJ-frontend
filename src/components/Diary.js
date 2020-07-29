@@ -37,7 +37,6 @@ export default class Diary extends Component {
         return (
             <div id="diary">
                 <Container>
-                    {/* <div className="text" id="datetime">{moment().format('dddd LL, LT')}</div> */}
                     <Row>
                         <Col xs={12} md={4}>
                             <h4 className="diaryheader">Today Moods</h4>
@@ -70,12 +69,13 @@ export default class Diary extends Component {
                     </Row>
                     <Row>
                         <Col xs={12} md={4}>
-                            <a className="btn-floating btn-large waves-effect waves-light  deep-orange lighten-3" onClick={this.handleUpdate}><i className="material-icons">image</i></a>
+                            <br/>
+                            <a className="btn-floating btn-medium waves-effect waves-light  deep-orange lighten-3" onClick={this.handleUpdate}><i className="material-icons">image</i></a>
                         </Col>
                         <Col xs={12} md={1}></Col>
                         <Col xs={12} md={7}>
                             <form id="entry" onSubmit={this.handleSubmit}>
-                                <textarea placeholder="Begin Today Journal Here!" name="content" onChange={this.handleChange} style={{height: 180, width: 600, border: 'none' ,borderBottom: 'solid 2px coral'}}></textarea>
+                                <textarea className="text" placeholder="Begin Today Journal Here!" name="content" onChange={this.handleChange} style={{height: 180, width: 600, border: 'none' ,borderBottom: 'solid 2px coral'}}></textarea>
                                 <input className="waves-effect waves-light btn-small" style={{backgroundColor: 'LightSalmon', marginTop: '10px'}} type="submit" value="Submit Journal" />
                             </form>
                         </Col>
