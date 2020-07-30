@@ -37,21 +37,24 @@ export default class UpdateAccount extends Component {
                     <div>
                         <input 
                             name="name" 
-                            placeholder={`${this.state.user.name}`}
+                            placeholder={this.state.user.name}
+                            // value={this.state.user.name}
                         />
                         <label style={{float: 'left'}}>Name</label>
                     </div>
                     <div>
                         <input 
                             name="email" 
-                            placeholder={`${this.state.user.email}`}
+                            placeholder={this.state.user.email}
+                            // value={this.state.user.email}
                         />
                         <label style={{float: 'left'}}>Email</label>
                     </div>
                     <div>
                         <input 
                             name="username" 
-                            placeholder={`${this.state.user.username}`}
+                            placeholder={this.state.user.username}
+                            // value={this.state.user.username}
                         />
                         <label style={{float: 'left'}}>Username</label>
                     </div>

@@ -10,6 +10,7 @@ export default class App extends Component {
       currentUser: {} 
     },
     loading: true,
+    signup: false,
     user: {
         name: "",
         email: "",
@@ -66,6 +67,17 @@ export default class App extends Component {
       api.auth.signup(user)
         .then((response) => response.json())
         .then((userData) => console.log(userData))
+
+      this.setState({
+        user: {
+          ...this.state.user,
+          name: '',
+          username: '',
+          email: '',
+          password: '',
+          password_confirmation: ''
+        }
+      })
   }
 
   render () {
@@ -84,13 +96,10 @@ export default class App extends Component {
         :
           <Home 
               loading={this.state.loading}
-              loggedIn={this.state.loggedIn}
+              signup={this.state.signup}
               user={this.state.user} 
-              currentUser={this.state.auth.currentUser}
               handleChange={this.handleChange} 
               handleSubmit={this.handleSubmit}
-              createNewUser={this.createNewUser}
-              handleSignup={this.handleSignup}
               handleLogin={this.handleLogin}
           />
         }

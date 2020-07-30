@@ -16,14 +16,10 @@ export default class Home extends Component {
                             <div className="col-md-6">
                                 <Intro 
                                     loading={this.props.loading}
-                                    loggedIn={this.props.loggedIn}
                                     signup={this.props.signup}
                                     user={this.props.user} 
-                                    currentUser={this.props.currentUser}
-                                    handleChange={this.props.handleChange} 
+                                    handleChange={this.props.handleChange}
                                     handleSubmit={this.props.handleSubmit}
-                                    createNewUser={this.props.createNewUser}
-                                    handleSignup={this.props.handleSignup}
                                     handleLogin={this.props.handleLogin}
                                 />
                             </div>

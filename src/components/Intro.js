@@ -19,13 +19,19 @@ export default class Intro extends Component {
                                     user={this.props.user} 
                                     handleChange={this.props.handleChange} 
                                     handleSubmit={this.props.handleSubmit}
-                                    createNewUser={this.props.createNewUser}
-                                    handleSignup={this.props.handleSignup}
                                 />
                             }
                         />
-                        <Route exact path="/login" render={(routerProps) => <Login {...routerProps} handleLogin={this.props.handleLogin} /> } />
-                        <Route exact path="/" render={() => this.props.signup ? null : <Redirect to="/signup" />} />
+                        <Route exact path="/login" 
+                            render={(routerProps) => 
+                                <Login {...routerProps} handleLogin={this.props.handleLogin} /> 
+                            } 
+                        />
+                        <Route exact path="/" 
+                            render={() => 
+                                this.props.signup ? null : <Redirect to="/signup" />
+                            }
+                        />
                     </div>
             )
         )
