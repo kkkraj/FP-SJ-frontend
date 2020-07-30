@@ -1,8 +1,7 @@
 import React, {Component} from 'react';
-import moment from 'moment';
 import Moods from './Moods';
-import Acitities from './Acitities';
-import {Container, Row, Col} from 'react-bootstrap'
+import Activities from './Activities';
+import {Container, Row, Col} from 'react-bootstrap';
 
 export default class Diary extends Component {
     state = {
@@ -52,7 +51,7 @@ export default class Diary extends Component {
                         </Col>
                         <Col xs={12} md={1}></Col>
                         <Col xs={12} md={7}>
-                            <Acitities currentUserId={this.state.diary_entry.user_id} />
+                            <Activities currentUserId={this.state.diary_entry.user_id} />
                         </Col>
                     </Row>
                 </Container>

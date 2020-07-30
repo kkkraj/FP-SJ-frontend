@@ -1,35 +1,7 @@
 import React, {Component} from 'react';
-// import api from '../services/api';
 import 'materialize-css/dist/css/materialize.min.css';
 
 export default class Signup extends Component {
-    // state = {
-    //     user: {
-    //         name: "",
-    //         email: "",
-    //         username: "",
-    //         password: "",
-    //         password_confirmation: ""
-    //     }
-    // }
-
-    // handleChange = (event) => {
-    //     const newUser = { ...this.state.user, [event.target.name]: event.target.value };
-    //     this.setState({ user: newUser })
-    // }
-
-    // handleSubmit = (event) => {
-    //     event.preventDefault();
-    //     const user = {...this.state}
-    //     this.createNewUser(user)
-    // }
-
-    // createNewUser = (user) => {
-    //     api.auth.signup(user)
-    //       .then((response) => response.json())
-    //       .then((userData) => console.log(userData))
-    // }
-
     render () {
         return (
             <div>

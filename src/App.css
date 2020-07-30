@@ -99,7 +99,7 @@ button.waves-effect.waves-light.btn {
   padding: 0px 0px 0px 0px;
   height: 600px;
   border-radius: 20px;
-  background-color: rgb(255, 250, 236);
+  background-color: rgb(255, 253, 253);
   box-shadow: 10px 15px 20px rgb(187, 187, 187);
 }
 
@@ -157,21 +157,16 @@ textarea::placeholder {
 }
 
 .moodsdiv {
-  /* box-shadow: 5px 10px 20px rgb(187, 187, 187); */
-  /* background: rgb(238, 243, 243); */
   border-radius: 15px;
   padding: 8px 0px 0px 0px;
 }
 
 .actvdiv {
-  /* box-shadow: 5px 10px 20px rgb(187, 187, 187); */
-  /* background: rgb(238, 243, 243); */
   border-radius: 15px;
   padding: 8px 8px 2px 8px;
 }
 
 #entry {
-  /* box-shadow: 5px 10px 20px rgb(187, 187, 187); */
   border-radius: 15px;
   padding: 10px 8px 15px 8px;
 }
@@ -194,7 +189,6 @@ textarea::placeholder {
 }
 
 .detail-header {
-  /* border-bottom: solid 1px PeachPuff; */
   border-bottom: solid 1px rgb(229, 247, 229);
 }
 

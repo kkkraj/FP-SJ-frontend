@@ -32,7 +32,6 @@ export default class Moods extends Component {
     render () {
         return ( 
             <div style={{textAlign: 'center'}}>
-                {/* <h4 className="text">Today Moods</h4> */}
                 <div className="moodsdiv" style={{textAlign: 'center', display: 'grid', gridTemplateColumns: 'repeat(4, 1fr)'}}>
                     { this.state.moods.map((mood) => 
                         <div className="moods" key={mood.id}>

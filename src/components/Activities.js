@@ -3,7 +3,7 @@ import React, {Component} from 'react';
 const activitiesURL = "http://localhost:3000/activities";
 const userActivitiesURL = "http://localhost:3000/user_activities";
 
-export default class Acitities extends Component {
+export default class Activities extends Component {
     state = {
         activities: [],
         currentUserId: this.props.currentUserId
@@ -16,7 +16,6 @@ export default class Acitities extends Component {
     }
 
     handleActivityClick = (activity) => {
-        // console.log(`${activity.activity_name} clicked`)
         fetch(userActivitiesURL, {
             method: "POST",
             headers: {
@@ -32,7 +31,6 @@ export default class Acitities extends Component {
     render () {
         return (
             <div style={{textAlign: 'center'}}>
-                {/* <h4 className="text">Today Activities</h4> */}
                 <div className="actvdiv" style={{textAlign: 'center', display: 'grid', gridTemplateColumns: 'repeat(8, 1fr)'}}>
                     {this.state.activities.map((activity) => 
                         <div className="actvs" key={activity.id} style={{paddingTop: '7.5px'}}>

@@ -31,30 +31,33 @@ export default class UpdateAccount extends Component {
         return (
             <div>
                 <br/><br/>
-                <h2 className="text" style={{fontWeight: 'bold', color: 'LightSeaGreen'}}>Update Account</h2>
+                <h3 className="text" style={{fontWeight: 'bold', color: 'LightSeaGreen'}}>Update Account</h3>
                 <br/><br/>
                 <form onChange={this.handleChange} onSubmit={this.handleSubmit}>
-                        <div>
-                            <input 
-                              name="name" 
-                              placeholder="name"
-                            />
-                        </div>
-                        <div>
-                            <input 
-                              name="email" 
-                              placeholder="email"
-                            />
-                        </div>
-                        <div>
-                            <input 
-                              name="username" 
-                              placeholder="username"
-                            />
-                        </div>
-                        <br/>
-                        <button style={{backgroundColor: 'LightSalmon'}} className="waves-effect waves-light btn-small" type="submit">Update</button>
-                    </form>
+                    <div>
+                        <input 
+                            name="name" 
+                            placeholder={`${this.state.user.name}`}
+                        />
+                        <label style={{float: 'left'}}>Name</label>
+                    </div>
+                    <div>
+                        <input 
+                            name="email" 
+                            placeholder={`${this.state.user.email}`}
+                        />
+                        <label style={{float: 'left'}}>Email</label>
+                    </div>
+                    <div>
+                        <input 
+                            name="username" 
+                            placeholder={`${this.state.user.username}`}
+                        />
+                        <label style={{float: 'left'}}>Username</label>
+                    </div>
+                    <br/>
+                    <button style={{backgroundColor: 'LightSalmon'}} className="waves-effect waves-light btn-small" type="submit">Update</button>
+                </form>
             </div>
         )
     }

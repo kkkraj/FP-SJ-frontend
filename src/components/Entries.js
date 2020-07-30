@@ -35,7 +35,7 @@ export default class Entries extends Component {
                         <Col xs={12} md={4} style={{textAlign: 'center'}}>
                             <Calendar onChange={this.HandleChange} onClick={this.handleClick} value={this.state.date} />
                             <br/><br/>
-                            <p style={{color: 'rgb(240, 128, 128)'}}>Pick a Date to Display</p>
+                            <p style={{color: 'DarkSalmon'}}>Pick a Date to Display</p>
                         </Col>
                         <Col xs={12} md={1}></Col>
                         <Col xs={12} md={6}>

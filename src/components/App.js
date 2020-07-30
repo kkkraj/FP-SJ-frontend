@@ -1,14 +1,6 @@
 import '../App.css';
 import React, { Component } from 'react';
-import { BrowserRouter as Router, Route, Redirect} from "react-router-dom";
 import api from "../services/api";
-import Navbar from './Navbar';
-import Signup from './Signup';
-import Login from './Login';
-import About from './About';
-import Profile from './Profile';
-import Diary from './Diary';
-import Diarybook from './Diarybook';
 import Home from './Home';
 import Welcome from './Welcome';
 

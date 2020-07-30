@@ -64,7 +64,12 @@ export default class Diarybook extends Component {
                             <div key={diary.id}>
                                 <ul>
                                     <li id="diary-content">{diary.content}</li>
-                                    <button style={{width: '30px', height: '30px', marginTop: '10px'}} className="btn-floating btn-small waves-effect waves-light deep-orange lighten-4" onClick={() => {this.handleDeleteDiary(diary)}}><i className="material-icons">clear</i></button>
+                                    <button 
+                                        style={{width: '30px', height: '30px', marginTop: '10px'}} 
+                                        className="btn-floating btn-small waves-effect waves-light grey lighten-5" 
+                                        onClick={() => {this.handleDeleteDiary(diary)}}>
+                                        <i className="material-icons" style={{color: 'LightSteelBlue'}}>clear</i>
+                                    </button>
                                 </ul>
                             </div>
                         ) : null
