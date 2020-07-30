@@ -24,7 +24,7 @@ export default class Intro extends Component {
                         />
                         <Route exact path="/login" 
                             render={(routerProps) => 
-                                <Login {...routerProps} handleLogin={this.props.handleLogin} /> 
+                                <Login {...routerProps} handleLogin={this.props.handleLogin} />
                             } 
                         />
                         <Route exact path="/" 

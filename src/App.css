@@ -1,10 +1,6 @@
 @import url('https://fonts.googleapis.com/css2?family=Abril+Fatface&family=Galada&family=Gravitas+One&family=Kranky&family=Limelight&family=MuseoModerno:wght@500&family=Oleo+Script&family=Oleo+Script+Swash+Caps&family=Raleway:wght@100;300&family=Rozha+One&family=Sacramento&family=Vast+Shadow&family=Vidaloka&family=Yeseva+One&family=Baloo+Tamma+2:wght@500&display=swap');
 
-#homeimg {
-  /* margin: 0;
-  height: 100%;
-  width: 53%;    
-  float: right; */
+/* #homeimg {
   background-image: url(./images/bg.png);
   width: 60vw;
   height: 100vh;
@@ -13,33 +9,46 @@
   background-position: left;
   background-repeat: no-repeat;
   object-fit: cover;
+} */
+
+img#auswhale {
+  width: auto;
+  height: 100vh;
+  float: right;
+  position: absolute;
+  right: 0;
+}
+
+#intro-m {
+  float: left;
+  width: 40%;
 }
 
 #intro {
-  padding-top: 10px;
-  /* padding-left: 70px; */
+  padding-top: 40px;
+  padding-left: 80px;
   font-family: 'Raleway', sans-serif;
 }
 
 #intro #welcome {
-  font-size: 40px;
+  font-size: 35px;
   margin-bottom: 0px;
 }
 
 #intro .logo {
   margin-top: 0px;
   margin-bottom: 0px;
-  font-size: 60px;
+  font-size: 50px;
   font-family: 'Limelight', cursive;
 }
 
 #signupmessage {
-  font-size: 17px;
+  font-size: 16px;
 }
 
 button.waves-effect.waves-light.btn {
   color: white;
-  background-color: rgb(79, 155, 190);
+  background-color: rgb(121, 191, 223);
 }
 
   /* font-family: 'Vidaloka', serif; */
@@ -49,6 +58,10 @@ button.waves-effect.waves-light.btn {
   /* font-family: 'Gravitas One', cursive; */
   /* font-family: 'Abril Fatface', cursive; */
   /* font-family: 'Rozha One', serif; */
+
+.sign-form {
+  width: 94%;
+}
 
 #nav .nav-wrapper {
   padding-top: 30px;
@@ -146,24 +159,30 @@ div#weather {
 }
 
 textarea::placeholder {
-  color: rgb(230, 199, 168);
+  color:LightSteelBlue;
+  text-align: center;
 }
 
 .diaryheader {
   font-family: 'Raleway', sans-serif;
   font-weight: bold;
-  color: rgb(104, 187, 183);
+  color: rgb(87, 177, 172);
   letter-spacing: 1px;
+  margin: 0px 0px 0px;
+  padding: 3px 0px 3px 0px;
+  background-color: WhiteSmoke;
+  /* box-shadow: 1px 1px 5px rgb(211, 211, 211); */
+  border-radius: 15px;
 }
 
 .moodsdiv {
   border-radius: 15px;
-  padding: 8px 0px 0px 0px;
+  padding: 0px 0px 0px 0px;
 }
 
 .actvdiv {
   border-radius: 15px;
-  padding: 8px 8px 2px 8px;
+  padding: 0px 8px 0px 8px;
 }
 
 #entry {
@@ -203,4 +222,10 @@ a#logout:hover {
 
 li#diary-content {
   text-align: justify;
+}
+
+.dtitle::-webkit-input-placeholder {
+  text-align: center;
+  font-family: 'Raleway', sans-serif;
+  color:LightSteelBlue;
 }

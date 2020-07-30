@@ -63,6 +63,7 @@ export default class Diarybook extends Component {
                         return diary.user_id === this.state.currentUserId && formatted === this.props.selectedDate ? (
                             <div key={diary.id}>
                                 <ul>
+                                    <li style={{fontWeight: 'bold', color: 'DarkSlateGrey'}}>{diary.title}</li>
                                     <li id="diary-content">{diary.content}</li>
                                     <button 
                                         style={{width: '30px', height: '30px', marginTop: '10px'}} 

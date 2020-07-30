@@ -40,7 +40,7 @@ export default class UpdateAccount extends Component {
                             placeholder={this.state.user.name}
                             // value={this.state.user.name}
                         />
-                        <label style={{float: 'left'}}>Name</label>
+                        <label className="active" style={{float: 'left'}}>Name</label>
                     </div>
                     <div>
                         <input 
@@ -48,7 +48,7 @@ export default class UpdateAccount extends Component {
                             placeholder={this.state.user.email}
                             // value={this.state.user.email}
                         />
-                        <label style={{float: 'left'}}>Email</label>
+                        <label className="active" style={{float: 'left'}}>Email</label>
                     </div>
                     <div>
                         <input 
@@ -56,7 +56,7 @@ export default class UpdateAccount extends Component {
                             placeholder={this.state.user.username}
                             // value={this.state.user.username}
                         />
-                        <label style={{float: 'left'}}>Username</label>
+                        <label className="active" style={{float: 'left'}}>Username</label>
                     </div>
                     <br/>
                     <button style={{backgroundColor: 'LightSalmon'}} className="waves-effect waves-light btn-small" type="submit">Update</button>

@@ -40,20 +40,18 @@ export default class Login extends Component {
                 {this.state.error ? <p style={{color: "Chocolate"}}>Incorrect username or password, please Try Again</p> : null}
                 <div>
                     <form onChange={this.handleChange} onSubmit={this.handleSubmit}>
-                        <div className="row">
-                            <div className="input-field col s3">
-                                <div>
-                                    <input type="text" name="username" />
-                                    <label className="active">Username</label>
-                                </div>
-                                <div>
-                                    <input type="password" name="password" />
-                                    <label className="active">Password</label>
-                                </div>
-                                <br/>
-                                <div>
-                                    <button className="waves-effect waves-light btn" type="submit">Login</button>
-                                </div>
+                        <div className="sign-form">
+                            <div>
+                                <input type="text" name="username" />
+                                <label className="active">Username</label>
+                            </div>
+                            <div>
+                                <input type="password" name="password" />
+                                <label className="active">Password</label>
+                            </div>
+                            <br/>
+                            <div>
+                                <button className="waves-effect waves-light btn" type="submit">Login</button>
                             </div>
                         </div>
                     </form>

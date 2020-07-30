@@ -6,6 +6,7 @@ import {Container, Row, Col} from 'react-bootstrap';
 export default class Diary extends Component {
     state = {
         diary_entry: {
+            title: "",
             content: "",
             user_id: this.props.currentUser.id
         }
@@ -30,7 +31,8 @@ export default class Diary extends Component {
             },
             body: JSON.stringify(diaryEntry)
         })
-        this.setState({ diary_entry: {...this.state.diary_entry, content: ""} })
+
+        this.setState({ diary_entry: {...this.state.diary_entry, title:"", content: ""} })
     }
 
     render () {
@@ -60,7 +62,7 @@ export default class Diary extends Component {
                 <Container>
                     <Row>
                         <Col xs={12} md={4}>
-                            <h4 className="diaryheader">Upload Images</h4>
+                            <h4 className="diaryheader">Photo</h4>
                         </Col>
                         <Col xs={12} md={1}></Col>
                         <Col xs={12} md={7}>
@@ -77,14 +79,22 @@ export default class Diary extends Component {
                         <Col xs={12} md={1}></Col>
                         <Col xs={12} md={7}>
                             <form id="entry" onSubmit={this.handleSubmit}>
+                                <input 
+                                    className="dtitle" 
+                                    placeholder="title"
+                                    value={this.state.diary_entry.title} 
+                                    name="title" 
+                                    onChange={this.handleChange} 
+                                    style={{width: '60%', borderBottom: 'dotted 2px salmon'}}
+                                /><br/><br/>
                                 <textarea 
                                    className="text" 
                                    placeholder="Begin Today Journal Here!" 
                                    value={this.state.diary_entry.content} 
                                    name="content" 
                                    onChange={this.handleChange} 
-                                   style={{height: 180, width: 600, border: 'none' ,borderBottom: 'solid 1px #FFA07A'}}>
-                                </textarea>
+                                   style={{height: 180, width: 600, border: 'none' ,borderBottom: 'dotted 2px salmon'}}
+                                ></textarea>
                                 <input 
                                     className="waves-effect waves-light btn-small" 
                                     type="submit" 

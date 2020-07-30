@@ -68,16 +68,16 @@ export default class App extends Component {
         .then((response) => response.json())
         .then((userData) => console.log(userData))
 
-      this.setState({
-        user: {
-          ...this.state.user,
-          name: '',
-          username: '',
-          email: '',
-          password: '',
-          password_confirmation: ''
-        }
-      })
+      // this.setState({
+      //   user: {
+      //     ...this.state.user,
+      //     name: '',
+      //     username: '',
+      //     email: '',
+      //     password: '',
+      //     password_confirmation: ''
+      //   }
+      // })
   }
 
   render () {

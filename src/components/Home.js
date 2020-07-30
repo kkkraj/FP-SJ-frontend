@@ -1,33 +1,25 @@
 import React, {Component} from 'react';
-// import bg from '../images/bg.png';
+import bg from '../images/bg.png';
 import Intro from './Intro'
 import 'materialize-css/dist/css/materialize.min.css';
 
 export default class Home extends Component {
     render () {
         return (
-            <div id="home">
-                <div id="homeimg"></div>
-                {/* <div className="col s6">
-                    <img src={bg} alt="astronaut riding a whale"/>
-                </div> */}
-                    <div className="container">
-                        <div className="row">
-                            <div className="col-md-6">
-                                <Intro 
-                                    loading={this.props.loading}
-                                    signup={this.props.signup}
-                                    user={this.props.user} 
-                                    handleChange={this.props.handleChange}
-                                    handleSubmit={this.props.handleSubmit}
-                                    handleLogin={this.props.handleLogin}
-                                />
-                            </div>
-                            <div className="col-md-6">
-
-                            </div>
-                        </div>
-                    </div>
+            <div>
+                <div id="intro-m">
+                    <Intro 
+                        loading={this.props.loading}
+                        signup={this.props.signup}
+                        user={this.props.user} 
+                        handleChange={this.props.handleChange}
+                        handleSubmit={this.props.handleSubmit}
+                        handleLogin={this.props.handleLogin}
+                    />
+                </div>
+                <div>
+                    <img id='auswhale' src={bg} alt="astronaut riding a whale"/>
+                </div>
             </div>
         )
     }

@@ -45,8 +45,17 @@ export default class Profile extends Component {
                     </Col>
                     <Col xs={12} md={1}></Col>
                     <Col xs={12} md={4}>
-                        <a className="btn-floating btn-large waves-effect waves-light deep-orange lighten-3" onClick={this.handleUpdate}><i className="material-icons">settings</i></a>
-                        {this.state.updateClick === true ? <UpdateAccount currentUser={this.props.currentUser} handleUpdate={this.handleUpdate} /> : null}
+                        <a 
+                            className="btn-floating btn-large waves-effect waves-light deep-orange lighten-3" 
+                            onClick={this.handleUpdate}>
+                            <i className="material-icons">settings</i>
+                        </a>
+                        {this.state.updateClick === true ? 
+                            <UpdateAccount 
+                                currentUser={this.props.currentUser} 
+                                handleUpdate={this.handleUpdate}
+                            /> : null
+                        }
                     </Col>
                     <Col xs={12} md={1}></Col>
                 </Row>
