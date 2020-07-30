@@ -229,3 +229,7 @@ li#diary-content {
   font-family: 'Raleway', sans-serif;
   color:LightSteelBlue;
 }
+
+.charts {
+  padding-top: 40px;
+}

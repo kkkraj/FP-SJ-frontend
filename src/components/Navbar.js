@@ -19,6 +19,10 @@ class Navbar extends Component {
                             All Entries
                         </NavLink>
 
+                        <NavLink style={{ marginRight: '80px' }} to="/charts">
+                            Chart
+                        </NavLink>
+
                         <NavLink style={{ marginRight: '80px' }} to="/profile">
                             Account
                         </NavLink>
