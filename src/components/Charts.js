@@ -9,6 +9,11 @@ export default class Charts extends Component {
             <div className="charts">
                 <Container>
                     <Row>
+                        <Col xs={12} md={5}><h4 className="chart-header">Mood Tracker</h4></Col>
+                        <Col xs={12} md={1}></Col>
+                        <Col xs={12} md={5}><h4 className="chart-header">Activity Tracker</h4></Col>
+                    </Row>
+                    <Row>
                         <Col xs={12} md={5}><MoodsChart /></Col>
                         <Col xs={12} md={1}></Col>
                         <Col xs={12} md={5}><ActivityChart /></Col>

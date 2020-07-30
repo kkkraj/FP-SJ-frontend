@@ -10,16 +10,20 @@ export default class MoodsChart extends Component {
           {
             backgroundColor: 'lightgray',
             borderColor: 'none',
-            borderWidth: 2,
-            data: [18, 20, 18, 5, 8, 2, 25, 30]
+            borderWidth: 1,
+            data: [18, 20, 18, 5, 8, 2, 25, 28]
           }
-        ]
+        ],
+        moodList: []
     }
 
     componentDidMount() {
         fetch(moodsURL)
           .then((response) => response.json())
-          .then((moodsListData) => this.setState({ labels: moodsListData.map((mood) => mood.mood_name)}));
+          .then((moodsListData) => this.setState({ 
+              moodList: moodsListData,
+              labels: moodsListData.map((mood) => mood.mood_name)
+          }));
     }
 
     render() {
@@ -49,11 +53,21 @@ export default class MoodsChart extends Component {
                                 stacked: true,
                                 gridLines: {
                                   display: false
-                                }
+                                },
+                                ticks: {
+                                    display: false
+                                  },
                             }]
                           }
                     }}                    
                 />
+                <div style={{textAlign: 'center', display: 'grid', gridTemplateColumns: 'repeat(8, 1fr)', width: '415px', marginLeft: '28px'}}>
+                    { this.state.moodList.map((mood) => 
+                        <div className="moods" key={mood.id}>
+                            <img style={{width: '40px', height: 'auto', borderRadius: '100px'}} src={mood.mood_url}/>
+                        </div>
+                    )}
+                </div>
             </div>
         )
     }
