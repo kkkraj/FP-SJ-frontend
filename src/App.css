@@ -205,6 +205,7 @@ textarea::placeholder {
 .booheaders {
   color:rgb(104, 187, 183);
   font-weight: bold;
+  letter-spacing: 1px;
 }
 
 .detail-header {
@@ -239,4 +240,15 @@ li#diary-content {
 .chart-header {
   color:rgb(104, 187, 183);
   font-weight: bold;
+  letter-spacing: 1px;
+}
+
+#monthly {
+  background-color: WhiteSmoke;
+  color:salmon;
+  border-radius: 15px;
+  font-weight: bold;
+  letter-spacing: 1px;
+  margin: 0px 0px 0px;
+  padding: 3px 0px 3px 0px;
 }

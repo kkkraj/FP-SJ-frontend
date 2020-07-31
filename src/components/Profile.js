@@ -4,6 +4,7 @@ import float from '../images/float.png';
 import 'materialize-css/dist/css/materialize.min.css';
 import 'bootstrap/dist/css/bootstrap.min.css';
 import {Container, Row, Col, Image} from 'react-bootstrap'
+import Modal from 'react-bootstrap/Modal';
 
 export default class Profile extends Component {
     state = {

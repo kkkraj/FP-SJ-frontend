@@ -15,6 +15,7 @@ export default class Home extends Component {
                         handleChange={this.props.handleChange}
                         handleSubmit={this.props.handleSubmit}
                         handleLogin={this.props.handleLogin}
+                        error={this.props.error}
                     />
                 </div>
                 <div>

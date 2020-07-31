@@ -3,14 +3,16 @@ import React, { Component } from 'react';
 import api from "../services/api";
 import Home from './Home';
 import Welcome from './Welcome';
+import {withRouter} from 'react-router-dom';
 
-export default class App extends Component {
+class App extends Component {
   state = { 
     auth: { 
       currentUser: {} 
     },
     loading: true,
     signup: false,
+    error: false,
     user: {
         name: "",
         email: "",
@@ -64,20 +66,32 @@ export default class App extends Component {
   }
 
   createNewUser = (user) => {
-      api.auth.signup(user)
-        .then((response) => response.json())
-        .then((userData) => console.log(userData))
+      // api.auth.signup(user)
+      //   .then((response) => response.json())
+      //   .then((userData) => console.log(userData))
 
-      // this.setState({
-      //   user: {
-      //     ...this.state.user,
-      //     name: '',
-      //     username: '',
-      //     email: '',
-      //     password: '',
-      //     password_confirmation: ''
-      //   }
-      // })
+      api.auth.signup(user)
+          .then((response) => response.json())
+          .then((userData) => {
+              if (userData.error) {
+                this.setState({ error: true });
+              } else {
+                // this.handleLogin(userData)
+                // this.props.history.push('/welcome')
+                console.log(userData)
+              }
+          });
+
+      this.setState({
+        user: {
+          ...this.state.user,
+          name: '',
+          username: '',
+          email: '',
+          password: '',
+          password_confirmation: ''
+        }
+      })
   }
 
   render () {
@@ -95,6 +109,7 @@ export default class App extends Component {
           />
         :
           <Home 
+              error={this.state.error}
               loading={this.state.loading}
               signup={this.state.signup}
               user={this.state.user} 
@@ -108,3 +123,4 @@ export default class App extends Component {
   }
 }
 
+export default withRouter(App)

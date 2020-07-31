@@ -19,6 +19,7 @@ export default class Intro extends Component {
                                     user={this.props.user} 
                                     handleChange={this.props.handleChange} 
                                     handleSubmit={this.props.handleSubmit}
+                                    error={this.props.error}
                                 />
                             }
                         />
