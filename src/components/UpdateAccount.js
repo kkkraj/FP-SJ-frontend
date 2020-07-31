@@ -30,31 +30,37 @@ export default class UpdateAccount extends Component {
     render () {
         return (
             <div>
-                <h2>Update My Account</h2>
+                <br/><br/>
+                <h3 className="text" style={{fontWeight: 'bold', color: 'LightSeaGreen'}}>Update Account</h3>
+                <br/><br/>
                 <form onChange={this.handleChange} onSubmit={this.handleSubmit}>
-                        <div>
-                            <label>Name</label>
-                            <input 
-                              name="name" 
-                              placeholder="name"
-                            />
-                        </div>
-                        <div>
-                            <label>Email</label>
-                            <input 
-                              name="email" 
-                              placeholder="email"
-                            />
-                        </div>
-                        <div>
-                            <label>Username</label>
-                            <input 
-                              name="username" 
-                              placeholder="username"
-                            />
-                        </div>
-                        <button type="submit">Submit</button>
-                    </form>
+                    <div>
+                        <input 
+                            name="name" 
+                            placeholder={this.state.user.name}
+                            // value={this.state.user.name}
+                        />
+                        <label className="active" style={{float: 'left'}}>Name</label>
+                    </div>
+                    <div>
+                        <input 
+                            name="email" 
+                            placeholder={this.state.user.email}
+                            // value={this.state.user.email}
+                        />
+                        <label className="active" style={{float: 'left'}}>Email</label>
+                    </div>
+                    <div>
+                        <input 
+                            name="username" 
+                            placeholder={this.state.user.username}
+                            // value={this.state.user.username}
+                        />
+                        <label className="active" style={{float: 'left'}}>Username</label>
+                    </div>
+                    <br/>
+                    <button style={{backgroundColor: 'LightSalmon'}} className="waves-effect waves-light btn-small" type="submit">Update</button>
+                </form>
             </div>
         )
     }

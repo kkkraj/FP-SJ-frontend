@@ -1,80 +1,39 @@
-import React, {Component} from 'react'
-import api from '../services/api';
+import React, {Component} from 'react';
+import 'materialize-css/dist/css/materialize.min.css';
 
 export default class Signup extends Component {
-    state = {
-        error: false,
-        user: {
-            name: "",
-            email: "",
-            username: "",
-            password: ""
-        }
-    }
-
-    handleChange = (event) => {
-        const newUser = { ...this.state.user, [event.target.name]: event.target.value };
-        this.setState({ user: newUser })
-    }
-
-    handleSubmit = (event) => {
-        event.preventDefault();
-        const user = {...this.state}
-        this.createNewUser(user)
-    }
-
-    createNewUser = (user) => {
-        api.auth.signup(user)
-          .then((response) => {
-              if (response.error) {
-                this.setState({ error: true });
-              } else {
-                (response.json()).then((userData) => console.log(userData))
-              }
-          });
-    }
-
     render () {
         return (
             <div>
-                {/* {this.state.error ? <p>Unable to create an account, please try again</p> : null} */}
-                <div>
-                    <form onChange={this.handleChange} onSubmit={this.handleSubmit}>
+                {/* {this.props.error ? <p style={{color: "Chocolate"}}>Unable to Sign Up</p> : null} */}
+                <form onChange={this.props.handleChange} onSubmit={this.props.handleSubmit}>
+                    <div className="sign-form">
                         <div>
-                            <label>Name</label>
-                            <input 
-                              type="text" 
-                              name="name" 
-                              placeholder="name"
-                            />
+                            <input type="text" name="name" value={this.props.user.name} />
+                            <label className="active">Name</label>
                         </div>
                         <div>
-                            <label>Email</label>
-                            <input 
-                              type="email" 
-                              name="email" 
-                              placeholder="email"
-                            />
+                            <input type="email" name="email" value={this.props.user.email} />
+                            <label className="active">Email</label>
                         </div>
                         <div>
-                            <label>Username</label>
-                            <input 
-                              type="text" 
-                              name="username" 
-                              placeholder="username"
-                            />
+                            <input type="text" name="username" value={this.props.user.username} />
+                            <label className="active">Username</label>
                         </div>
                         <div>
-                            <label>Password</label>
-                            <input 
-                              type="password" 
-                              name="password" 
-                              placeholder="password"
-                            />
+                            <input type="password" name="password" value={this.props.user.password} />
+                            <label className="active">Password</label>
                         </div>
-                        <button type="submit">Signup</button>
-                    </form>
-                </div>
+                        <div>
+                            <input type="password" name="password_confirmation" value={this.props.user.password_confirmation} />
+                            <label className="active">Confirm Password</label>
+                        </div>
+                        <br/>
+                        <div>
+                            <button className="waves-effect waves-light btn" type="submit">Signup</button>
+                        </div>
+                    </div>
+                </form>
             </div>
         )
     }

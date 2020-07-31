@@ -1,38 +1,254 @@
-.App {
+@import url('https://fonts.googleapis.com/css2?family=Abril+Fatface&family=Galada&family=Gravitas+One&family=Kranky&family=Limelight&family=MuseoModerno:wght@500&family=Oleo+Script&family=Oleo+Script+Swash+Caps&family=Raleway:wght@100;300&family=Rozha+One&family=Sacramento&family=Vast+Shadow&family=Vidaloka&family=Yeseva+One&family=Baloo+Tamma+2:wght@500&display=swap');
+
+/* #homeimg {
+  background-image: url(./images/bg.png);
+  width: 60vw;
+  height: 100vh;
+  position: absolute;
+  right: 0;
+  background-position: left;
+  background-repeat: no-repeat;
+  object-fit: cover;
+} */
+
+img#auswhale {
+  width: auto;
+  height: 100vh;
+  float: right;
+  position: absolute;
+  right: 0;
+}
+
+#intro-m {
+  float: left;
+  width: 40%;
+}
+
+#intro {
+  padding-top: 40px;
+  padding-left: 80px;
+  font-family: 'Raleway', sans-serif;
+}
+
+#intro #welcome {
+  font-size: 35px;
+  margin-bottom: 0px;
+}
+
+#intro .logo {
+  margin-top: 0px;
+  margin-bottom: 0px;
+  font-size: 50px;
+  font-family: 'Limelight', cursive;
+}
+
+#signupmessage {
+  font-size: 16px;
+}
+
+button.waves-effect.waves-light.btn {
+  color: white;
+  background-color: rgb(121, 191, 223);
+}
+
+  /* font-family: 'Vidaloka', serif; */
+  /* font-family: 'Kranky', cursive; */
+  /* font-family: 'Vast Shadow', cursive; */
+  /* font-family: 'Yeseva One', cursive; */
+  /* font-family: 'Gravitas One', cursive; */
+  /* font-family: 'Abril Fatface', cursive; */
+  /* font-family: 'Rozha One', serif; */
+
+.sign-form {
+  width: 94%;
+}
+
+#nav .nav-wrapper {
+  padding-top: 30px;
+  text-align: center;
+  font-size: 17px;
+}
+
+.nav-wrapper a {
+  font-family: 'Baloo Tamma 2', cursive;
+  color: rgb(98, 104, 110);
+}
+
+.nav-wrapper a:hover {
+  color: darksalmon;
+}
+
+
+#about #hello {
+  font-family: 'Raleway', sans-serif;
+  font-weight: bold;
+  text-align: center;
+  padding-top: 50px;
+  padding-bottom: 30px;
+  letter-spacing: 3px;
+  color: rgb(17, 81, 146);
+}
+
+.text {
+  font-family: 'Raleway', sans-serif;
+}
+
+#diary {
+  padding-top: 40px;
   text-align: center;
 }
 
-.App-logo {
-  height: 40vmin;
-  pointer-events: none;
+#float {
+  border-top-left-radius: 20px;
+  border-top-right-radius: 20px;
 }
 
-@media (prefers-reduced-motion: no-preference) {
-  .App-logo {
-    animation: App-logo-spin infinite 20s linear;
-  }
+.profile {
+  text-align: center;
+  padding-top: 50px;
 }
 
-.App-header {
-  background-color: #282c34;
-  min-height: 100vh;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  justify-content: center;
-  font-size: calc(10px + 2vmin);
-  color: white;
+#one {
+  padding: 0px 0px 0px 0px;
+  height: 600px;
+  border-radius: 20px;
+  background-color: rgb(255, 253, 253);
+  box-shadow: 10px 15px 20px rgb(187, 187, 187);
 }
 
-.App-link {
-  color: #61dafb;
+#about {
+  text-align: center;
 }
 
-@keyframes App-logo-spin {
-  from {
-    transform: rotate(0deg);
-  }
-  to {
-    transform: rotate(360deg);
-  }
+#aboutimg {
+  width: 62%;
+  height: auto;
+  display: block;
+  margin-top: 50px;
+  margin-left: auto;
+  margin-right: auto;
+  box-shadow: 15px 15px 15px rgb(187, 187, 187);
+  border-radius: 15px;
+}
+
+#datetime {
+  padding-top: 20px;
+  font-size: larger;
+  color: darkblue;
+  width: 400px;
+  height: 295px;
+  box-shadow: 10px 15px 20px rgb(187, 187, 187);
+  border-radius: 15px;
+}
+
+div#weather {
+  width: 400px;
+  height: 295px;
+  box-shadow: 10px 15px 20px rgb(187, 187, 187);
+  border-radius: 15px;
+  padding-top: 20px;
+  display: block;
+  margin-left: auto;
+  margin-right: auto;
+  text-align: center;
+}
+
+#myclock {
+  margin-left: auto;
+  margin-right: auto;
+}
+
+textarea::placeholder {
+  color:LightSteelBlue;
+  text-align: center;
+}
+
+.diaryheader {
+  font-family: 'Raleway', sans-serif;
+  font-weight: bold;
+  color: rgb(87, 177, 172);
+  letter-spacing: 1px;
+  margin: 0px 0px 0px;
+  padding: 3px 0px 3px 0px;
+  background-color: WhiteSmoke;
+  /* box-shadow: 1px 1px 5px rgb(211, 211, 211); */
+  border-radius: 15px;
+}
+
+.moodsdiv {
+  border-radius: 15px;
+  padding: 0px 0px 0px 0px;
+}
+
+.actvdiv {
+  border-radius: 15px;
+  padding: 0px 8px 0px 8px;
+}
+
+#entry {
+  border-radius: 15px;
+  padding: 10px 8px 15px 8px;
+}
+
+.moods:hover {
+  font-weight: bolder;
+}
+
+.actvs:hover {
+  font-weight: bolder;
+}
+
+#entries {
+  padding-top: 50px;
+}
+
+.booheaders {
+  color:rgb(104, 187, 183);
+  font-weight: bold;
+  letter-spacing: 1px;
+}
+
+.detail-header {
+  border-bottom: solid 1px rgb(229, 247, 229);
+}
+
+a#logout {
+  color:  rgb(98, 104, 110);
+  cursor: pointer;
+}
+
+a#logout:hover {
+  color: indianred;
+}
+
+li#diary-content {
+  text-align: justify;
+}
+
+.dtitle::-webkit-input-placeholder {
+  text-align: center;
+  font-family: 'Raleway', sans-serif;
+  color:LightSteelBlue;
+}
+
+.charts {
+  padding-top: 40px;
+  text-align: center;
+  font-family: 'Raleway', sans-serif;
+}
+
+.chart-header {
+  color:rgb(104, 187, 183);
+  font-weight: bold;
+  letter-spacing: 1px;
+}
+
+#monthly {
+  background-color: WhiteSmoke;
+  color:salmon;
+  border-radius: 15px;
+  font-weight: bold;
+  letter-spacing: 1px;
+  margin: 0px 0px 0px;
+  padding: 3px 0px 3px 0px;
 }
