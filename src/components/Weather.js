@@ -10,7 +10,9 @@ export default class Weather extends Component {
         humidity: '',
         windSpeed: '',
         city: '',
-        iconUrl: ''
+        iconUrl: '',
+        min: '',
+        max: ''
     }
 
     componentDidMount() {
@@ -23,7 +25,9 @@ export default class Weather extends Component {
             humidity: weatherData.main.humidity,
             windSpeed: weatherData.wind.speed,
             city: weatherData.name,
-            iconUrl: `http://openweathermap.org/img/wn/${weatherData.weather[0].icon}@2x.png`
+            iconUrl: `http://openweathermap.org/img/wn/${weatherData.weather[0].icon}@2x.png`,
+            min: weatherData.main.temp_min,
+            max: weatherData.main.temp_max
           }))
     }
 
@@ -36,6 +40,7 @@ export default class Weather extends Component {
                 <h5 className="text" style={{fontWeight: 'bold', color: 'dimgray'}}>{Math.round((this.state.temp - 273.15) * 1.8 + 32)} °F</h5>
                 <br/>
                 <h6 className="text">humidity {this.state.humidity} % | wind {this.state.windSpeed} mph</h6>
+                <h6 className="text">min temp {this.state.min} % | max {this.state.max} mph</h6>
             </div>
         )
     }
