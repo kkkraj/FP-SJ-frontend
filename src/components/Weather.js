@@ -40,7 +40,7 @@ export default class Weather extends Component {
                 <h5 className="text" style={{fontWeight: 'bold', color: 'dimgray'}}>{Math.round((this.state.temp - 273.15) * 1.8 + 32)} °F</h5>
                 <br/>
                 <h6 className="text">humidity {this.state.humidity} % | wind {this.state.windSpeed} mph</h6>
-                <h6 className="text">min temp {this.state.min} % | max {this.state.max} mph</h6>
+                <h6 className="text">min temp {Math.round((this.state.min - 273.15) * 1.8 + 32)} °F | max temp {Math.round((this.state.max - 273.15) * 1.8 + 32)} °F</h6>
             </div>
         )
     }
