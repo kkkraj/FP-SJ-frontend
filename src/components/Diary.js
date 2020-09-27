@@ -1,6 +1,7 @@
 import React, {Component} from 'react';
 import Moods from './Moods';
 import Activities from './Activities';
+import Photo from './Photo';
 import {Container, Row, Col} from 'react-bootstrap';
 
 export default class Diary extends Component {
@@ -75,6 +76,7 @@ export default class Diary extends Component {
                             <a className="btn-floating btn-medium waves-effect waves-light deep-orange lighten-3">
                                 <i className="material-icons">image</i>
                             </a>
+                            <Photo />
                         </Col>
                         <Col xs={12} md={1}></Col>
                         <Col xs={12} md={7}>
