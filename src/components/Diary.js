@@ -62,7 +62,7 @@ export default class Diary extends Component {
                 <Container>
                     <Row>
                         <Col xs={12} md={4}>
-                            <h4 className="diaryheader">Photo</h4>
+                            <h4 className="diaryheader">Today Photo</h4>
                         </Col>
                         <Col xs={12} md={1}></Col>
                         <Col xs={12} md={7}>
@@ -85,7 +85,7 @@ export default class Diary extends Component {
                                     value={this.state.diary_entry.title} 
                                     name="title" 
                                     onChange={this.handleChange} 
-                                    style={{width: '60%', borderBottom: 'dotted 2px salmon'}}
+                                    style={{width: '60%', borderBottom: 'solid 2px salmon'}}
                                 /><br/><br/>
                                 <textarea 
                                    className="text" 
@@ -93,7 +93,7 @@ export default class Diary extends Component {
                                    value={this.state.diary_entry.content} 
                                    name="content" 
                                    onChange={this.handleChange} 
-                                   style={{height: 180, width: 600, border: 'none' ,borderBottom: 'dotted 2px salmon'}}
+                                   style={{height: 180, width: 600, border: 'none' ,borderBottom: 'solid 2px salmon'}}
                                 ></textarea>
                                 <input 
                                     className="waves-effect waves-light btn-small" 
