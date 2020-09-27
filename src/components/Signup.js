@@ -5,7 +5,7 @@ export default class Signup extends Component {
     render () {
         return (
             <div>
-                {this.props.error ? <p style={{color: "Chocolate"}}>Unable to Sign Up</p> : null}
+                {/* {this.props.error ? <p style={{color: "Chocolate"}}>Unable to Sign Up</p> : null} */}
                 <form onChange={this.props.handleChange} onSubmit={this.props.handleSubmit}>
                     <div className="sign-form">
                         <div>
