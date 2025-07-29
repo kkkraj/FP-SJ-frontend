@@ -1,62 +1,62 @@
-import React, { Component } from 'react';
+import React, { useState } from 'react';
+import { useNavigate } from 'react-router-dom';
 import api from '../services/api';
-import 'materialize-css/dist/css/materialize.min.css';
 
-export default class Login extends Component {
-    state = {
-        error: false,
-        userInfo: {
-            username: "",
-            password: ""
-      },
-    }
+export default function Login(props) {
+    const navigate = useNavigate();
+    const [error, setError] = useState(false);
+    const [userInfo, setUserInfo] = useState({
+        username: "",
+        password: ""
+    });
 
-    handleChange = (event) => {
-        const loginInfo = { ...this.state.userInfo, [event.target.name]: event.target.value };
-        this.setState({ userInfo: loginInfo });
-    }
+    const handleChange = (event) => {
+        const { name, value } = event.target;
+        setUserInfo(prevInfo => ({ ...prevInfo, [name]: value }));
+    };
 
-    handleSubmit = (event) => {
+    const handleSubmit = (event) => {
         event.preventDefault();
-        const userInfo = {...this.state.userInfo}
-        this.loginUser(userInfo)
-    }
+        loginUser(userInfo);
+    };
 
-    loginUser = (userInfo) => {
+    const loginUser = (userInfo) => {
         api.auth.login(userInfo)
           .then((response) => {
             if (response.error) {
-              this.setState({ error: true });
+              setError(true);
             } else {
-              this.props.handleLogin(response);
-              this.props.history.push('/about');
+              props.handleLogin(response);
+              navigate('/about');
             }
+          })
+          .catch((error) => {
+            console.error('Login error:', error);
+            setError(true);
           });
-    }
+    };
 
-    render () {
-        return (
+    return (
+        <div>
+            {error && <p style={{color: "Chocolate"}}>Incorrect username or password, please Try Again</p>}
             <div>
-                {this.state.error ? <p style={{color: "Chocolate"}}>Incorrect username or password, please Try Again</p> : null}
-                <div>
-                    <form onChange={this.handleChange} onSubmit={this.handleSubmit}>
-                        <div className="sign-form">
-                            <div>
-                                <input type="text" name="username" />
-                                <label className="active">Username</label>
-                            </div>
-                            <div>
-                                <input type="password" name="password" />
-                                <label className="active">Password</label>
-                            </div>
-                            <br/>
-                            <div>
-                                <button className="waves-effect waves-light btn" type="submit">Login</button>
-                            </div>
+                <form onChange={handleChange} onSubmit={handleSubmit}>
+                    <div className="sign-form">
+                        <div>
+                            <input type="text" name="username" value={userInfo.username} />
+                            <label className="active">Username</label>
                         </div>
-                    </form>
-                </div>
+                        <div>
+                            <input type="password" name="password" value={userInfo.password} />
+                            <label className="active">Password</label>
+                        </div>
+                        <br/>
+                        <div>
+                            <button className="waves-effect waves-light btn" type="submit">Login</button>
+                        </div>
+                    </div>
+                </form>
             </div>
-        )
-    }
+        </div>
+    );
 }

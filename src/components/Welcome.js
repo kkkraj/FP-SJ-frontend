@@ -1,5 +1,5 @@
-import React, {Component} from 'react';
-import {Route} from "react-router-dom";
+import React from 'react';
+import { Routes, Route } from "react-router-dom";
 import Navbar from './Navbar';
 import About from './About';
 import Profile from './Profile';
@@ -7,20 +7,26 @@ import Diary from './Diary';
 import Entries from './Entries';
 import Charts from './Charts';
 
-export default class Welcome extends Component {
-    render () {
+export default function Welcome(props) {
+    if (props.loading) {
         return (
-            this.props.loading ? (<div className="progress"><div className="indeterminate"></div></div>) : (
-                <div>
-                    <Navbar handleLogout={this.props.handleLogout} />
-                    <br/>
-                    <Route exact path="/about" render={() => <About currentUser={this.props.currentUser} />} />
-                    <Route exact path="/diary" render={() => <Diary currentUser={this.props.currentUser} />} />
-                    <Route exact path="/entries" render={() => <Entries currentUser={this.props.currentUser} />} />
-                    <Route exact path="/charts" render={() => <Charts currentUser={this.props.currentUser} />} />
-                    <Route exact path="/profile" render={() => <Profile currentUser={this.props.currentUser} handleDeleteUser={this.props.handleDeleteUser} />} />
-                </div>
-            )
-        )
+            <div className="progress">
+                <div className="indeterminate"></div>
+            </div>
+        );
     }
+
+    return (
+        <div>
+            <Navbar handleLogout={props.handleLogout} />
+            <br/>
+            <Routes>
+                <Route path="/about" element={<About currentUser={props.currentUser} />} />
+                <Route path="/diary" element={<Diary currentUser={props.currentUser} />} />
+                <Route path="/entries" element={<Entries currentUser={props.currentUser} />} />
+                <Route path="/charts" element={<Charts currentUser={props.currentUser} />} />
+                <Route path="/profile" element={<Profile currentUser={props.currentUser} handleDeleteUser={props.handleDeleteUser} />} />
+            </Routes>
+        </div>
+    );
 }

@@ -1,126 +1,116 @@
 import '../App.css';
-import React, { Component } from 'react';
+import React, { useState, useEffect } from 'react';
+import { useNavigate } from 'react-router-dom';
 import api from "../services/api";
 import Home from './Home';
 import Welcome from './Welcome';
-import {withRouter} from 'react-router-dom';
 
-class App extends Component {
-  state = { 
-    auth: { 
-      currentUser: {} 
-    },
-    loading: true,
-    signup: false,
-    error: false,
-    user: {
-        name: "",
-        email: "",
-        username: "",
-        password: "",
-        password_confirmation: ""
-    }
-  };
+function App() {
+  const navigate = useNavigate();
+  const [auth, setAuth] = useState({ currentUser: {} });
+  const [loading, setLoading] = useState(true);
+  const [signup, setSignup] = useState(false);
+  const [error, setError] = useState(false);
+  const [user, setUser] = useState({
+    name: "",
+    email: "",
+    username: "",
+    password: "",
+    password_confirmation: ""
+  });
 
-  componentDidMount() {
+  useEffect(() => {
     const token = localStorage.getItem("token");
     if (token) {
       api.auth.getCurrentUser().then((data) => {
-        const currentUser = { currentUser: data.user};
-        this.setState({ auth: currentUser, loading: false });
+        setAuth({ currentUser: data.user });
+        setLoading(false);
+      }).catch(() => {
+        setLoading(false);
       });
     } else {
-      this.setState({ loading: false });
+      setLoading(false);
     }
-  }
+  }, []);
 
-  handleLogin = (user) => {
+  const handleLogin = (user) => {
     const currentUser = { currentUser: user };
     localStorage.setItem("token", user.jwt);
-    this.setState({ auth: currentUser });
-  }
+    setAuth(currentUser);
+  };
 
-  handleLogout = () => {
+  const handleLogout = () => {
     localStorage.removeItem("token");
-    this.setState({ 
-      auth: { currentUser: {} } 
+    setAuth({ currentUser: {} });
+  };
+
+  const handleDeleteUser = (user) => {
+    api.auth.deleteUser(user);
+    handleLogout();
+    alert("Your Account has been Deleted");
+  };
+
+  const handleChange = (event) => {
+    const { name, value } = event.target;
+    setUser(prevUser => ({ ...prevUser, [name]: value }));
+  };
+
+  const handleSubmit = (event) => {
+    event.preventDefault();
+    setSignup(true);
+    createNewUser({ user });
+  };
+
+  const createNewUser = (userData) => {
+    api.auth.signup(userData)
+      .then((response) => response.json())
+      .then((userData) => {
+        if (userData.error) {
+          setError(true);
+        } else {
+          console.log(userData);
+        }
+      })
+      .catch((error) => {
+        console.error('Signup error:', error);
+        setError(true);
+      });
+
+    setUser({
+      name: '',
+      username: '',
+      email: '',
+      password: '',
+      password_confirmation: ''
     });
   };
 
-  handleDeleteUser = (user) => {
-    api.auth.deleteUser(user);
-    this.handleLogout();
-    alert("Your Account has been Deleted");
-  }
+  const loggedIn = !!auth.currentUser.id;
+  console.log(`logged-in? ${loggedIn}`);
+  console.log(`current user id: ${auth.currentUser.id}`);
 
-  handleChange = (event) => {
-    const newUser = { ...this.state.user, [event.target.name]: event.target.value };
-    this.setState({ user: newUser })
-  }
-
-  handleSubmit = (event) => {
-      event.preventDefault();
-      this.setState({ signup: true })
-      const user = {...this.state}
-      this.createNewUser(user)
-  }
-
-  createNewUser = (user) => {
-      // api.auth.signup(user)
-      //   .then((response) => response.json())
-      //   .then((userData) => console.log(userData))
-
-      api.auth.signup(user)
-          .then((response) => response.json())
-          .then((userData) => {
-              if (userData.error) {
-                this.setState({ error: true });
-              } else {
-                // this.handleLogin(userData)
-                // this.props.history.push('/welcome')
-                console.log(userData)
-              }
-          });
-
-      this.setState({
-        user: {
-          ...this.state.user,
-          name: '',
-          username: '',
-          email: '',
-          password: '',
-          password_confirmation: ''
-        }
-      })
-  }
-
-  render () {
-    const loggedIn = !!this.state.auth.currentUser.id;
-    console.log(`logged-in? ${loggedIn}`)
-    console.log(`current user id: ${this.state.auth.currentUser.id}`)
-    return (
-      <div id="app">
-        { loggedIn ? 
-          <Welcome 
-              loading={this.state.loading} 
-              currentUser={this.state.auth.currentUser}
-              handleLogout={this.handleLogout}
-              handleDeleteUser={this.handleDeleteUser}
-          />
-        :
-          <Home 
-              error={this.state.error}
-              loading={this.state.loading}
-              signup={this.state.signup}
-              user={this.state.user} 
-              handleChange={this.handleChange} 
-              handleSubmit={this.handleSubmit}
-              handleLogin={this.handleLogin}
-          />
-        }
-      </div>
-    )
-  }
+  return (
+    <div id="app">
+      {loggedIn ? (
+        <Welcome 
+          loading={loading} 
+          currentUser={auth.currentUser}
+          handleLogout={handleLogout}
+          handleDeleteUser={handleDeleteUser}
+        />
+      ) : (
+        <Home 
+          error={error}
+          loading={loading}
+          signup={signup}
+          user={user} 
+          handleChange={handleChange} 
+          handleSubmit={handleSubmit}
+          handleLogin={handleLogin}
+        />
+      )}
+    </div>
+  );
 }
 
-export default withRouter(App)
+export default App;
