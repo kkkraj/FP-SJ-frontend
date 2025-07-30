@@ -34,9 +34,13 @@ function App() {
   }, []);
 
   const handleLogin = (user) => {
-    const currentUser = { currentUser: user };
-    localStorage.setItem("token", user.jwt);
+    console.log('handleLogin called with user:', user);
+    // Extract the actual user data from the nested response
+    const userData = user.user || user;
+    const currentUser = { currentUser: userData };
+    localStorage.setItem("token", user.token || user.jwt);
     setAuth(currentUser);
+    console.log('Auth state updated, currentUser:', userData);
   };
 
   const handleLogout = () => {
@@ -62,32 +66,80 @@ function App() {
   };
 
   const createNewUser = (userData) => {
-    api.auth.signup(userData)
-      .then((response) => response.json())
-      .then((userData) => {
-        if (userData.error) {
+    console.log('Sending signup data:', userData.user);
+    console.log('Full userData object:', userData);
+    
+    // Try different data structures that the backend might expect
+    const userInfo = userData.user;
+    
+    // First try: Send user data directly
+    api.auth.signup(userInfo)
+      .then((response) => {
+        console.log('Signup response:', response);
+        if (response.error) {
           setError(true);
         } else {
-          console.log(userData);
+          console.log('Signup successful:', response);
+          
+          // Clear the form
+          setUser({
+            name: '',
+            username: '',
+            email: '',
+            password: '',
+            password_confirmation: ''
+          });
+          
+          // Show success message and redirect to login
+          alert('Signup successful! Please log in with your new account.');
+          
+          // Reset signup state to show login form
+          setSignup(false);
+          setError(false);
         }
       })
       .catch((error) => {
         console.error('Signup error:', error);
-        setError(true);
+        
+        // If first attempt fails, try alternative endpoint
+        console.log('Trying alternative signup endpoint...');
+        api.auth.signupAlternative(userInfo)
+          .then((response) => {
+            console.log('Alternative signup response:', response);
+            if (response.error) {
+              setError(true);
+            } else {
+              console.log('Alternative signup successful:', response);
+              
+              // Clear the form
+              setUser({
+                name: '',
+                username: '',
+                email: '',
+                password: '',
+                password_confirmation: ''
+              });
+              
+              // Show success message and redirect to login
+              alert('Signup successful! Please log in with your new account.');
+              
+              // Reset signup state to show login form
+              setSignup(false);
+              setError(false);
+            }
+          })
+          .catch((altError) => {
+            console.error('Alternative signup also failed:', altError);
+            setError(true);
+          });
       });
-
-    setUser({
-      name: '',
-      username: '',
-      email: '',
-      password: '',
-      password_confirmation: ''
-    });
   };
 
   const loggedIn = !!auth.currentUser.id;
   console.log(`logged-in? ${loggedIn}`);
   console.log(`current user id: ${auth.currentUser.id}`);
+  console.log(`full auth state:`, auth);
+  console.log(`currentUser object:`, auth.currentUser);
 
   return (
     <div id="app">

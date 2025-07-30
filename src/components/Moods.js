@@ -1,46 +1,63 @@
-import React, {Component} from 'react'
+import React, { useState, useEffect } from 'react';
+import api from '../services/api';
 
-const moodsURL = `http://localhost:3000/moods`;
-const userMoodURL = `http://localhost:3000/user_moods`;
+export default function Moods(props) {
+    const [moods, setMoods] = useState([]);
+    const [loading, setLoading] = useState(true);
+    const [error, setError] = useState(null);
 
-export default class Moods extends Component {
-    state = {
-        moods: [],
-        currentUserId: this.props.currentUserId
-    }
+    useEffect(() => {
+        const fetchMoods = async () => {
+            try {
+                const moodsData = await api.moods.getAll();
+                setMoods(moodsData);
+                setLoading(false);
+            } catch (error) {
+                console.error('Error fetching moods:', error);
+                setError(error.message);
+                setLoading(false);
+            }
+        };
 
-    componentDidMount() {
-        fetch(moodsURL)
-          .then((response) => response.json())
-          .then((moodsData) => this.setState({ moods: moodsData}))
-    }
+        fetchMoods();
+    }, []);
 
-    handleMoodClick = (mood) => {
-        console.log(`${mood.mood_name} clicked`)
-        fetch(userMoodURL, {
-            method: 'POST',
-            headers: {
-                'Content-Type': 'application/json',
-            },
-            body: JSON.stringify({
-                user_id: this.state.currentUserId,
+    const handleMoodClick = async (mood) => {
+        try {
+            console.log(`${mood.mood_name} clicked`);
+            await api.moods.createUserMood({
+                user_id: props.currentUserId,
                 mood_id: mood.id
-            })
-        })
+            });
+            console.log('User mood created successfully');
+        } catch (error) {
+            console.error('Error creating user mood:', error);
+        }
+    };
+
+    if (loading) {
+        return <div>Loading moods...</div>;
     }
 
-    render () {
-        return ( 
-            <div style={{textAlign: 'center'}}>
-                <div className="moodsdiv" style={{textAlign: 'center', display: 'grid', gridTemplateColumns: 'repeat(4, 1fr)'}}>
-                    { this.state.moods.map((mood) => 
-                        <div className="moods" key={mood.id}>
-                            <img style={{width: '70px', height: 'auto', borderRadius: '100px'}} src={mood.mood_url} onClick={() => this.handleMoodClick(mood)} />
-                            <p className="text" style={{fontSize: '12px', marginBottom: '0'}}>{mood.mood_name}</p>
-                        </div>
-                    )}
-                </div>
-            </div>
-        )
+    if (error) {
+        return <div>Error loading moods: {error}</div>;
     }
+
+    return ( 
+        <div style={{textAlign: 'center'}}>
+            <div className="moodsdiv" style={{textAlign: 'center', display: 'grid', gridTemplateColumns: 'repeat(4, 1fr)'}}>
+                {moods.map((mood) => 
+                    <div className="moods" key={mood.id}>
+                        <img 
+                            style={{width: '70px', height: 'auto', borderRadius: '100px'}} 
+                            src={mood.mood_url} 
+                            onClick={() => handleMoodClick(mood)}
+                            alt={mood.mood_name}
+                        />
+                        <p className="text" style={{fontSize: '12px', marginBottom: '0'}}>{mood.mood_name}</p>
+                    </div>
+                )}
+            </div>
+        </div>
+    );
 }

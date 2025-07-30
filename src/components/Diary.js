@@ -3,6 +3,7 @@ import DOMPurify from 'dompurify';
 import Moods from './Moods';
 import Activities from './Activities';
 import {Container, Row, Col} from 'react-bootstrap';
+import api from '../services/api';
 
 export default function Diary(props) {
     const [diaryEntry, setDiaryEntry] = useState({
@@ -23,27 +24,14 @@ export default function Diary(props) {
         createNewDiaryEntry({ diary_entry: diaryEntry });
     };
 
-    const createNewDiaryEntry = (diaryEntryData) => {
-        fetch("http://localhost:3000/diary_entries", {
-            method: 'POST',
-            headers: {
-                'Content-Type': 'application/json'
-            },
-            body: JSON.stringify(diaryEntryData)
-        })
-        .then(response => {
-            if (!response.ok) {
-                throw new Error('Network response was not ok');
-            }
-            return response.json();
-        })
-        .then(data => {
+    const createNewDiaryEntry = async (diaryEntryData) => {
+        try {
+            const data = await api.diary.createEntry(diaryEntryData);
             console.log('Diary entry created:', data);
             setDiaryEntry({ ...diaryEntry, title: "", content: "" });
-        })
-        .catch(error => {
+        } catch (error) {
             console.error('Error creating diary entry:', error);
-        });
+        }
     };
 
     return (

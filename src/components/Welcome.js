@@ -1,5 +1,5 @@
 import React from 'react';
-import { Routes, Route } from "react-router-dom";
+import { Routes, Route, Navigate } from "react-router-dom";
 import Navbar from './Navbar';
 import About from './About';
 import Profile from './Profile';
@@ -26,6 +26,7 @@ export default function Welcome(props) {
                 <Route path="/entries" element={<Entries currentUser={props.currentUser} />} />
                 <Route path="/charts" element={<Charts currentUser={props.currentUser} />} />
                 <Route path="/profile" element={<Profile currentUser={props.currentUser} handleDeleteUser={props.handleDeleteUser} />} />
+                <Route path="/" element={<Navigate to="/about" replace />} />
             </Routes>
         </div>
     );

@@ -27,7 +27,8 @@ export default function Login(props) {
               setError(true);
             } else {
               props.handleLogin(response);
-              navigate('/about');
+              // Navigate to welcome page after successful login
+              navigate('/');
             }
           })
           .catch((error) => {
@@ -40,14 +41,24 @@ export default function Login(props) {
         <div>
             {error && <p style={{color: "Chocolate"}}>Incorrect username or password, please Try Again</p>}
             <div>
-                <form onChange={handleChange} onSubmit={handleSubmit}>
+                <form onSubmit={handleSubmit}>
                     <div className="sign-form">
                         <div>
-                            <input type="text" name="username" value={userInfo.username} />
+                            <input 
+                                type="text" 
+                                name="username" 
+                                value={userInfo.username} 
+                                onChange={handleChange}
+                            />
                             <label className="active">Username</label>
                         </div>
                         <div>
-                            <input type="password" name="password" value={userInfo.password} />
+                            <input 
+                                type="password" 
+                                name="password" 
+                                value={userInfo.password} 
+                                onChange={handleChange}
+                            />
                             <label className="active">Password</label>
                         </div>
                         <br/>
