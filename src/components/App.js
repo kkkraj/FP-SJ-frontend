@@ -54,6 +54,28 @@ function App() {
     alert("Your Account has been Deleted");
   };
 
+  const handleAccountUpdate = (updatedUserData) => {
+    // Update the auth state with the new user data
+    // The backend might return only the updated field, so merge with existing data
+    const userData = updatedUserData.user || updatedUserData;
+    
+    // Merge the updated data with existing user data to preserve all fields
+    const mergedUserData = {
+      ...auth.currentUser,  // Keep existing data
+      ...userData           // Override with updated data
+    };
+    
+    // Ensure we have the user ID to maintain login state
+    if (!mergedUserData.id && auth.currentUser.id) {
+        mergedUserData.id = auth.currentUser.id;
+    }
+    
+    const currentUser = { currentUser: mergedUserData };
+    setAuth(currentUser);
+    console.log('Account updated, new user data:', mergedUserData);
+    console.log('Auth state after update:', currentUser);
+  };
+
   const handleChange = (event) => {
     const { name, value } = event.target;
     setUser(prevUser => ({ ...prevUser, [name]: value }));
@@ -140,6 +162,9 @@ function App() {
   console.log(`current user id: ${auth.currentUser.id}`);
   console.log(`full auth state:`, auth);
   console.log(`currentUser object:`, auth.currentUser);
+  console.log(`currentUser name:`, auth.currentUser.name);
+  console.log(`currentUser email:`, auth.currentUser.email);
+  console.log(`currentUser username:`, auth.currentUser.username);
 
   return (
     <div id="app">
@@ -149,6 +174,7 @@ function App() {
           currentUser={auth.currentUser}
           handleLogout={handleLogout}
           handleDeleteUser={handleDeleteUser}
+          onAccountUpdate={handleAccountUpdate}
         />
       ) : (
         <Home 

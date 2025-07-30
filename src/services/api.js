@@ -109,7 +109,25 @@ const login = (userInfo) => {
     }).then((response) => {
         console.log('API: Login response status:', response.status);
         if (!response.ok) {
-            throw new Error(`Login failed: ${response.status} ${response.statusText}`);
+            return response.text().then(text => {
+                console.log('API: Login error response body:', text);
+                let errorMessage = `Login failed: ${response.status} ${response.statusText}`;
+                try {
+                    const errorData = JSON.parse(text);
+                    if (errorData.error) {
+                        errorMessage = errorData.error;
+                    }
+                } catch (e) {
+                    // If response is not JSON, use the text as is
+                    if (text) {
+                        errorMessage = text;
+                    }
+                }
+                const error = new Error(errorMessage);
+                error.status = response.status;
+                error.responseBody = text;
+                throw error;
+            });
         }
         return response.json();
     }).then((data) => {

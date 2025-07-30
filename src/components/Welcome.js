@@ -25,7 +25,7 @@ export default function Welcome(props) {
                 <Route path="/diary" element={<Diary currentUser={props.currentUser} />} />
                 <Route path="/entries" element={<Entries currentUser={props.currentUser} />} />
                 <Route path="/charts" element={<Charts currentUser={props.currentUser} />} />
-                <Route path="/profile" element={<Profile currentUser={props.currentUser} handleDeleteUser={props.handleDeleteUser} />} />
+                <Route path="/profile" element={<Profile key={`${props.currentUser.id}-${props.currentUser.name || 'unknown'}`} currentUser={props.currentUser} handleDeleteUser={props.handleDeleteUser} onAccountUpdate={props.onAccountUpdate} />} />
                 <Route path="/" element={<Navigate to="/about" replace />} />
             </Routes>
         </div>
