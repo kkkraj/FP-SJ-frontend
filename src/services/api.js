@@ -1,12 +1,11 @@
-const API_ROOT = `http://localhost:3000/api/v1`;
-
 const token = () => localStorage.getItem('token');
-
-const headers = {
+const headers = () => ({
     'Content-Type': 'application/json',
     Accept: 'application/json',
-    Authorization: token(),
-};
+    Authorization: `Bearer ${token()}`
+});
+
+const API_ROOT = `http://localhost:3000/api/v1`;
 
 const signup = (userInfo) => {
     console.log('API: Attempting signup with data:', userInfo);
@@ -121,7 +120,7 @@ const login = (userInfo) => {
 
 const getCurrentUser = () => {
     return fetch(`${API_ROOT}/current_user/`, {
-        headers: headers,
+        headers: headers(),
     }).then((response) => {
         if (!response.ok) {
             throw new Error(`Failed to get current user: ${response.status} ${response.statusText}`);
@@ -133,7 +132,7 @@ const getCurrentUser = () => {
 const deleteUser = (user) => {
     return fetch(`${API_ROOT}/users/${user.id}`, {
         method: 'DELETE',
-        headers: headers,
+        headers: headers(),
     }).then((response) => {
         if (!response.ok) {
             throw new Error(`Failed to delete user: ${response.status} ${response.statusText}`);
@@ -145,7 +144,7 @@ const deleteUser = (user) => {
 const updateUser = (user) => {
     return fetch(`${API_ROOT}/users/${user.id}`, {
         method: "PATCH",
-        headers: headers,
+        headers: headers(),
         body: JSON.stringify(user)
     }).then((response) => {
         if (!response.ok) {
@@ -167,7 +166,7 @@ const api = {
     moods: {
         getAll: () => {
             return fetch(`http://localhost:3000/moods/`, {
-                headers: headers,
+                headers: headers(),
             }).then((response) => {
                 if (!response.ok) {
                     throw new Error(`Failed to fetch moods: ${response.status} ${response.statusText}`);
@@ -178,7 +177,7 @@ const api = {
         createUserMood: (userMoodData) => {
             return fetch(`http://localhost:3000/user_moods/`, {
                 method: 'POST',
-                headers: headers,
+                headers: headers(),
                 body: JSON.stringify(userMoodData)
             }).then((response) => {
                 if (!response.ok) {
@@ -191,7 +190,7 @@ const api = {
     activities: {
         getAll: () => {
             return fetch(`http://localhost:3000/activities/`, {
-                headers: headers,
+                headers: headers(),
             }).then((response) => {
                 if (!response.ok) {
                     throw new Error(`Failed to fetch activities: ${response.status} ${response.statusText}`);
@@ -202,7 +201,7 @@ const api = {
         createUserActivity: (userActivityData) => {
             return fetch(`http://localhost:3000/user_activities/`, {
                 method: 'POST',
-                headers: headers,
+                headers: headers(),
                 body: JSON.stringify(userActivityData)
             }).then((response) => {
                 if (!response.ok) {
@@ -216,7 +215,7 @@ const api = {
         createEntry: (diaryEntryData) => {
             return fetch(`http://localhost:3000/diary_entries/`, {
                 method: 'POST',
-                headers: headers,
+                headers: headers(),
                 body: JSON.stringify(diaryEntryData)
             }).then((response) => {
                 if (!response.ok) {
@@ -224,8 +223,54 @@ const api = {
                 }
                 return response.json();
             });
+        },
+        getAll: () => {
+            return fetch(`http://localhost:3000/diary_entries/`, {
+                headers: headers(),
+            }).then((response) => {
+                if (!response.ok) {
+                    throw new Error(`Failed to fetch diary entries: ${response.status} ${response.statusText}`);
+                }
+                return response.json();
+            });
+        },
+        delete: (id) => {
+            return fetch(`http://localhost:3000/diary_entries/${id}`, {
+                method: 'DELETE',
+                headers: headers(),
+            }).then((response) => {
+                if (!response.ok) {
+                    throw new Error(`Failed to delete diary entry: ${response.status} ${response.statusText}`);
+                }
+                return response.json();
+            });
         }
-    }
+    },
+    userMoods: {
+        getAll: () => {
+            return fetch(`http://localhost:3000/user_moods/`, {
+                headers: headers(),
+            }).then((response) => {
+                if (!response.ok) {
+                    throw new Error(`Failed to fetch user moods: ${response.status} ${response.statusText}`);
+                }
+                return response.json();
+            });
+        }
+    },
+    userActivities: {
+        getAll: () => {
+            return fetch(`http://localhost:3000/user_activities/`, {
+                headers: headers(),
+            }).then((response) => {
+                if (!response.ok) {
+                    throw new Error(`Failed to fetch user activities: ${response.status} ${response.statusText}`);
+                }
+                return response.json();
+            });
+        }
+    },
+    getHeaders: headers
 };
 
 export default api;

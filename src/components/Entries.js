@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import Diarybook from './Diarybook';
 import Calendar from 'react-calendar';
 import '../Calendar.css';
@@ -10,7 +10,8 @@ export default function Entries(props) {
     const [formatDate, setFormatDate] = useState('');
     const [displayDate, setDisplayDate] = useState('');
 
-    const handleChange = (selectedDate) => {
+    // Function to format date for display and API
+    const formatDateForDisplay = (selectedDate) => {
         const year = selectedDate.getFullYear();
         const month = selectedDate.getMonth();
         const ddate = selectedDate.getDate();
@@ -18,6 +19,21 @@ export default function Entries(props) {
         const weekDay = selectedDate.toLocaleString('en-us', {  weekday: 'long' });
         const monthName = selectedDate.toLocaleString('en-us', {  month: 'long' });
         const forDisplay = `${weekDay} ${monthName} ${ddate}, ${year}`;
+        
+        return { formatted, forDisplay };
+    };
+
+    // Set today's date as default when component mounts
+    useEffect(() => {
+        const today = new Date();
+        const { formatted, forDisplay } = formatDateForDisplay(today);
+        setDate(today);
+        setFormatDate(formatted);
+        setDisplayDate(forDisplay);
+    }, []);
+
+    const handleChange = (selectedDate) => {
+        const { formatted, forDisplay } = formatDateForDisplay(selectedDate);
         
         setDate(selectedDate);
         setFormatDate(formatted);
