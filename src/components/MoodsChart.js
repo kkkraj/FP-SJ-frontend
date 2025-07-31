@@ -21,37 +21,68 @@ ChartJS.register(
   Legend
 );
 
-const randoms = [...Array(8)].map(() => Math.floor(Math.random() * 30));
+// Fallback mock data
+const generateMockData = (count) => [...Array(count)].map(() => Math.floor(Math.random() * 30) + 1);
 
-export default function MoodsChart() {
+export default function MoodsChart({ currentUserId }) {
     const [moodList, setMoodList] = useState([]);
+    const [userMoodData, setUserMoodData] = useState([]);
     const [loading, setLoading] = useState(true);
     const [error, setError] = useState(null);
 
     useEffect(() => {
-        const fetchMoods = async () => {
+        const fetchData = async () => {
             try {
-                const moodsListData = await api.moods.getAll();
+                // Fetch both moods list and user mood data
+                const [moodsListData, userMoodData] = await Promise.all([
+                    api.moods.getAll(),
+                    currentUserId ? api.moods.getUserMoodsForMonth(currentUserId) : Promise.resolve([])
+                ]);
+                
                 setMoodList(moodsListData);
+                setUserMoodData(userMoodData);
                 setLoading(false);
             } catch (error) {
-                console.error('Error fetching moods:', error);
+                console.error('Error fetching mood data:', error);
                 setError(error.message);
                 setLoading(false);
             }
         };
 
-        fetchMoods();
-    }, []);
+        fetchData();
+    }, [currentUserId]);
+
+    // Process user mood data to count occurrences of each mood
+    const processMoodData = () => {
+        if (!userMoodData || userMoodData.length === 0) {
+            // Use mock data if no real data
+            return generateMockData(moodList.length);
+        }
+
+        // Count occurrences of each mood
+        const moodCounts = {};
+        moodList.forEach(mood => {
+            moodCounts[mood.id] = 0;
+        });
+
+        userMoodData.forEach(userMood => {
+            if (moodCounts.hasOwnProperty(userMood.mood_id)) {
+                moodCounts[userMood.mood_id]++;
+            }
+        });
+
+        // Convert to array in the same order as moodList
+        return moodList.map(mood => moodCounts[mood.id] || 0);
+    };
 
     const chartData = {
         labels: moodList.map((mood) => mood.mood_name),
         datasets: [
             {
-                backgroundColor: '#d8f0f3',
-                borderColor: 'transparent',
+                backgroundColor: 'rgba(87, 177, 172, 0.6)', // Using your teal theme color
+                borderColor: 'rgba(87, 177, 172, 1)',
                 borderWidth: 1,
-                data: randoms
+                data: processMoodData()
             }
         ]
     };
@@ -61,21 +92,29 @@ export default function MoodsChart() {
         plugins: {
             legend: {
                 display: false
+            },
+            tooltip: {
+                callbacks: {
+                    label: function(context) {
+                        const moodName = context.label;
+                        const count = context.parsed.y;
+                        return `${moodName}: ${count} time${count !== 1 ? 's' : ''}`;
+                    }
+                }
             }
         },
         scales: {
             y: {
-                stacked: true,
+                beginAtZero: true,
                 ticks: {
-                    min: 1,
-                    beginAtZero: false,
+                    stepSize: 1,
+                    precision: 0
                 },
                 grid: {
                     display: false
                 }
             },
             x: {
-                stacked: true,
                 grid: {
                     display: false
                 },

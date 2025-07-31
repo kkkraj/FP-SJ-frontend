@@ -3,7 +3,7 @@ import MoodsChart from './MoodsChart';
 import ActivityChart from './ActivityChart';
 import {Container, Row, Col} from 'react-bootstrap';
 
-export default function Charts() {
+export default function Charts({ currentUserId }) {
     return (
         <div className="charts">
             <Container>
@@ -17,8 +17,8 @@ export default function Charts() {
                     <Col xs={12} md={6}><h4 className="chart-header">Activity Tracker</h4></Col>
                 </Row>
                 <Row>
-                    <Col xs={12} md={6}><MoodsChart /></Col>
-                    <Col xs={12} md={6}><ActivityChart /></Col>
+                    <Col xs={12} md={6}><MoodsChart currentUserId={currentUserId} /></Col>
+                    <Col xs={12} md={6}><ActivityChart currentUserId={currentUserId} /></Col>
                 </Row>
             </Container>
         </div>

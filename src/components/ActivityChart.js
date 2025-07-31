@@ -21,37 +21,68 @@ ChartJS.register(
   Legend
 );
 
-const randoms = [...Array(16)].map(() => Math.floor(Math.random() * 30));
+// Fallback mock data
+const generateMockData = (count) => [...Array(count)].map(() => Math.floor(Math.random() * 30) + 1);
 
-export default function ActivityChart() {
+export default function ActivityChart({ currentUserId }) {
     const [activitiesList, setActivitiesList] = useState([]);
+    const [userActivityData, setUserActivityData] = useState([]);
     const [loading, setLoading] = useState(true);
     const [error, setError] = useState(null);
 
     useEffect(() => {
-        const fetchActivities = async () => {
+        const fetchData = async () => {
             try {
-                const activitiesData = await api.activities.getAll();
+                // Fetch both activities list and user activity data
+                const [activitiesData, userActivityData] = await Promise.all([
+                    api.activities.getAll(),
+                    currentUserId ? api.activities.getUserActivitiesForMonth(currentUserId) : Promise.resolve([])
+                ]);
+                
                 setActivitiesList(activitiesData);
+                setUserActivityData(userActivityData);
                 setLoading(false);
             } catch (error) {
-                console.error('Error fetching activities:', error);
+                console.error('Error fetching activity data:', error);
                 setError(error.message);
                 setLoading(false);
             }
         };
 
-        fetchActivities();
-    }, []);
+        fetchData();
+    }, [currentUserId]);
+
+    // Process user activity data to count occurrences of each activity
+    const processActivityData = () => {
+        if (!userActivityData || userActivityData.length === 0) {
+            // Use mock data if no real data
+            return generateMockData(activitiesList.length);
+        }
+
+        // Count occurrences of each activity
+        const activityCounts = {};
+        activitiesList.forEach(activity => {
+            activityCounts[activity.id] = 0;
+        });
+
+        userActivityData.forEach(userActivity => {
+            if (activityCounts.hasOwnProperty(userActivity.activity_id)) {
+                activityCounts[userActivity.activity_id]++;
+            }
+        });
+
+        // Convert to array in the same order as activitiesList
+        return activitiesList.map(activity => activityCounts[activity.id] || 0);
+    };
 
     const chartData = {
         labels: activitiesList.map((actv) => actv.activity_name),
         datasets: [
             {
-                backgroundColor: '#d8f0f3',
-                borderColor: 'transparent',
+                backgroundColor: 'rgba(255, 127, 80, 0.6)', // Using coral color
+                borderColor: 'rgba(255, 127, 80, 1)',
                 borderWidth: 1,
-                data: randoms
+                data: processActivityData()
             }
         ]
     };
@@ -61,21 +92,29 @@ export default function ActivityChart() {
         plugins: {
             legend: {
                 display: false
+            },
+            tooltip: {
+                callbacks: {
+                    label: function(context) {
+                        const activityName = context.label;
+                        const count = context.parsed.y;
+                        return `${activityName}: ${count} time${count !== 1 ? 's' : ''}`;
+                    }
+                }
             }
         },
         scales: {
             y: {
-                stacked: true,
+                beginAtZero: true,
                 ticks: {
-                    min: 1,
-                    beginAtZero: false,
+                    stepSize: 1,
+                    precision: 0
                 },
                 grid: {
                     display: false
                 }
             },
             x: {
-                stacked: true,
                 grid: {
                     display: false
                 },

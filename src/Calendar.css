@@ -104,10 +104,12 @@
 .react-calendar__tile--now {
   background: linen;
   border-radius: 100px;
+  font-weight: bold;
 }
 .react-calendar__tile--now:enabled:hover,
 .react-calendar__tile--now:enabled:focus {
   background: linen;
+  font-weight: bold;
 }
 .react-calendar__tile--hasActive {
   background: linen;

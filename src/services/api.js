@@ -215,6 +215,19 @@ const api = {
                 return response.json();
             });
         },
+        getUserMoodsForMonth: (userId) => {
+            // Get data for the past 30 days
+            const endDate = new Date().toISOString().split('T')[0];
+            const startDate = new Date(Date.now() - 30 * 24 * 60 * 60 * 1000).toISOString().split('T')[0];
+            return fetch(`http://localhost:3000/user_moods/?user_id=${userId}&start_date=${startDate}&end_date=${endDate}`, {
+                headers: headers(),
+            }).then((response) => {
+                if (!response.ok) {
+                    throw new Error(`Failed to fetch user moods for month: ${response.status} ${response.statusText}`);
+                }
+                return response.json();
+            });
+        },
         deleteUserMood: (userMoodId) => {
             return fetch(`http://localhost:3000/user_moods/${userMoodId}`, {
                 method: 'DELETE',
@@ -257,6 +270,19 @@ const api = {
             }).then((response) => {
                 if (!response.ok) {
                     throw new Error(`Failed to fetch user activities: ${response.status} ${response.statusText}`);
+                }
+                return response.json();
+            });
+        },
+        getUserActivitiesForMonth: (userId) => {
+            // Get data for the past 30 days
+            const endDate = new Date().toISOString().split('T')[0];
+            const startDate = new Date(Date.now() - 30 * 24 * 60 * 60 * 1000).toISOString().split('T')[0];
+            return fetch(`http://localhost:3000/user_activities/?user_id=${userId}&start_date=${startDate}&end_date=${endDate}`, {
+                headers: headers(),
+            }).then((response) => {
+                if (!response.ok) {
+                    throw new Error(`Failed to fetch user activities for month: ${response.status} ${response.statusText}`);
                 }
                 return response.json();
             });
