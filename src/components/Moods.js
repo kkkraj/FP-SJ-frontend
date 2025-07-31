@@ -3,6 +3,8 @@ import api from '../services/api';
 
 export default function Moods(props) {
     const [moods, setMoods] = useState([]);
+    const [selectedMoods, setSelectedMoods] = useState(new Set());
+    const [userMoodIds, setUserMoodIds] = useState(new Map()); // Map mood_id to user_mood_id
     const [loading, setLoading] = useState(true);
     const [error, setError] = useState(null);
 
@@ -22,16 +24,79 @@ export default function Moods(props) {
         fetchMoods();
     }, []);
 
+    // Fetch user's moods for today to show current selections
+    useEffect(() => {
+        const fetchUserMoods = async () => {
+            try {
+                const userMoodsData = await api.moods.getUserMoods(props.currentUserId);
+                console.log('Fetched user moods:', userMoodsData);
+                
+                // Create a set of mood IDs that the user has already selected today
+                const todayMoodIds = new Set(userMoodsData.map(userMood => userMood.mood_id));
+                console.log('Today mood IDs:', Array.from(todayMoodIds));
+                setSelectedMoods(todayMoodIds);
+                
+                // Create a map of mood_id to user_mood_id for deletion
+                const moodIdMap = new Map();
+                userMoodsData.forEach(userMood => {
+                    moodIdMap.set(userMood.mood_id, userMood.id);
+                });
+                console.log('Mood ID mapping:', Object.fromEntries(moodIdMap));
+                setUserMoodIds(moodIdMap);
+            } catch (error) {
+                console.error('Error fetching user moods:', error);
+            }
+        };
+
+        if (props.currentUserId) {
+            fetchUserMoods();
+        }
+    }, [props.currentUserId]);
+
     const handleMoodClick = async (mood) => {
-        try {
-            console.log(`${mood.mood_name} clicked`);
-            await api.moods.createUserMood({
-                user_id: props.currentUserId,
-                mood_id: mood.id
-            });
-            console.log('User mood created successfully');
-        } catch (error) {
-            console.error('Error creating user mood:', error);
+        const isCurrentlySelected = selectedMoods.has(mood.id);
+
+        if (isCurrentlySelected) {
+            // Deselect the mood
+            try {
+                console.log(`Deselecting ${mood.mood_name}`);
+                const userMoodId = userMoodIds.get(mood.id);
+                if (userMoodId) {
+                    await api.moods.deleteUserMood(userMoodId);
+                    console.log(`${mood.mood_name} deselected from database`);
+                }
+                
+                // Update local state
+                setSelectedMoods(prev => {
+                    const newSet = new Set(prev);
+                    newSet.delete(mood.id);
+                    return newSet;
+                });
+                
+                setUserMoodIds(prev => {
+                    const newMap = new Map(prev);
+                    newMap.delete(mood.id);
+                    return newMap;
+                });
+            } catch (error) {
+                console.error('Error deselecting mood:', error);
+            }
+        } else {
+            // Select the mood
+            try {
+                console.log(`${mood.mood_name} clicked`);
+                const response = await api.moods.createUserMood({
+                    user_id: props.currentUserId,
+                    mood_id: mood.id
+                });
+                console.log('User mood created successfully');
+                
+                // Add to selected moods and store the user mood ID
+                setSelectedMoods(prev => new Set([...prev, mood.id]));
+                setUserMoodIds(prev => new Map(prev).set(mood.id, response.id));
+            } catch (error) {
+                console.error('Error creating user mood:', error);
+            }
         }
     };
 
@@ -46,17 +111,41 @@ export default function Moods(props) {
     return ( 
         <div style={{textAlign: 'center'}}>
             <div className="moodsdiv" style={{textAlign: 'center', display: 'grid', gridTemplateColumns: 'repeat(4, 1fr)'}}>
-                {moods.map((mood) => 
-                    <div className="moods" key={mood.id}>
-                        <img 
-                            style={{width: '70px', height: 'auto', borderRadius: '100px'}} 
-                            src={mood.mood_url} 
+                {moods.map((mood) => {
+                    const isSelected = selectedMoods.has(mood.id);
+                    return (
+                        <div 
+                            className="moods" 
+                            key={mood.id}
+                            style={{
+                                cursor: 'pointer',
+                                transition: 'all 0.3s ease'
+                            }}
                             onClick={() => handleMoodClick(mood)}
-                            alt={mood.mood_name}
-                        />
-                        <p className="text" style={{fontSize: '12px', marginBottom: '0'}}>{mood.mood_name}</p>
-                    </div>
-                )}
+                        >
+                            <img 
+                                style={{
+                                    width: '70px', 
+                                    height: 'auto', 
+                                    borderRadius: '100px',
+                                    transition: 'all 0.3s ease',
+                                    boxShadow: isSelected ? '0 4px 12px rgba(87, 177, 172, 0.4)' : 'none'
+                                }} 
+                                src={mood.mood_url} 
+                                alt={mood.mood_name}
+                            />
+                            <p className="text" style={{
+                                fontSize: '12px', 
+                                marginBottom: '0',
+                                marginTop: '5px',
+                                fontWeight: isSelected ? 'bold' : 'normal',
+                                color: isSelected ? 'rgb(87, 177, 172)' : 'inherit'
+                            }}>
+                                {mood.mood_name}
+                            </p>
+                        </div>
+                    );
+                })}
             </div>
         </div>
     );

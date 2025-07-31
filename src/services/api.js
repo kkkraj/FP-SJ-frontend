@@ -203,6 +203,28 @@ const api = {
                 }
                 return response.json();
             });
+        },
+        getUserMoods: (userId) => {
+            const today = new Date().toISOString().split('T')[0]; // Format: YYYY-MM-DD
+            return fetch(`http://localhost:3000/user_moods/?user_id=${userId}&date=${today}`, {
+                headers: headers(),
+            }).then((response) => {
+                if (!response.ok) {
+                    throw new Error(`Failed to fetch user moods: ${response.status} ${response.statusText}`);
+                }
+                return response.json();
+            });
+        },
+        deleteUserMood: (userMoodId) => {
+            return fetch(`http://localhost:3000/user_moods/${userMoodId}`, {
+                method: 'DELETE',
+                headers: headers(),
+            }).then((response) => {
+                if (!response.ok) {
+                    throw new Error(`Failed to delete user mood: ${response.status} ${response.statusText}`);
+                }
+                return response.json();
+            });
         }
     },
     activities: {
@@ -224,6 +246,28 @@ const api = {
             }).then((response) => {
                 if (!response.ok) {
                     throw new Error(`Failed to create user activity: ${response.status} ${response.statusText}`);
+                }
+                return response.json();
+            });
+        },
+        getUserActivities: (userId) => {
+            const today = new Date().toISOString().split('T')[0]; // Format: YYYY-MM-DD
+            return fetch(`http://localhost:3000/user_activities/?user_id=${userId}&date=${today}`, {
+                headers: headers(),
+            }).then((response) => {
+                if (!response.ok) {
+                    throw new Error(`Failed to fetch user activities: ${response.status} ${response.statusText}`);
+                }
+                return response.json();
+            });
+        },
+        deleteUserActivity: (userActivityId) => {
+            return fetch(`http://localhost:3000/user_activities/${userActivityId}`, {
+                method: 'DELETE',
+                headers: headers(),
+            }).then((response) => {
+                if (!response.ok) {
+                    throw new Error(`Failed to delete user activity: ${response.status} ${response.statusText}`);
                 }
                 return response.json();
             });

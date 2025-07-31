@@ -7,10 +7,10 @@ import api from '../services/api';
 
 export default function Diary(props) {
     const [diaryEntry, setDiaryEntry] = useState({
-        title: "",
         content: "",
         user_id: props.currentUser.id
     });
+    const [showConfirmation, setShowConfirmation] = useState(false);
 
     const handleChange = (event) => {
         const { name, value } = event.target;
@@ -28,7 +28,13 @@ export default function Diary(props) {
         try {
             const data = await api.diary.createEntry(diaryEntryData);
             console.log('Diary entry created:', data);
-            setDiaryEntry({ ...diaryEntry, title: "", content: "" });
+            setDiaryEntry({ ...diaryEntry, content: "" });
+            
+            // Show confirmation message
+            setShowConfirmation(true);
+            setTimeout(() => {
+                setShowConfirmation(false);
+            }, 3000); // Hide after 3 seconds
         } catch (error) {
             console.error('Error creating diary entry:', error);
         }
@@ -77,21 +83,22 @@ export default function Diary(props) {
                     <Col xs={12} md={1}></Col>
                     <Col xs={12} md={7}>
                         <form id="entry" onSubmit={handleSubmit}>
-                            <input 
-                                className="dtitle" 
-                                placeholder="title"
-                                value={diaryEntry.title} 
-                                name="title" 
-                                onChange={handleChange} 
-                                style={{width: '60%', borderBottom: 'dotted 2px salmon'}}
-                            /><br/><br/>
                             <textarea 
                                className="text" 
                                placeholder="Begin Today Journal Here!" 
                                value={diaryEntry.content} 
                                name="content" 
                                onChange={handleChange} 
-                               style={{height: 180, width: 600, border: 'none' ,borderBottom: 'dotted 2px salmon'}}
+                               style={{
+                                   height: '250px', 
+                                   width: '100%', 
+                                   border: 'none',
+                                   resize: 'none',
+                                   padding: '15px',
+                                   fontSize: '14px',
+                                   fontFamily: 'Raleway, sans-serif',
+                                   lineHeight: '1.6'
+                               }}
                             ></textarea>
                             <input 
                                 className="waves-effect waves-light btn-small" 
@@ -99,6 +106,17 @@ export default function Diary(props) {
                                 value="Submit Journal" 
                                 style={{backgroundColor: 'LightSalmon', marginTop: '10px'}} 
                             />
+                            {showConfirmation && (
+                                <div style={{
+                                    color: 'rgb(87, 177, 172)',
+                                    fontSize: '14px',
+                                    marginTop: '10px',
+                                    fontFamily: 'Raleway, sans-serif',
+                                    fontWeight: 'bold'
+                                }}>
+                                    ✓ Journal entry saved successfully!
+                                </div>
+                            )}
                         </form>  
                     </Col>
                 </Row>

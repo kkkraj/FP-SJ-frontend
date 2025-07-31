@@ -73,6 +73,47 @@ export default function Diarybook(props) {
         return DOMPurify.sanitize(content);
     };
 
+    // Helper function to format date for comparison
+    const formatDate = (dateString) => {
+        const date = new Date(dateString);
+        const day = date.getDate();
+        const month = date.getMonth();
+        const year = date.getFullYear();
+        return `${year}-${month}-${day}`;
+    };
+
+    // Get unique moods for the selected date
+    const getUniqueMoodsForDate = () => {
+        const dateMoods = userMoods.filter(userMood => {
+            const formatted = formatDate(userMood.created_at);
+            return userMood.user_id === currentUserId && formatted === props.selectedDate;
+        });
+
+        // Get unique mood IDs to avoid duplicates
+        const uniqueMoodIds = [...new Set(dateMoods.map(userMood => userMood.mood_id))];
+        
+        return uniqueMoodIds.map(moodId => {
+            const mood = moodsList.find(m => m.id === moodId);
+            return mood;
+        }).filter(Boolean); // Remove any undefined moods
+    };
+
+    // Get unique activities for the selected date
+    const getUniqueActivitiesForDate = () => {
+        const dateActivities = userActivities.filter(userActivity => {
+            const formatted = formatDate(userActivity.created_at);
+            return userActivity.user_id === currentUserId && formatted === props.selectedDate;
+        });
+
+        // Get unique activity IDs to avoid duplicates
+        const uniqueActivityIds = [...new Set(dateActivities.map(userActivity => userActivity.activity_id))];
+        
+        return uniqueActivityIds.map(activityId => {
+            const activity = activitiesList.find(a => a.id === activityId);
+            return activity;
+        }).filter(Boolean); // Remove any undefined activities
+    };
+
     if (loading) {
         return <div>Loading diary entries...</div>;
     }
@@ -81,24 +122,19 @@ export default function Diarybook(props) {
         return <div>Error loading diary entries: {error}</div>;
     }
 
+    const uniqueMoods = getUniqueMoodsForDate();
+    const uniqueActivities = getUniqueActivitiesForDate();
+
     return (
         <div className="text">
             <div className="detail-header">
                 <h4 className="booheaders">Journal</h4>
                 {diaries.filter(diary => {
-                    const date1 = new Date(diary.created_at);
-                    const date2 = date1.getDate();
-                    const month = date1.getMonth();
-                    const year = date1.getFullYear();
-                    const formatted = year + '-' + month + '-' + date2;
+                    const formatted = formatDate(diary.created_at);
                     return diary.user_id === currentUserId && formatted === props.selectedDate;
                 }).length > 0 ? (
                     diaries.map((diary) => {
-                        const date1 = new Date(diary.created_at);
-                        const date2 = date1.getDate();
-                        const month = date1.getMonth();
-                        const year = date1.getFullYear();
-                        const formatted = year + '-' + month + '-' + date2;
+                        const formatted = formatDate(diary.created_at);
                         
                         return diary.user_id === currentUserId && formatted === props.selectedDate ? (
                             <div key={diary.id}>
@@ -111,10 +147,46 @@ export default function Diarybook(props) {
                                     </li>
                                     <li>
                                         <button 
-                                            style={{width: '30px', height: '30px', marginTop: '10px'}} 
-                                            className="btn-floating btn-small waves-effect waves-light grey lighten-5" 
+                                            style={{
+                                                width: '32px', 
+                                                height: '32px', 
+                                                marginTop: '10px',
+                                                border: 'none',
+                                                borderRadius: '50%',
+                                                backgroundColor: 'rgba(255, 255, 255, 0.9)',
+                                                boxShadow: '0 2px 8px rgba(187, 187, 187, 0.3)',
+                                                cursor: 'pointer',
+                                                transition: 'all 0.3s ease',
+                                                display: 'flex',
+                                                alignItems: 'center',
+                                                justifyContent: 'center'
+                                            }}
+                                            onMouseEnter={(e) => {
+                                                e.target.style.backgroundColor = 'rgba(255, 99, 71, 0.1)';
+                                                e.target.style.boxShadow = '0 4px 12px rgba(255, 99, 71, 0.3)';
+                                                e.target.style.transform = 'scale(1.1)';
+                                            }}
+                                            onMouseLeave={(e) => {
+                                                e.target.style.backgroundColor = 'rgba(255, 255, 255, 0.9)';
+                                                e.target.style.boxShadow = '0 2px 8px rgba(187, 187, 187, 0.3)';
+                                                e.target.style.transform = 'scale(1)';
+                                            }}
                                             onClick={() => handleDeleteClick(diary)}>
-                                            <i className="material-icons" style={{color: 'LightSteelBlue'}}>clear</i>
+                                            <i 
+                                                className="material-icons" 
+                                                style={{
+                                                    color: 'rgb(98, 104, 110)',
+                                                    fontSize: '18px',
+                                                    transition: 'color 0.3s ease'
+                                                }}
+                                                onMouseEnter={(e) => {
+                                                    e.target.style.color = 'tomato';
+                                                }}
+                                                onMouseLeave={(e) => {
+                                                    e.target.style.color = 'rgb(98, 104, 110)';
+                                                }}>
+                                                delete
+                                            </i>
                                         </button>
                                     </li>
                                 </ul>
@@ -128,32 +200,15 @@ export default function Diarybook(props) {
             <br/>
             <div className="detail-header">
                 <h4 className="booheaders">Moods</h4>
-                {userMoods.filter(userMood => {
-                    const date1 = new Date(userMood.created_at);
-                    const date2 = date1.getDate();
-                    const month = date1.getMonth();
-                    const year = date1.getFullYear();
-                    const formatted = year + '-' + month + '-' + date2;
-                    return userMood.user_id === currentUserId && formatted === props.selectedDate;
-                }).length > 0 ? (
-                    userMoods.map((userMood) => 
-                        moodsList.map((mood) => {
-                            const date1 = new Date(userMood.created_at);
-                            const date2 = date1.getDate();
-                            const month = date1.getMonth();
-                            const year = date1.getFullYear();
-                            const formatted = year + '-' + month + '-' + date2;
-                            
-                            return userMood.mood_id === mood.id && userMood.user_id === currentUserId && formatted === props.selectedDate ? (
-                                <ul key={mood.id} style={{listStyle: 'none', padding: 0}}>
-                                    <li>
-                                        <img style={{width: '30px', height: 'auto'}} src={mood.mood_url} alt={mood.mood_name}/> 
-                                        {sanitizeContent(mood.mood_name)}
-                                    </li>
-                                </ul>
-                            ) : null;
-                        })
-                    )
+                {uniqueMoods.length > 0 ? (
+                    <ul style={{listStyle: 'none', padding: 0}}>
+                        {uniqueMoods.map((mood) => (
+                            <li key={mood.id}>
+                                <img style={{width: '30px', height: 'auto'}} src={mood.mood_url} alt={mood.mood_name}/> 
+                                {sanitizeContent(mood.mood_name)}
+                            </li>
+                        ))}
+                    </ul>
                 ) : (
                     <p style={{color: 'gray', fontStyle: 'italic'}}>No entry for this day.</p>
                 )}
@@ -161,32 +216,15 @@ export default function Diarybook(props) {
             <br/>
             <div className="detail-header">
                 <h4 className="booheaders">Activities</h4>
-                {userActivities.filter(userActivity => {
-                    const date1 = new Date(userActivity.created_at);
-                    const date2 = date1.getDate();
-                    const month = date1.getMonth();
-                    const year = date1.getFullYear();
-                    const formatted = year + '-' + month + '-' + date2;
-                    return userActivity.user_id === currentUserId && formatted === props.selectedDate;
-                }).length > 0 ? (
-                    userActivities.map((userActivity) =>
-                        activitiesList.map((activity) => {
-                            const date1 = new Date(userActivity.created_at);
-                            const date2 = date1.getDate();
-                            const month = date1.getMonth();
-                            const year = date1.getFullYear();
-                            const formatted = year + '-' + month + '-' + date2;
-                            
-                            return userActivity.activity_id === activity.id && userActivity.user_id === currentUserId && formatted === props.selectedDate ? (
-                                <ul key={activity.id} style={{listStyle: 'none', padding: 0}}>
-                                    <li>
-                                        <img style={{width: '30px', height: 'auto'}} src={activity.activity_url} alt={activity.activity_name}/> 
-                                        {sanitizeContent(activity.activity_name)}
-                                    </li>
-                                </ul>
-                            ) : null;
-                        })
-                    )
+                {uniqueActivities.length > 0 ? (
+                    <ul style={{listStyle: 'none', padding: 0}}>
+                        {uniqueActivities.map((activity) => (
+                            <li key={activity.id}>
+                                <img style={{width: '30px', height: 'auto'}} src={activity.activity_url} alt={activity.activity_name}/> 
+                                {sanitizeContent(activity.activity_name)}
+                            </li>
+                        ))}
+                    </ul>
                 ) : (
                     <p style={{color: 'gray', fontStyle: 'italic'}}>No entry for this day.</p>
                 )}

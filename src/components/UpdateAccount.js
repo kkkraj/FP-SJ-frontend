@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import api from "../services/api";
+import api from '../services/api';
 
 export default function UpdateAccount(props) {
     const [user, setUser] = useState({
@@ -8,9 +8,9 @@ export default function UpdateAccount(props) {
         email: '',
         username: ''
     });
+    const [activeField, setActiveField] = useState(null); // 'name', 'email', 'username', or null
     const [successMessage, setSuccessMessage] = useState('');
     const [errorMessage, setErrorMessage] = useState('');
-    const [activeField, setActiveField] = useState(null); // 'name', 'email', 'username', or null
     
     const handleChange = (event) => {
         const { name, value } = event.target;
