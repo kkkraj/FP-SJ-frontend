@@ -335,8 +335,8 @@ const api = {
         }
     },
     userMoods: {
-        getAll: () => {
-            return fetch(`http://localhost:3000/user_moods/`, {
+        getAll: (userId) => {
+            return fetch(`http://localhost:3000/user_moods/?user_id=${userId}`, {
                 headers: headers(),
             }).then((response) => {
                 if (!response.ok) {
@@ -347,8 +347,8 @@ const api = {
         }
     },
     userActivities: {
-        getAll: () => {
-            return fetch(`http://localhost:3000/user_activities/`, {
+        getAll: (userId) => {
+            return fetch(`http://localhost:3000/user_activities/?user_id=${userId}`, {
                 headers: headers(),
             }).then((response) => {
                 if (!response.ok) {

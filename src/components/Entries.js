@@ -13,8 +13,8 @@ export default function Entries(props) {
     // Function to format date for display and API
     const formatDateForDisplay = (selectedDate) => {
         const year = selectedDate.getFullYear();
-        const month = selectedDate.getMonth();
-        const ddate = selectedDate.getDate();
+        const month = String(selectedDate.getMonth() + 1).padStart(2, '0'); // Add 1 because getMonth() returns 0-11
+        const ddate = String(selectedDate.getDate()).padStart(2, '0');
         const formatted = `${year}-${month}-${ddate}`;
         const weekDay = selectedDate.toLocaleString('en-us', {  weekday: 'long' });
         const monthName = selectedDate.toLocaleString('en-us', {  month: 'long' });

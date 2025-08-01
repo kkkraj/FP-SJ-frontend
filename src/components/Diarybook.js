@@ -21,11 +21,20 @@ export default function Diarybook(props) {
                 // Fetch all data in parallel
                 const [diariesData, userMoodsData, moodsListData, activitiesData, userActivitiesData] = await Promise.all([
                     api.diary.getAll(),
-                    api.userMoods.getAll(),
+                    api.userMoods.getAll(currentUserId),
                     api.moods.getAll(),
                     api.activities.getAll(),
-                    api.userActivities.getAll()
+                    api.userActivities.getAll(currentUserId)
                 ]);
+
+                console.log('=== DEBUGGING DATA FETCH ===');
+                console.log('Current User ID:', currentUserId);
+                console.log('Selected Date:', props.selectedDate);
+                console.log('All Diaries:', diariesData);
+                console.log('All User Moods:', userMoodsData);
+                console.log('All Moods List:', moodsListData);
+                console.log('All Activities:', activitiesData);
+                console.log('All User Activities:', userActivitiesData);
 
                 setDiaries(diariesData);
                 setUserMoods(userMoodsData);
@@ -76,21 +85,28 @@ export default function Diarybook(props) {
     // Helper function to format date for comparison
     const formatDate = (dateString) => {
         const date = new Date(dateString);
-        const day = date.getDate();
-        const month = date.getMonth();
         const year = date.getFullYear();
+        const month = String(date.getMonth() + 1).padStart(2, '0'); // Add 1 because getMonth() returns 0-11
+        const day = String(date.getDate()).padStart(2, '0');
         return `${year}-${month}-${day}`;
     };
 
     // Get unique moods for the selected date
     const getUniqueMoodsForDate = () => {
+        console.log('Selected date:', props.selectedDate);
+        console.log('All user moods:', userMoods);
+        
         const dateMoods = userMoods.filter(userMood => {
             const formatted = formatDate(userMood.created_at);
+            console.log('User mood date:', userMood.created_at, 'Formatted:', formatted, 'Selected:', props.selectedDate);
             return userMood.user_id === currentUserId && formatted === props.selectedDate;
         });
 
+        console.log('Filtered date moods:', dateMoods);
+
         // Get unique mood IDs to avoid duplicates
         const uniqueMoodIds = [...new Set(dateMoods.map(userMood => userMood.mood_id))];
+        console.log('Unique mood IDs:', uniqueMoodIds);
         
         return uniqueMoodIds.map(moodId => {
             const mood = moodsList.find(m => m.id === moodId);
@@ -100,13 +116,20 @@ export default function Diarybook(props) {
 
     // Get unique activities for the selected date
     const getUniqueActivitiesForDate = () => {
+        console.log('Selected date:', props.selectedDate);
+        console.log('All user activities:', userActivities);
+        
         const dateActivities = userActivities.filter(userActivity => {
             const formatted = formatDate(userActivity.created_at);
+            console.log('User activity date:', userActivity.created_at, 'Formatted:', formatted, 'Selected:', props.selectedDate);
             return userActivity.user_id === currentUserId && formatted === props.selectedDate;
         });
 
+        console.log('Filtered date activities:', dateActivities);
+
         // Get unique activity IDs to avoid duplicates
         const uniqueActivityIds = [...new Set(dateActivities.map(userActivity => userActivity.activity_id))];
+        console.log('Unique activity IDs:', uniqueActivityIds);
         
         return uniqueActivityIds.map(activityId => {
             const activity = activitiesList.find(a => a.id === activityId);
