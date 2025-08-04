@@ -72,10 +72,10 @@ export default function MoodsChart({ currentUserId }) {
         // Clear previous chart
         d3.select(svgRef.current).selectAll("*").remove();
 
-        // Set up dimensions
+        // Set up dimensions - smaller for side-by-side layout
         const margin = { top: 20, right: 20, bottom: 60, left: 20 };
-        const width = 800 - margin.left - margin.right;
-        const height = 500 - margin.top - margin.bottom;
+        const width = 400 - margin.left - margin.right;
+        const height = 400 - margin.top - margin.bottom;
 
         // Create SVG
         const svg = d3.select(svgRef.current)
@@ -84,15 +84,15 @@ export default function MoodsChart({ currentUserId }) {
             .append("g")
             .attr("transform", `translate(${margin.left},${margin.top})`);
 
-        // Create color scale
-        const colorScale = d3.scaleOrdinal()
-            .domain(data.map(d => d.id))
-            .range(d3.quantize(t => d3.interpolateSpectral(t * 0.8 + 0.1), data.length));
+        // Create color scale based on frequency (lightest to darkest salmon)
+        const colorScale = d3.scaleSequential()
+            .domain([0, d3.max(data, d => d.count)])
+            .interpolator(d3.interpolateRgb("#FFE4E1", "#CD5C5C"));
 
-        // Create size scale
+        // Create size scale - all bubbles same size since color represents frequency
         const sizeScale = d3.scaleSqrt()
             .domain([0, d3.max(data, d => d.count)])
-            .range([12, 35]);
+            .range([20, 20]);
 
         // Create simulation
         const simulation = d3.forceSimulation(data)
@@ -111,15 +111,19 @@ export default function MoodsChart({ currentUserId }) {
         // Add bubble circles
         bubbles.append("circle")
             .attr("r", d => sizeScale(d.count))
-            .style("fill", d => colorScale(d.id))
+            .style("fill", d => {
+                const color = colorScale(d.count);
+                console.log(`Mood: ${d.mood_name}, Count: ${d.count}, Color: ${color}`);
+                return color;
+            })
             .style("opacity", 0.7)
-            .style("stroke", d => d3.color(colorScale(d.id)).darker(0.3))
-            .style("stroke-width", 2)
             .on("mouseover", function(event, d) {
                 console.log("Mouse over bubble:", d.mood_name, "count:", d.count);
                 d3.select(this)
                     .style("opacity", 1)
-                    .style("stroke-width", 3);
+                    .transition()
+                    .duration(200)
+                    .attr("r", sizeScale(d.count) * 1.2);
                 
                 // Show tooltip
                 showTooltip(event, d);
@@ -127,7 +131,9 @@ export default function MoodsChart({ currentUserId }) {
             .on("mouseout", function(event, d) {
                 d3.select(this)
                     .style("opacity", 0.7)
-                    .style("stroke-width", 2);
+                    .transition()
+                    .duration(200)
+                    .attr("r", sizeScale(d.count));
                 
                 // Hide tooltip
                 hideTooltip();
@@ -143,14 +149,7 @@ export default function MoodsChart({ currentUserId }) {
                     .attr("r", sizeScale(d.count));
             });
 
-        // Add mood images inside bubbles
-        bubbles.append("image")
-            .attr("xlink:href", d => d.mood_url)
-            .attr("x", d => -sizeScale(d.count) * 0.4)
-            .attr("y", d => -sizeScale(d.count) * 0.4)
-            .attr("width", d => sizeScale(d.count) * 0.8)
-            .attr("height", d => sizeScale(d.count) * 0.8)
-            .style("pointer-events", "none");
+
 
 
 
@@ -172,7 +171,7 @@ export default function MoodsChart({ currentUserId }) {
         const tooltip = d3.select("body").append("div")
             .attr("class", "tooltip")
             .style("position", "fixed")
-            .style("background", "WhiteSmoke")
+            .style("background", "white")
             .style("color", "#878f99")
             .style("padding", "8px 12px")
             .style("border-radius", "15px")
@@ -188,7 +187,10 @@ export default function MoodsChart({ currentUserId }) {
             .style("opacity", "1");
 
         tooltip.html(`
-            <div style="margin-bottom: 4px; font-size: 12px; font-weight: bold;">${d.mood_name}</div>
+            <div style="margin-bottom: 3px; text-align: center;">
+                <img src="${d.mood_url}" alt="${d.mood_name}" style="width: 30px; height: 30px; margin-bottom: 2px;" />
+            </div>
+            <div style="margin-bottom: 2px; font-size: 12px; font-weight: bold;">${d.mood_name}</div>
             <div style="font-size: 11px;">Selected ${d.count} time${d.count !== 1 ? 's' : ''}</div>
         `);
 

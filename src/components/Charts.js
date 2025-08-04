@@ -13,26 +13,22 @@ export default function Charts({ currentUserId }) {
                     <Col xs={12} md={4}></Col>
                 </Row> <br/>
                 
-                {/* Mood Chart - Full Width */}
+                {/* Chart Headers - Side by Side */}
                 <Row>
-                    <Col xs={12}>
+                    <Col xs={12} md={6}>
                         <h4 className="chart-header">Mood Tracker</h4>
                     </Col>
-                </Row>
-                <Row>
-                    <Col xs={12}>
-                        <MoodsChart currentUserId={currentUserId} />
-                    </Col>
-                </Row>
-                
-                {/* Activity Chart - Full Width */}
-                <Row style={{ marginTop: '40px' }}>
-                    <Col xs={12}>
+                    <Col xs={12} md={6}>
                         <h4 className="chart-header">Activity Tracker</h4>
                     </Col>
                 </Row>
+                
+                {/* Charts - Side by Side */}
                 <Row>
-                    <Col xs={12}>
+                    <Col xs={12} md={6}>
+                        <MoodsChart currentUserId={currentUserId} />
+                    </Col>
+                    <Col xs={12} md={6}>
                         <ActivityChart currentUserId={currentUserId} />
                     </Col>
                 </Row>
