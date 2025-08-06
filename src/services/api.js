@@ -312,6 +312,20 @@ const api = {
                 return response.json();
             });
         },
+        uploadPhoto: (formData) => {
+            return fetch(`http://localhost:3000/diary_photos/`, {
+                method: 'POST',
+                headers: {
+                    'Authorization': `Bearer ${token()}`
+                },
+                body: formData
+            }).then((response) => {
+                if (!response.ok) {
+                    throw new Error(`Failed to upload photo: ${response.status} ${response.statusText}`);
+                }
+                return response.json();
+            });
+        },
         getAll: () => {
             return fetch(`http://localhost:3000/diary_entries/`, {
                 headers: headers(),

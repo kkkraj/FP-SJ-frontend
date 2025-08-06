@@ -252,3 +252,43 @@ li#diary-content {
   margin: 0px 0px 0px;
   padding: 3px 0px 3px 0px;
 }
+
+/* Remove borders from all button elements */
+.btn,
+.btn-small,
+.btn-large,
+.btn-floating,
+button[type="submit"],
+input[type="submit"] {
+  border: none !important;
+  outline: none !important;
+  box-shadow: none !important;
+  border-radius: 10px !important;
+  padding: 6px 12px !important;
+}
+
+/* Remove borders from button hover states */
+.btn:hover,
+.btn-small:hover,
+.btn-large:hover,
+.btn-floating:hover,
+button[type="submit"]:hover,
+input[type="submit"]:hover {
+  border: none !important;
+  outline: none !important;
+  box-shadow: none !important;
+  border-radius: 10px !important;
+}
+
+/* Remove borders from button focus states */
+.btn:focus,
+.btn-small:focus,
+.btn-large:focus,
+.btn-floating:focus,
+button[type="submit"]:focus,
+input[type="submit"]:focus {
+  border: none !important;
+  outline: none !important;
+  box-shadow: none !important;
+  border-radius: 10px !important;
+}
