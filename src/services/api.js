@@ -326,6 +326,39 @@ const api = {
                 return response.json();
             });
         },
+        getPhotos: (userId) => {
+            return fetch(`http://localhost:3000/diary_photos/?user_id=${userId}`, {
+                headers: headers(),
+            }).then((response) => {
+                if (!response.ok) {
+                    throw new Error(`Failed to fetch diary photos: ${response.status} ${response.statusText}`);
+                }
+                return response.json();
+            });
+        },
+        deletePhoto: (photoId) => {
+            console.log('API: Sending DELETE request to:', `http://localhost:3000/diary_photos/${photoId}`);
+            console.log('API: Headers:', headers());
+            
+            return fetch(`http://localhost:3000/diary_photos/${photoId}`, {
+                method: 'DELETE',
+                headers: headers(),
+            }).then((response) => {
+                console.log('API: Response status:', response.status);
+                console.log('API: Response ok:', response.ok);
+                
+                if (!response.ok) {
+                    console.error('API: Delete failed with status:', response.status);
+                    throw new Error(`Failed to delete diary photo: ${response.status} ${response.statusText}`);
+                }
+                
+                console.log('API: Delete successful');
+                return response.json();
+            }).catch((error) => {
+                console.error('API: Delete request failed:', error);
+                throw error;
+            });
+        },
         getAll: () => {
             return fetch(`http://localhost:3000/diary_entries/`, {
                 headers: headers(),

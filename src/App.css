@@ -292,3 +292,17 @@ input[type="submit"]:focus {
   box-shadow: none !important;
   border-radius: 10px !important;
 }
+
+/* Photo container hover effects */
+.photo-container {
+  position: relative;
+}
+
+.photo-container button {
+  opacity: 0;
+  transition: opacity 0.3s ease;
+}
+
+.photo-container:hover button {
+  opacity: 1;
+}
