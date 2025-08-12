@@ -142,7 +142,18 @@ export default function Diarybook(props) {
         return `${year}-${month}-${day}`;
     };
 
-    // Get unique moods for the selected date
+    // Helper function to format time for display
+    const formatTime = (dateString) => {
+        const date = new Date(dateString);
+        const hours = date.getHours();
+        const minutes = date.getMinutes();
+        const ampm = hours >= 12 ? 'PM' : 'AM';
+        const displayHours = hours % 12 || 12;
+        const displayMinutes = String(minutes).padStart(2, '0');
+        return `${displayHours}:${displayMinutes} ${ampm}`;
+    };
+
+    // Get unique moods for the selected date with timestamps
     const getUniqueMoodsForDate = () => {
         console.log('Selected date:', props.selectedDate);
         console.log('All user moods:', userMoods);
@@ -155,17 +166,21 @@ export default function Diarybook(props) {
 
         console.log('Filtered date moods:', dateMoods);
 
-        // Get unique mood IDs to avoid duplicates
-        const uniqueMoodIds = [...new Set(dateMoods.map(userMood => userMood.mood_id))];
-        console.log('Unique mood IDs:', uniqueMoodIds);
+        // Get unique mood IDs to avoid duplicates, but keep the first occurrence for timestamp
+        const uniqueMoodMap = new Map();
+        dateMoods.forEach(userMood => {
+            if (!uniqueMoodMap.has(userMood.mood_id)) {
+                uniqueMoodMap.set(userMood.mood_id, userMood.created_at);
+            }
+        });
         
-        return uniqueMoodIds.map(moodId => {
+        return Array.from(uniqueMoodMap.entries()).map(([moodId, timestamp]) => {
             const mood = moodsList.find(m => m.id === moodId);
-            return mood;
+            return mood ? { ...mood, timestamp } : null;
         }).filter(Boolean); // Remove any undefined moods
     };
 
-    // Get unique activities for the selected date
+    // Get unique activities for the selected date with timestamps
     const getUniqueActivitiesForDate = () => {
         console.log('Selected date:', props.selectedDate);
         console.log('All user activities:', userActivities);
@@ -178,14 +193,29 @@ export default function Diarybook(props) {
 
         console.log('Filtered date activities:', dateActivities);
 
-        // Get unique activity IDs to avoid duplicates
-        const uniqueActivityIds = [...new Set(dateActivities.map(userActivity => userActivity.activity_id))];
-        console.log('Unique activity IDs:', uniqueActivityIds);
+        // Get unique activity IDs to avoid duplicates, but keep the first occurrence for timestamp
+        const uniqueActivityMap = new Map();
+        dateActivities.forEach(userActivity => {
+            if (!uniqueActivityMap.has(userActivity.activity_id)) {
+                uniqueActivityMap.set(userActivity.activity_id, userActivity.created_at);
+            }
+        });
         
-        return uniqueActivityIds.map(activityId => {
+        return Array.from(uniqueActivityMap.entries()).map(([activityId, timestamp]) => {
             const activity = activitiesList.find(a => a.id === activityId);
-            return activity;
+            return activity ? { ...activity, timestamp } : null;
         }).filter(Boolean); // Remove any undefined activities
+    };
+
+    // Get sorted diaries for the selected date (oldest to newest)
+    const getSortedDiariesForDate = () => {
+        const dateDiaries = diaries.filter(diary => {
+            const formatted = formatDate(diary.created_at);
+            return diary.user_id === currentUserId && formatted === props.selectedDate;
+        });
+        
+        // Sort by creation time (oldest to newest)
+        return dateDiaries.sort((a, b) => new Date(a.created_at) - new Date(b.created_at));
     };
 
     // Get photos for the selected date
@@ -325,6 +355,7 @@ export default function Diarybook(props) {
 >
                                     {/* Delete Button */}
                                     <button 
+                                        className="delete-photo-btn"
                                         style={{
                                             position: 'absolute',
                                             top: '8px',
@@ -342,16 +373,7 @@ export default function Diarybook(props) {
                                             justifyContent: 'center',
                                             zIndex: 10
                                         }}
-                                        onMouseEnter={(e) => {
-                                            e.target.style.backgroundColor = 'rgba(255, 99, 71, 0.1)';
-                                            e.target.style.boxShadow = '0 4px 12px rgba(255, 99, 71, 0.3)';
-                                            e.target.style.transform = 'scale(1.1)';
-                                        }}
-                                        onMouseLeave={(e) => {
-                                            e.target.style.backgroundColor = 'rgba(255, 255, 255, 0.9)';
-                                            e.target.style.boxShadow = '0 2px 8px rgba(187, 187, 187, 0.3)';
-                                            e.target.style.transform = 'scale(1)';
-                                        }}
+                                        // Hover effects now handled by CSS
                                         onClick={(e) => {
                                             e.stopPropagation();
                                             handlePhotoDeleteClick(photo);
@@ -362,12 +384,6 @@ export default function Diarybook(props) {
                                                 color: 'rgb(98, 104, 110)',
                                                 fontSize: '16px',
                                                 transition: 'color 0.3s ease'
-                                            }}
-                                            onMouseEnter={(e) => {
-                                                e.target.style.color = 'tomato';
-                                            }}
-                                            onMouseLeave={(e) => {
-                                                e.target.style.color = 'rgb(98, 104, 110)';
                                             }}>
                                             delete
                                         </i>
@@ -413,6 +429,24 @@ export default function Diarybook(props) {
                                             console.log('Image loaded successfully:', photo.photo_url);
                                         }}
                                     />
+                                    {/* Photo timestamp - only visible on hover */}
+                                    <div 
+                                        className="photo-timestamp"
+                                        style={{
+                                            position: 'absolute',
+                                            top: '8px',
+                                            left: '8px',
+                                            background: 'rgba(255, 255, 255, 0.8)',
+                                            color: 'rgb(98, 104, 110)',
+                                            fontSize: '11px',
+                                            padding: '6px 8px',
+                                            borderRadius: '4px',
+                                            opacity: 0,
+                                            transition: 'opacity 0.3s ease',
+                                            zIndex: 5
+                                        }}>
+                                        {formatTime(photo.created_at)}
+                                    </div>
                                 </div>
                             ))}
                         </div>
@@ -424,25 +458,28 @@ export default function Diarybook(props) {
             <br/>
             <div className="detail-header">
                 <h4 className="booheaders">Journal</h4>
-                {diaries.filter(diary => {
-                    const formatted = formatDate(diary.created_at);
-                    return diary.user_id === currentUserId && formatted === props.selectedDate;
-                }).length > 0 ? (
-                    diaries.map((diary) => {
-                        const formatted = formatDate(diary.created_at);
-                        
-                        return diary.user_id === currentUserId && formatted === props.selectedDate ? (
-                            <div key={diary.id}>
+                {(() => {
+                    const sortedDiaries = getSortedDiariesForDate();
+                    return sortedDiaries.length > 0 ? (
+                        sortedDiaries.map((diary) => (
+                            <div key={diary.id} style={{marginBottom: '20px'}}>
                                 <ul style={{listStyle: 'none', padding: 0}}>
                                     <li id="diary-content">
                                         {sanitizeContent(diary.content)}
                                     </li>
-                                    <li>
+                                    <li style={{display: 'flex', alignItems: 'center', justifyContent: 'space-between', marginTop: '10px'}}>
+                                        <span style={{
+                                            color: 'gray',
+                                            fontSize: '12px',
+                                            fontStyle: 'italic'
+                                        }}>
+                                            Created at {formatTime(diary.created_at)}
+                                        </span>
                                         <button 
+                                            className="delete-photo-btn"
                                             style={{
                                                 width: '32px', 
                                                 height: '32px', 
-                                                marginTop: '10px',
                                                 border: 'none',
                                                 borderRadius: '50%',
                                                 backgroundColor: 'rgba(255, 255, 255, 0.9)',
@@ -453,16 +490,6 @@ export default function Diarybook(props) {
                                                 alignItems: 'center',
                                                 justifyContent: 'center'
                                             }}
-                                            onMouseEnter={(e) => {
-                                                e.target.style.backgroundColor = 'rgba(255, 99, 71, 0.1)';
-                                                e.target.style.boxShadow = '0 4px 12px rgba(255, 99, 71, 0.3)';
-                                                e.target.style.transform = 'scale(1.1)';
-                                            }}
-                                            onMouseLeave={(e) => {
-                                                e.target.style.backgroundColor = 'rgba(255, 255, 255, 0.9)';
-                                                e.target.style.boxShadow = '0 2px 8px rgba(187, 187, 187, 0.3)';
-                                                e.target.style.transform = 'scale(1)';
-                                            }}
                                             onClick={() => handleDeleteClick(diary)}>
                                             <i 
                                                 className="material-icons" 
@@ -470,12 +497,6 @@ export default function Diarybook(props) {
                                                     color: 'rgb(98, 104, 110)',
                                                     fontSize: '18px',
                                                     transition: 'color 0.3s ease'
-                                                }}
-                                                onMouseEnter={(e) => {
-                                                    e.target.style.color = 'tomato';
-                                                }}
-                                                onMouseLeave={(e) => {
-                                                    e.target.style.color = 'rgb(98, 104, 110)';
                                                 }}>
                                                 delete
                                             </i>
@@ -483,11 +504,11 @@ export default function Diarybook(props) {
                                     </li>
                                 </ul>
                             </div>
-                        ) : null;
-                    })
-                ) : (
-                    <p style={{color: 'gray', fontStyle: 'italic'}}>No entry for this day.</p>
-                )}
+                        ))
+                    ) : (
+                        <p style={{color: 'gray', fontStyle: 'italic'}}>No entry for this day.</p>
+                    );
+                })()}
             </div>
             <br/>
             <div className="detail-header">
@@ -495,9 +516,18 @@ export default function Diarybook(props) {
                 {uniqueMoods.length > 0 ? (
                     <ul style={{listStyle: 'none', padding: 0}}>
                         {uniqueMoods.map((mood) => (
-                            <li key={mood.id}>
-                                <img style={{width: '30px', height: 'auto'}} src={mood.mood_url} alt={mood.mood_name}/> 
-                                {sanitizeContent(mood.mood_name)}
+                            <li key={mood.id} style={{display: 'flex', alignItems: 'center', justifyContent: 'space-between', marginBottom: '10px'}}>
+                                <div style={{display: 'flex', alignItems: 'center'}}>
+                                    <img style={{width: '30px', height: 'auto', marginRight: '10px'}} src={mood.mood_url} alt={mood.mood_name}/> 
+                                    {sanitizeContent(mood.mood_name)}
+                                </div>
+                                <span style={{
+                                    color: 'gray',
+                                    fontSize: '12px',
+                                    fontStyle: 'italic'
+                                }}>
+                                    {formatTime(mood.timestamp)}
+                                </span>
                             </li>
                         ))}
                     </ul>
@@ -511,9 +541,18 @@ export default function Diarybook(props) {
                 {uniqueActivities.length > 0 ? (
                     <ul style={{listStyle: 'none', padding: 0}}>
                         {uniqueActivities.map((activity) => (
-                            <li key={activity.id}>
-                                <img style={{width: '30px', height: 'auto'}} src={activity.activity_url} alt={activity.activity_name}/> 
-                                {sanitizeContent(activity.activity_name)}
+                            <li key={activity.id} style={{display: 'flex', alignItems: 'center', justifyContent: 'space-between', marginBottom: '10px'}}>
+                                <div style={{display: 'flex', alignItems: 'center'}}>
+                                    <img style={{width: '30px', height: 'auto', marginRight: '10px'}} src={activity.activity_url} alt={activity.activity_name}/> 
+                                    {sanitizeContent(activity.activity_name)}
+                                </div>
+                                <span style={{
+                                    color: 'gray',
+                                    fontSize: '12px',
+                                    fontStyle: 'italic'
+                                }}>
+                                    {formatTime(activity.timestamp)}
+                                </span>
                             </li>
                         ))}
                     </ul>

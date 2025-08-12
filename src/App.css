@@ -298,11 +298,61 @@ input[type="submit"]:focus {
   position: relative;
 }
 
-.photo-container button {
+/* More specific selector to override general button styles */
+.photo-container button.delete-photo-btn {
   opacity: 0;
   transition: opacity 0.3s ease;
+  border-radius: 50% !important; /* Ensure circular shape is maintained */
+  width: 28px !important;
+  height: 28px !important;
+  padding: 0 !important; /* Override the general button padding */
 }
 
-.photo-container:hover button {
+/* Also handle diary delete buttons - more specific than general button rules */
+button.delete-photo-btn,
+.photo-container button.delete-photo-btn,
+.detail-header button.delete-photo-btn {
+  border-radius: 50% !important; /* Ensure circular shape is maintained */
+  padding: 0 !important; /* Override the general button padding */
+}
+
+/* Force circular shape on all states */
+button.delete-photo-btn,
+button.delete-photo-btn:hover,
+button.delete-photo-btn:focus,
+button.delete-photo-btn:active,
+.photo-container button.delete-photo-btn,
+.photo-container button.delete-photo-btn:hover,
+.photo-container button.delete-photo-btn:focus,
+.photo-container button.delete-photo-btn:active,
+.detail-header button.delete-photo-btn,
+.detail-header button.delete-photo-btn:hover,
+.detail-header button.delete-photo-btn:focus,
+.detail-header button.delete-photo-btn:active {
+  border-radius: 50% !important;
+}
+
+.photo-container:hover button.delete-photo-btn {
   opacity: 1;
+}
+
+/* Photo timestamp hover effect - more specific selector */
+.photo-container:hover .photo-timestamp,
+.photo-container .photo-timestamp:hover {
+  opacity: 1 !important;
+}
+
+/* Delete button hover states - more specific to override general button styles */
+button.delete-photo-btn:hover,
+.photo-container button.delete-photo-btn:hover,
+.detail-header button.delete-photo-btn:hover {
+  background-color: rgba(255, 99, 71, 0.1) !important;
+  box-shadow: 0 4px 12px rgba(255, 99, 71, 0.3) !important;
+  transform: scale(1.1) !important;
+}
+
+button.delete-photo-btn .material-icons:hover,
+.photo-container button.delete-photo-btn .material-icons:hover,
+.detail-header button.delete-photo-btn .material-icons:hover {
+  color: tomato !important;
 }
