@@ -215,10 +215,20 @@ const api = {
                 return response.json();
             });
         },
-        getUserMoodsForMonth: (userId) => {
-            // Get data for the past 30 days
-            const endDate = new Date().toISOString().split('T')[0];
-            const startDate = new Date(Date.now() - 30 * 24 * 60 * 60 * 1000).toISOString().split('T')[0];
+        getUserMoodsForMonth: (userId, month = null) => {
+            let startDate, endDate;
+            
+            if (month) {
+                // Parse month parameter (YYYY-MM format)
+                const [year, monthNum] = month.split('-');
+                startDate = new Date(parseInt(year), parseInt(monthNum) - 1, 1).toISOString().split('T')[0];
+                endDate = new Date(parseInt(year), parseInt(monthNum), 0).toISOString().split('T')[0];
+            } else {
+                // Default to past 30 days if no month specified
+                endDate = new Date().toISOString().split('T')[0];
+                startDate = new Date(Date.now() - 30 * 24 * 60 * 60 * 1000).toISOString().split('T')[0];
+            }
+            
             return fetch(`http://localhost:3000/user_moods/?user_id=${userId}&start_date=${startDate}&end_date=${endDate}`, {
                 headers: headers(),
             }).then((response) => {
@@ -274,10 +284,20 @@ const api = {
                 return response.json();
             });
         },
-        getUserActivitiesForMonth: (userId) => {
-            // Get data for the past 30 days
-            const endDate = new Date().toISOString().split('T')[0];
-            const startDate = new Date(Date.now() - 30 * 24 * 60 * 60 * 1000).toISOString().split('T')[0];
+        getUserActivitiesForMonth: (userId, month = null) => {
+            let startDate, endDate;
+            
+            if (month) {
+                // Parse month parameter (YYYY-MM format)
+                const [year, monthNum] = month.split('-');
+                startDate = new Date(parseInt(year), parseInt(monthNum) - 1, 1).toISOString().split('T')[0];
+                endDate = new Date(parseInt(year), parseInt(monthNum), 0).toISOString().split('T')[0];
+            } else {
+                // Default to past 30 days if no month specified
+                endDate = new Date().toISOString().split('T')[0];
+                startDate = new Date(Date.now() - 30 * 24 * 60 * 60 * 1000).toISOString().split('T')[0];
+            }
+            
             return fetch(`http://localhost:3000/user_activities/?user_id=${userId}&start_date=${startDate}&end_date=${endDate}`, {
                 headers: headers(),
             }).then((response) => {

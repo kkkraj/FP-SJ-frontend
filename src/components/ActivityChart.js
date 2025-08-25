@@ -1,40 +1,34 @@
-import React, { useState, useEffect, useRef } from 'react';
+import React, { useState, useEffect, useRef, useCallback } from 'react';
 import * as d3 from 'd3';
 import api from '../services/api';
 
-export default function ActivityChart({ currentUserId }) {
+export default function ActivityChart({ currentUserId, selectedMonth }) {
     const [activitiesList, setActivitiesList] = useState([]);
     const [userActivityData, setUserActivityData] = useState([]);
     const [loading, setLoading] = useState(true);
     const [error, setError] = useState(null);
     const svgRef = useRef();
 
-    useEffect(() => {
-        const fetchData = async () => {
-            try {
-                // Fetch both activities list and user activity data
-                const [activitiesData, userActivityData] = await Promise.all([
-                    api.activities.getAll(),
-                    currentUserId ? api.activities.getUserActivitiesForMonth(currentUserId) : Promise.resolve([])
-                ]);
-                
-                setActivitiesList(activitiesData);
-                setUserActivityData(userActivityData);
-                setLoading(false);
-            } catch (error) {
-                console.error('Error fetching activity data:', error);
-                setError(error.message);
-                setLoading(false);
-            }
-        };
-
-        fetchData();
-    }, [currentUserId]);
-
     // Process user activity data to count occurrences of each activity
-    const processActivityData = () => {
+    const processActivityData = useCallback(() => {
         if (!userActivityData || userActivityData.length === 0) {
-            // Use mock data if no real data
+            // Check if the selected month is in the future
+            if (selectedMonth) {
+                const [year, month] = selectedMonth.split('-');
+                const selectedDate = new Date(parseInt(year), parseInt(month) - 1, 1);
+                const currentDate = new Date();
+                const currentMonthStart = new Date(currentDate.getFullYear(), currentDate.getMonth(), 1);
+                
+                if (selectedDate >= currentMonthStart) {
+                    // Return empty data for future months
+                    return activitiesList.map((activity) => ({
+                        ...activity,
+                        count: 0
+                    }));
+                }
+            }
+            
+            // Use mock data only for past months
             return activitiesList.map((activity, index) => ({
                 ...activity,
                 count: Math.floor(Math.random() * 30) + 1
@@ -58,15 +52,9 @@ export default function ActivityChart({ currentUserId }) {
             ...activity,
             count: activityCounts[activity.id] || 0
         }));
-    };
+    }, [activitiesList, userActivityData]);
 
-    useEffect(() => {
-        if (!loading && activitiesList.length > 0) {
-            createBubbleChart();
-        }
-    }, [loading, activitiesList, userActivityData]);
-
-    const createBubbleChart = () => {
+    const createBubbleChart = useCallback(() => {
         const data = processActivityData();
         
         // Clear previous chart
@@ -149,17 +137,46 @@ export default function ActivityChart({ currentUserId }) {
                     .attr("r", sizeScale(d.count));
             });
 
-
-
-
-
         // Update positions on simulation tick
         simulation.on("tick", () => {
             bubbles.attr("transform", d => `translate(${d.x},${d.y})`);
         });
 
+    }, [processActivityData]);
 
-    };
+    useEffect(() => {
+        const fetchData = async () => {
+            try {
+                // Only fetch data if we have a valid month and userId
+                if (!selectedMonth || !/^\d{4}-\d{2}$/.test(selectedMonth)) {
+                    setLoading(false);
+                    return;
+                }
+                
+                // Fetch both activities list and user activity data
+                const [activitiesData, userActivityData] = await Promise.all([
+                    api.activities.getAll(),
+                    currentUserId ? api.activities.getUserActivitiesForMonth(currentUserId, selectedMonth) : Promise.resolve([])
+                ]);
+                
+                setActivitiesList(activitiesData);
+                setUserActivityData(userActivityData);
+                setLoading(false);
+            } catch (error) {
+                console.error('Error fetching activity data:', error);
+                setError(error.message);
+                setLoading(false);
+            }
+        };
+
+        fetchData();
+    }, [currentUserId, selectedMonth]);
+
+    useEffect(() => {
+        if (!loading && activitiesList.length > 0) {
+            createBubbleChart();
+        }
+    }, [loading, activitiesList, userActivityData, createBubbleChart]);
 
     // Tooltip functions
     const showTooltip = (event, d) => {

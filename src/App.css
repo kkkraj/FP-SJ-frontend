@@ -245,12 +245,14 @@ li#diary-content {
 
 #monthly {
   background-color: WhiteSmoke;
-  color:salmon;
+  color: salmon;
   border-radius: 15px;
   font-weight: bold;
   letter-spacing: 1px;
   margin: 0px 0px 0px;
-  padding: 3px 0px 3px 0px;
+  padding: 3px 20px 3px 20px;
+  min-width: 200px;
+  text-align: center;
 }
 
 /* Remove borders from all button elements */
@@ -356,3 +358,70 @@ button.delete-photo-btn .material-icons:hover,
 .detail-header button.delete-photo-btn .material-icons:hover {
   color: tomato !important;
 }
+
+/* Month Selector Styles */
+.charts .form-select {
+  background-color: #f8f9fa;
+  border: 2px solid #e9ecef;
+  border-radius: 8px;
+  font-size: 14px;
+  font-weight: 500;
+  color: #495057;
+  transition: all 0.3s ease;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+}
+
+.charts .form-select:hover {
+  border-color: #68bbbb;
+  box-shadow: 0 4px 8px rgba(104, 187, 183, 0.2);
+}
+
+.charts .form-select:focus {
+  border-color: #68bbbb;
+  box-shadow: 0 0 0 0.2rem rgba(104, 187, 183, 0.25);
+  outline: none;
+}
+
+.charts .form-select option {
+  background-color: white;
+  color: #495057;
+  padding: 8px;
+}
+
+/* Month Navigation Button Styles */
+.charts .month-nav-btn {
+  border: none;
+  border-radius: 50%;
+  width: 32px;
+  height: 32px;
+  padding: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 16px;
+  font-weight: bold;
+  color: salmon;
+  background-color: transparent;
+  transition: all 0.2s ease;
+  box-shadow: none;
+}
+
+.charts .month-nav-btn:hover:not(:disabled) {
+  background-color: rgba(250, 128, 114, 0.1);
+  color: salmon;
+  transform: scale(1.1);
+}
+
+.charts .month-nav-btn:focus {
+  box-shadow: 0 0 0 0.2rem rgba(104, 187, 183, 0.25);
+  outline: none;
+}
+
+.charts .month-nav-btn:disabled {
+  opacity: 0.3;
+  cursor: not-allowed;
+  color: #6c757d;
+}
+
+
+

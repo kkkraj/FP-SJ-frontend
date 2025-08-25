@@ -1,40 +1,34 @@
-import React, { useState, useEffect, useRef } from 'react';
+import React, { useState, useEffect, useRef, useCallback } from 'react';
 import * as d3 from 'd3';
 import api from '../services/api';
 
-export default function MoodsChart({ currentUserId }) {
+export default function MoodsChart({ currentUserId, selectedMonth }) {
     const [moodList, setMoodList] = useState([]);
     const [userMoodData, setUserMoodData] = useState([]);
     const [loading, setLoading] = useState(true);
     const [error, setError] = useState(null);
     const svgRef = useRef();
 
-    useEffect(() => {
-        const fetchData = async () => {
-            try {
-                // Fetch both moods list and user mood data
-                const [moodsListData, userMoodData] = await Promise.all([
-                    api.moods.getAll(),
-                    currentUserId ? api.moods.getUserMoodsForMonth(currentUserId) : Promise.resolve([])
-                ]);
-                
-                setMoodList(moodsListData);
-                setUserMoodData(userMoodData);
-                setLoading(false);
-            } catch (error) {
-                console.error('Error fetching mood data:', error);
-                setError(error.message);
-                setLoading(false);
-            }
-        };
-
-        fetchData();
-    }, [currentUserId]);
-
     // Process user mood data to count occurrences of each mood
-    const processMoodData = () => {
+    const processMoodData = useCallback(() => {
         if (!userMoodData || userMoodData.length === 0) {
-            // Use mock data if no real data
+            // Check if the selected month is in the future
+            if (selectedMonth) {
+                const [year, month] = selectedMonth.split('-');
+                const selectedDate = new Date(parseInt(year), parseInt(month) - 1, 1);
+                const currentDate = new Date();
+                const currentMonthStart = new Date(currentDate.getFullYear(), currentDate.getMonth(), 1);
+                
+                if (selectedDate >= currentMonthStart) {
+                    // Return empty data for future months
+                    return moodList.map((mood) => ({
+                        ...mood,
+                        count: 0
+                    }));
+                }
+            }
+            
+            // Use mock data only for past months
             return moodList.map((mood, index) => ({
                 ...mood,
                 count: Math.floor(Math.random() * 30) + 1
@@ -58,15 +52,9 @@ export default function MoodsChart({ currentUserId }) {
             ...mood,
             count: moodCounts[mood.id] || 0
         }));
-    };
+    }, [moodList, userMoodData]);
 
-    useEffect(() => {
-        if (!loading && moodList.length > 0) {
-            createBubbleChart();
-        }
-    }, [loading, moodList, userMoodData]);
-
-    const createBubbleChart = () => {
+    const createBubbleChart = useCallback(() => {
         const data = processMoodData();
         
         // Clear previous chart
@@ -149,17 +137,46 @@ export default function MoodsChart({ currentUserId }) {
                     .attr("r", sizeScale(d.count));
             });
 
-
-
-
-
         // Update positions on simulation tick
         simulation.on("tick", () => {
             bubbles.attr("transform", d => `translate(${d.x},${d.y})`);
         });
 
+    }, [processMoodData]);
 
-    };
+    useEffect(() => {
+        const fetchData = async () => {
+            try {
+                // Only fetch data if we have a valid month and userId
+                if (!selectedMonth || !/^\d{4}-\d{2}$/.test(selectedMonth)) {
+                    setLoading(false);
+                    return;
+                }
+                
+                // Fetch both moods list and user mood data
+                const [moodsListData, userMoodData] = await Promise.all([
+                    api.moods.getAll(),
+                    currentUserId ? api.moods.getUserMoodsForMonth(currentUserId, selectedMonth) : Promise.resolve([])
+                ]);
+                
+                setMoodList(moodsListData);
+                setUserMoodData(userMoodData);
+                setLoading(false);
+            } catch (error) {
+                console.error('Error fetching mood data:', error);
+                setError(error.message);
+                setLoading(false);
+            }
+        };
+
+        fetchData();
+    }, [currentUserId, selectedMonth]);
+
+    useEffect(() => {
+        if (!loading && moodList.length > 0) {
+            createBubbleChart();
+        }
+    }, [loading, moodList, userMoodData, createBubbleChart]);
 
     // Tooltip functions
     const showTooltip = (event, d) => {
