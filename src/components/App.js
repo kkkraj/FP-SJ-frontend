@@ -1,9 +1,12 @@
 import '../App.css';
 import React, { useState, useEffect } from 'react';
-import { useNavigate } from 'react-router-dom';
+import { useNavigate, Routes, Route } from 'react-router-dom';
 import api from "../services/api";
 import Home from './Home';
 import Welcome from './Welcome';
+import Signup from './Signup';
+import Login from './Login';
+import AuthLanding from './AuthLanding';
 
 function App() {
   const navigate = useNavigate();
@@ -177,15 +180,42 @@ function App() {
           onAccountUpdate={handleAccountUpdate}
         />
       ) : (
-        <Home 
-          error={error}
-          loading={loading}
-          signup={signup}
-          user={user} 
-          handleChange={handleChange} 
-          handleSubmit={handleSubmit}
-          handleLogin={handleLogin}
-        />
+        <Routes>
+          <Route path="/" element={
+            <Home 
+              error={error}
+              loading={loading}
+              signup={signup}
+              user={user} 
+              handleChange={handleChange} 
+              handleSubmit={handleSubmit}
+              handleLogin={handleLogin}
+            />
+          } />
+          <Route path="/home" element={
+            <Home 
+              error={error}
+              loading={loading}
+              signup={signup}
+              user={user} 
+              handleChange={handleChange} 
+              handleSubmit={handleSubmit}
+              handleLogin={handleLogin}
+            />
+          } />
+          <Route path="/auth" element={<AuthLanding />} />
+          <Route path="/signup" element={
+            <Signup 
+              user={user} 
+              handleChange={handleChange} 
+              handleSubmit={handleSubmit}
+              error={error}
+            />
+          } />
+          <Route path="/login" element={
+            <Login handleLogin={handleLogin} />
+          } />
+        </Routes>
       )}
     </div>
   );
