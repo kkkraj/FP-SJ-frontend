@@ -15,15 +15,14 @@ const signup = (userInfo) => {
     const dataFormats = [
         userInfo, // Original format
         { user: userInfo }, // Wrapped in 'user' key
-        { 
-            user: {
-                name: userInfo.name,
-                email: userInfo.email,
-                username: userInfo.username,
-                password: userInfo.password
-                // Removed password_confirmation to see if that's the issue
+                    {
+                user: {
+                    name: userInfo.name,
+                    email: userInfo.email,
+                    password: userInfo.password
+                    // Removed password_confirmation to see if that's the issue
+                }
             }
-        }
     ];
     
     // Try each format until one works
@@ -179,7 +178,32 @@ const api = {
         login: login,
         getCurrentUser: getCurrentUser,
         deleteUser: deleteUser,
-        updateUser: updateUser
+        updateUser: updateUser,
+        forgotPassword: (email) => {
+            console.log('API: Attempting forgot password for email:', email);
+            
+            return fetch(`${API_ROOT}/forgot_password`, {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+                    'Accept': 'application/json',
+                },
+                body: JSON.stringify({ email: email })
+            }).then((response) => {
+                console.log('API: Forgot password response status:', response.status);
+                
+                return response.json().then(data => {
+                    if (!response.ok) {
+                        // Backend returns 404 for "user not found" - this is business logic, not a technical error
+                        throw new Error(data.error || data.message || `Failed to send reset email: ${response.status}`);
+                    }
+                    return data;
+                });
+            }).catch((error) => {
+                console.error('API: Forgot password error:', error);
+                throw error;
+            });
+        }
     },
     moods: {
         getAll: () => {

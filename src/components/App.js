@@ -6,7 +6,8 @@ import Home from './Home';
 import Welcome from './Welcome';
 import Signup from './Signup';
 import Login from './Login';
-import AuthLanding from './AuthLanding';
+import TermsOfService from './TermsOfService';
+import HowItWorks from './HowItWorks';
 
 function App() {
   const navigate = useNavigate();
@@ -17,7 +18,6 @@ function App() {
   const [user, setUser] = useState({
     name: "",
     email: "",
-    username: "",
     password: "",
     password_confirmation: ""
   });
@@ -108,9 +108,8 @@ function App() {
           
           // Clear the form
           setUser({
-            name: '',
-            username: '',
-            email: '',
+                          name: '',
+              email: '',
             password: '',
             password_confirmation: ''
           });
@@ -138,9 +137,8 @@ function App() {
               
               // Clear the form
               setUser({
-                name: '',
-                username: '',
-                email: '',
+                              name: '',
+              email: '',
                 password: '',
                 password_confirmation: ''
               });
@@ -167,7 +165,6 @@ function App() {
   console.log(`currentUser object:`, auth.currentUser);
   console.log(`currentUser name:`, auth.currentUser.name);
   console.log(`currentUser email:`, auth.currentUser.email);
-  console.log(`currentUser username:`, auth.currentUser.username);
 
   return (
     <div id="app">
@@ -180,42 +177,47 @@ function App() {
           onAccountUpdate={handleAccountUpdate}
         />
       ) : (
-        <Routes>
-          <Route path="/" element={
-            <Home 
-              error={error}
-              loading={loading}
-              signup={signup}
-              user={user} 
-              handleChange={handleChange} 
-              handleSubmit={handleSubmit}
-              handleLogin={handleLogin}
-            />
-          } />
-          <Route path="/home" element={
-            <Home 
-              error={error}
-              loading={loading}
-              signup={signup}
-              user={user} 
-              handleChange={handleChange} 
-              handleSubmit={handleSubmit}
-              handleLogin={handleLogin}
-            />
-          } />
-          <Route path="/auth" element={<AuthLanding />} />
-          <Route path="/signup" element={
-            <Signup 
-              user={user} 
-              handleChange={handleChange} 
-              handleSubmit={handleSubmit}
-              error={error}
-            />
-          } />
-          <Route path="/login" element={
-            <Login handleLogin={handleLogin} />
-          } />
-        </Routes>
+                            <Routes>
+                      <Route path="/" element={
+                        <Home 
+                          error={error}
+                          loading={loading}
+                          signup={signup}
+                          user={user} 
+                          handleChange={handleChange} 
+                          handleSubmit={handleSubmit}
+                          handleLogin={handleLogin}
+                        />
+                      } />
+                      <Route path="/home" element={
+                        <Home 
+                          error={error}
+                          loading={loading}
+                          signup={signup}
+                          user={user} 
+                          handleChange={handleChange} 
+                          handleSubmit={handleSubmit}
+                          handleLogin={handleLogin}
+                        />
+                      } />
+                      <Route path="/signup" element={
+                        <Signup 
+                          user={user} 
+                          handleChange={handleChange} 
+                          handleSubmit={handleSubmit}
+                          error={error}
+                        />
+                      } />
+                      <Route path="/login" element={
+                        <Login handleLogin={handleLogin} />
+                      } />
+                      <Route path="/terms" element={
+                        <TermsOfService />
+                      } />
+                      <Route path="/how-it-works" element={
+                        <HowItWorks />
+                      } />
+                    </Routes>
       )}
     </div>
   );
