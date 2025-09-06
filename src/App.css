@@ -239,7 +239,7 @@ img#auswhale {
 
 .login-title {
   font-family: 'Poppins', sans-serif;
-  font-size: 45px;
+  font-size: 36px;
   font-weight: 500;
   color: #2c3e50;
   margin: 0 0 8px 0;
@@ -256,7 +256,7 @@ img#auswhale {
 
 .login-instruction {
   font-family: 'Raleway', sans-serif;
-  font-size: 16px;
+  font-size: 18px;
   color: #6c757d;
   margin: 0 0 40px 0;
   line-height: 1.6;
@@ -299,42 +299,90 @@ img#auswhale {
   color: rgb(87, 177, 172);
 }
 
-/* Signup page specific styling - simple centered form */
-.signup-page {
+/* Signup page specific styling - two column layout */
+.signup-container {
   min-height: 100vh;
+  display: flex;
+  background-color: #ffffff;
+}
+
+.signup-wrapper {
+  display: flex;
+  width: 100%;
+  min-height: 100vh;
+}
+
+.signup-left {
+  width: 40%;
   display: flex;
   align-items: center;
   justify-content: center;
-  background-color: #ffffff;
-  padding: 40px 20px;
+  background: linear-gradient(to bottom, #ffffff, #d2e3e4);
+  padding: 60px 80px;
+  position: relative;
+  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.12);
 }
 
-.signup-content {
+.signup-left-content {
+  text-align: center;
+  max-width: 400px;
+  width: 100%;
+  font-family: 'Raleway', sans-serif;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 48px;
+  min-height: 60vh;
+}
+
+.signup-right {
+  width: 60%;
+  background: #ffffff;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 60px 80px;
+  position: relative;
+}
+
+.signup-form-content {
   width: 100%;
   max-width: 500px;
   text-align: center;
+  font-family: 'Raleway', sans-serif;
 }
 
 /* Signup logo styling */
 .signup-logo {
-  margin-bottom: 32px;
+  margin-bottom: 0;
 }
 
 .signup-logo .logo {
-  height: 60px;
-  width: auto;
-  max-width: 200px;
+  max-width: 300px;
+  width: 100%;
+  height: auto;
   object-fit: contain;
 }
 
-.logo-divider {
-  width: 100vw;
-  height: 1px;
-  background-color: #e9ecef;
-  margin: 0 0 24px 0;
-  margin-left: calc(-50vw + 50%);
-  border-radius: 1px;
+.signup-left-content .tagline {
+  display: inline-flex;
+  align-items: center;
+  background-color: #f4f5f5;
+  padding: 8px 16px;
+  border-radius: 20px;
+  font-size: 14px;
+  color: #595d60;
+  margin-bottom: 0;
 }
+
+.signup-left-content .tagline-icon {
+  width: 16px;
+  height: 16px;
+  margin-right: 8px;
+  fill: currentColor;
+}
+
 
 /* Signup page title spacing */
 .signup-content .login-title {
@@ -420,6 +468,11 @@ img#auswhale {
   pointer-events: none;
 }
 
+/* Input with icon needs left padding */
+.input-wrapper .form-input {
+  padding-left: 48px;
+}
+
 .form-input {
   width: 100%;
   padding: 12px 16px 12px 16px;
@@ -433,11 +486,6 @@ img#auswhale {
   box-sizing: border-box;
 }
 
-.input-wrapper {
-  position: relative;
-  display: flex;
-  align-items: center;
-}
 
 .form-input:focus {
   border-color: rgb(104, 187, 183);
@@ -654,7 +702,7 @@ button.apple-button {
 /* Right Column - Illustration Area */
 .login-right {
   width: 40%;
-  background: #d2e3e4;
+  background: linear-gradient(to bottom, #ffffff, #d2e3e4);
   display: flex;
   align-items: center;
   justify-content: center;
@@ -690,7 +738,6 @@ button.apple-button {
   object-fit: contain;
   object-position: center;
   border-radius: 16px;
-  background: #d2e3e4;
 }
 
 /* Removed hover effects - image is now static */
@@ -1166,6 +1213,26 @@ button.apple-button {
   
   .right-button {
     flex: 1;
+  }
+  
+  /* Signup page responsive design */
+  .signup-wrapper {
+    flex-direction: column;
+  }
+  
+  .signup-left,
+  .signup-right {
+    width: 100%;
+    padding: 40px 20px;
+  }
+  
+  .signup-left {
+    order: 2;
+  }
+  
+  .signup-right {
+    order: 1;
+    min-height: 40vh;
   }
 }
 
