@@ -162,13 +162,20 @@ function App() {
   return (
     <div id="app">
       {loggedIn ? (
-        <Welcome 
-          loading={loading} 
-          currentUser={auth.currentUser}
-          handleLogout={handleLogout}
-          handleDeleteUser={handleDeleteUser}
-          onAccountUpdate={handleAccountUpdate}
-        />
+        <Routes>
+          <Route path="/how-it-works" element={
+            <HowItWorks currentUser={auth.currentUser} />
+          } />
+          <Route path="/*" element={
+            <Welcome 
+              loading={loading} 
+              currentUser={auth.currentUser}
+              handleLogout={handleLogout}
+              handleDeleteUser={handleDeleteUser}
+              onAccountUpdate={handleAccountUpdate}
+            />
+          } />
+        </Routes>
       ) : (
                             <Routes>
                       <Route path="/" element={

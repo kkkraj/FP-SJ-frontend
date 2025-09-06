@@ -86,14 +86,24 @@ export default function TermsOfService(props) {
                 </div>
 
                 <div className="terms-section">
-                    <h2>4. Your Content</h2>
+                    <h2>4. Privacy</h2>
+                    <p>
+                        Your privacy is important to us. Journals, notes, photos, and other entries you create are private by default and are not shared with other users.
+                    </p>
+                    <p>
+                        Please review our <a href="/privacy" className="legal-link">Privacy Policy</a> for details on how we collect, use, and protect your information.
+                    </p>
+                </div>
+
+                <div className="terms-section">
+                    <h2>5. Your Content</h2>
                     <p><strong>Ownership:</strong> You retain ownership of the text, images, and other content you create ("Your Content").</p>
                     <p><strong>License to Us:</strong> By using the Service, you grant us a limited license to store and display Your Content solely as needed to operate the Service.</p>
                     <p><strong>Responsibility:</strong> You are responsible for Your Content and must ensure it does not violate laws or infringe the rights of others.</p>
                 </div>
 
                 <div className="terms-section">
-                    <h2>5. Prohibited Uses</h2>
+                    <h2>6. Prohibited Uses</h2>
                     <p>You agree not to use the Service:</p>
                     <ul>
                         <li>For any unlawful purpose or to encourage unlawful activity.</li>
@@ -105,14 +115,14 @@ export default function TermsOfService(props) {
                 </div>
 
                 <div className="terms-section">
-                    <h2>6. Termination</h2>
+                    <h2>7. Termination</h2>
                     <p>
                         We may suspend or terminate your account if you violate these Terms or misuse the Service. You may stop using Space Journal at any time by closing your account.
                     </p>
                 </div>
 
                 <div className="terms-section">
-                    <h2>7. Disclaimers</h2>
+                    <h2>8. Disclaimers</h2>
                     <p>
                         Space Journal is provided on an "as is" and "as available" basis. We do not guarantee uninterrupted or error-free service.
                     </p>
@@ -122,21 +132,21 @@ export default function TermsOfService(props) {
                 </div>
 
                 <div className="terms-section">
-                    <h2>8. Limitation of Liability</h2>
+                    <h2>9. Limitation of Liability</h2>
                     <p>
                         To the fullest extent permitted by law, Space Journal and its creators shall not be liable for any indirect, incidental, or consequential damages arising from your use of the Service.
                     </p>
                 </div>
 
                 <div className="terms-section">
-                    <h2>9. Governing Law</h2>
+                    <h2>10. Governing Law</h2>
                     <p>
                         These Terms shall be governed by and interpreted under the laws of the jurisdiction in which our company operates, without regard to conflict of law principles.
                     </p>
                 </div>
 
                 <div className="terms-section">
-                    <h2>10. Changes to Terms</h2>
+                    <h2>11. Changes to Terms</h2>
                     <p>
                         We may update these Terms from time to time. If we make material changes, we will notify you (for example, by email or through the Service). Your continued use of the Service after changes take effect means you accept the revised Terms.
                     </p>
@@ -150,6 +160,10 @@ export default function TermsOfService(props) {
                     <p>
                         Email: support@spacejournal.io<br />
                     </p>
+                </div>
+
+                <div className="legal-links">
+                    <a href="/privacy" className="legal-link">Privacy Policy</a>
                 </div>
                 </div>
             </div>

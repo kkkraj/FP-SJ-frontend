@@ -132,7 +132,12 @@ export default function Signup(props) {
                                <span>Transform your thoughts into clarity</span>
                            </div>
                         <p className="login-instruction">Start your journey into mindful journaling to unlock balance, clarity, and growth.</p>
-                        <button className="btn-secondary">see how it works</button>
+                        <button 
+                            className="btn-secondary"
+                            onClick={() => navigate('/how-it-works')}
+                        >
+                            see how it works
+                        </button>
                     </div>
                 </div>
 
@@ -243,8 +248,14 @@ export default function Signup(props) {
                                     className="link-button" 
                                     onClick={() => navigate('/terms')}
                                 >
-                                    terms of service
-                                </button></p>
+                                    Terms of Service
+                                </button> and <button 
+                                    type="button"
+                                    className="link-button" 
+                                    onClick={() => navigate('/privacy')}
+                                >
+                                    Privacy Policy
+                                </button>.</p>
                             </div>
                             
                             <button className="signin-button" type="submit">

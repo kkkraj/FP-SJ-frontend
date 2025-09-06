@@ -410,6 +410,12 @@ export default function Login(props) {
                         </div>
                     </div>
                 </div>
+                
+                <div className="legal-links">
+                    <a href="/terms" className="legal-link">Terms of Service</a>
+                    <span className="divider">|</span>
+                    <a href="/privacy" className="legal-link">Privacy Policy</a>
+                </div>
             </div>
 
             {/* Forgot Password Modal */}

@@ -32,6 +32,10 @@ function Navbar(props) {
                     Account
                 </NavLink>
 
+                <NavLink style={{ marginRight: '80px' }} to="/how-it-works">
+                    How it works
+                </NavLink>
+
                 <a id="logout" onClick={handleLogout}>Log Out</a>
             </div>
         </div>

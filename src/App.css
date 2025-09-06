@@ -713,6 +713,7 @@ button.apple-button {
   width: 40%;
   background: linear-gradient(to bottom, #ffffff, #d2e3e4);
   display: flex;
+  flex-direction: column;
   align-items: center;
   justify-content: center;
   padding: 60px 80px;
@@ -724,9 +725,10 @@ button.apple-button {
   display: flex;
   flex-direction: column;
   align-items: center;
-  justify-content: flex-start;
-  height: auto;
+  justify-content: center;
+  height: 100%;
   width: 100%;
+  flex: 1;
 }
 
 .illustration-container {
@@ -740,8 +742,8 @@ button.apple-button {
 }
 
 .astronaut-illustration {
-  max-width: 75%;
-  max-height: 75%;
+  max-width: 90%;
+  max-height: 90%;
   width: auto;
   height: auto;
   object-fit: contain;
@@ -753,6 +755,9 @@ button.apple-button {
 
 .right-content {
   text-align: center;
+  display: flex;
+  flex-direction: column;
+  height: 100%;
 }
 
 .new-user-text {
@@ -1086,7 +1091,7 @@ button.apple-button {
 /* Hero Section */
 .hero-section {
   text-align: center;
-  padding: 80px 20px 60px;
+  padding: 40px 20px 60px;
   background-color: #ffffff;
 }
 
@@ -1108,12 +1113,79 @@ button.apple-button {
 /* Section Styles */
 .steps-section {
   background-color: #ffffff;
-  padding: 80px 20px;
+  padding: 40px 20px 80px;
 }
 
 .prompts-section {
   background-color: #f8f9fa;
   padding: 80px 20px;
+  width: 100vw;
+  margin-left: calc(-50vw + 50%);
+  margin-right: calc(-50vw + 50%);
+}
+
+.prompts-content {
+  max-width: 1200px;
+  margin: 0 auto;
+}
+
+/* Taglines Section */
+.taglines-section {
+  margin: 60px 0;
+}
+
+.taglines-list {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  gap: 40px;
+  list-style: none;
+  padding: 0;
+  margin: 0;
+}
+
+.tagline-item {
+  display: flex;
+  align-items: center;
+  font-family: 'Raleway', sans-serif;
+  font-size: 16px;
+  font-weight: 500;
+  color: #2c3e50;
+  margin: 0;
+  padding: 0;
+}
+
+.tagline-item::before {
+  content: '';
+  width: 12px;
+  height: 12px;
+  border-radius: 50%;
+  margin-right: 12px;
+  flex-shrink: 0;
+}
+
+.tagline-item.green::before {
+  background-color: #4ade80;
+}
+
+.tagline-item.yellow::before {
+  background-color: #fbbf24;
+}
+
+.tagline-item.purple::before {
+  background-color: #a78bfa;
+}
+
+.tagline-item.pink::before {
+  background-color: #f472b6;
+}
+
+.tagline-item.orange::before {
+  background-color: #fb923c;
+}
+
+.tagline-item.blue::before {
+  background-color: #60a5fa;
 }
 
 .features-section {
@@ -1131,7 +1203,7 @@ button.apple-button {
 }
 
 .section-subtitle {
-  font-size: 18px;
+  font-size: 16px;
   color: #6c757d;
   margin-bottom: 60px;
   text-align: center;
@@ -1155,6 +1227,9 @@ button.apple-button {
   padding: 24px;
   transition: all 0.3s ease;
   box-shadow: 0 2px 8px rgba(0, 0, 0, 0.05);
+  display: flex;
+  flex-direction: column;
+  height: 100%;
 }
 
 .step-card:hover {
@@ -1216,6 +1291,7 @@ button.apple-button {
   display: flex;
   gap: 8px;
   flex-wrap: wrap;
+  margin-top: auto;
 }
 
 .tag {
@@ -1254,7 +1330,29 @@ button.apple-button {
   display: grid;
   grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
   gap: 24px;
-  margin-bottom: 60px;
+  margin-bottom: 40px;
+}
+
+.prompts-action {
+  text-align: center;
+}
+
+.start-writing-btn {
+  background-color: #f8f9fa;
+  color: #6c757d;
+  border: 1px solid #e9ecef;
+  padding: 12px 24px;
+  border-radius: 8px;
+  font-size: 14px;
+  font-weight: 500;
+  cursor: pointer;
+  transition: all 0.3s ease;
+}
+
+.start-writing-btn:hover {
+  background-color: #e9ecef;
+  color: #495057;
+  border-color: #dee2e6;
 }
 
 .prompt-card {
@@ -1682,6 +1780,20 @@ button.apple-button {
   text-align: center;
   padding-top: 40px;
   border-top: 1px solid #e9ecef;
+  margin-top: 40px;
+}
+
+/* Legal links in login page - bottom center positioning */
+.login-right .legal-links {
+  text-align: center;
+  padding-top: 0;
+  border-top: none;
+  margin-top: auto;
+  padding-bottom: 20px;
+  position: absolute;
+  bottom: 20px;
+  left: 50%;
+  transform: translateX(-50%);
 }
 
 .legal-link {
@@ -1689,16 +1801,25 @@ button.apple-button {
   text-decoration: none;
   font-size: 14px;
   margin: 0 15px;
-  transition: color 0.3s ease;
+}
+
+/* Smaller legal links in login page */
+.login-right .legal-link {
+  font-size: 12px;
+  margin: 0 8px;
 }
 
 .legal-link:hover {
   color: rgb(104, 187, 183);
 }
 
-.divider {
-  color: #e9ecef;
+.legal-links .divider {
+  color: #6c757d;
   margin: 0 10px;
+}
+
+.legal-links .divider::before {
+  display: none;
 }
 
 /* Responsive Design for How It Works */

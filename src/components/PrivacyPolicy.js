@@ -149,6 +149,10 @@ export default function PrivacyPolicy(props) {
                         Email: privacy@spacejournal.io<br />
                     </p>
                 </div>
+
+                <div className="legal-links">
+                    <a href="/terms" className="legal-link">Terms of Service</a>
+                </div>
                 </div>
             </div>
         </div>
