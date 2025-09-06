@@ -1,10 +1,17 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
 
 export default function Signup(props) {
     const navigate = useNavigate();
+    const [error, setError] = useState(null);
     const [showPassword, setShowPassword] = useState(false);
     const [showConfirmPassword, setShowConfirmPassword] = useState(false);
+    const [fieldErrors, setFieldErrors] = useState({
+        name: false,
+        email: false,
+        password: false,
+        password_confirmation: false
+    });
 
     const togglePasswordVisibility = () => {
         setShowPassword(!showPassword);
@@ -12,6 +19,101 @@ export default function Signup(props) {
 
     const toggleConfirmPasswordVisibility = () => {
         setShowConfirmPassword(!showConfirmPassword);
+    };
+
+    const handleChange = (event) => {
+        props.handleChange(event);
+        // Clear error when user starts typing
+        if (error) {
+            setError(null);
+            // Also clear error in parent component
+            if (props.setError) {
+                props.setError(null);
+            }
+        }
+        // Clear field error when user starts typing
+        const { name } = event.target;
+        if (fieldErrors[name]) {
+            setFieldErrors(prev => ({
+                ...prev,
+                [name]: false
+            }));
+        }
+    };
+
+    // Function to determine which fields should show error state
+    const getFieldErrors = (errorCode) => {
+        const errors = { name: false, email: false, password: false, password_confirmation: false };
+        
+        switch (errorCode) {
+            case 'name_required':
+            case 'name_too_short':
+            case 'name_too_long':
+                errors.name = true;
+                break;
+            case 'email_required':
+            case 'invalid_email_format':
+            case 'user_exists':
+                errors.email = true;
+                break;
+            case 'password_required':
+            case 'password_too_short':
+            case 'password_too_long':
+                errors.password = true;
+                break;
+            case 'passwords_dont_match':
+                errors.password = true;
+                errors.password_confirmation = true;
+                break;
+            default:
+                break;
+        }
+        
+        return errors;
+    };
+
+    // Update field errors when error prop changes
+    useEffect(() => {
+        if (props.error) {
+            console.log('Signup error received:', props.error);
+            setError(props.error);
+            const fieldErrors = getFieldErrors(props.error);
+            console.log('Field errors set:', fieldErrors);
+            setFieldErrors(fieldErrors);
+        } else {
+            setError(null);
+            setFieldErrors({ name: false, email: false, password: false, password_confirmation: false });
+        }
+    }, [props.error]);
+
+    const getErrorMessage = () => {
+        const currentError = props.error || error;
+        if (currentError === 'name_required') {
+            return "Name is required";
+        } else if (currentError === 'email_required') {
+            return "Email is required";
+        } else if (currentError === 'password_required') {
+            return "Password is required";
+        } else if (currentError === 'invalid_email_format') {
+            return "Please enter a valid email address";
+        } else if (currentError === 'name_too_short') {
+            return "Name must be at least 2 characters long";
+        } else if (currentError === 'name_too_long') {
+            return "Name must be less than 50 characters";
+        } else if (currentError === 'passwords_dont_match') {
+            return "Password and password confirmation do not match";
+        } else if (currentError === 'password_too_short') {
+            return "Password must be at least 6 characters long";
+        } else if (currentError === 'password_too_long') {
+            return "Password must be less than 128 characters";
+        } else if (currentError === 'user_exists') {
+            return "A user with this email already exists, please log in";
+        } else if (currentError === 'validation_failed') {
+            return "Failed to create user. Please check your information and try again.";
+        } else if (currentError === 'general') {
+            return "Unable to create account. Please try again.";
+        }
+        return currentError;
     };
 
     return (
@@ -29,8 +131,8 @@ export default function Signup(props) {
                                </svg>
                                <span>Transform your thoughts into clarity</span>
                            </div>
-                        <p className="login-instruction">Start your journey into mindful journaling and discover balance, clarity, and growth.</p>
-                        <button className="right-button secondary">see how it works</button>
+                        <p className="login-instruction">Start your journey into mindful journaling to unlock balance, clarity, and growth.</p>
+                        <button className="btn-secondary">see how it works</button>
                     </div>
                 </div>
 
@@ -39,47 +141,56 @@ export default function Signup(props) {
                     <div className="signup-form-content">
                         <h1 className="login-title">Create Account</h1>
                         
-                        {props.error && (
-                            <div className="error-message">
-                                Unable to Sign Up. Please try again.
-                            </div>
-                        )}
+                        {(props.error || error) && <div className="error-message">{getErrorMessage()}</div>}
 
-                        <form onSubmit={props.handleSubmit} className="login-form">
+                        <form onSubmit={(e) => {
+                            console.log('Signup form onSubmit triggered');
+                            props.handleSubmit(e);
+                        }} className="login-form">
                             <div className="form-group">
-                        <input 
-                            type="text" 
-                            name="name" 
-                            value={props.user.name} 
-                            onChange={props.handleChange}
-                                    className="form-input"
-                                    placeholder="Full Name"
-                                    required
-                        />
-                    </div>
-                            
-                            <div className="form-group">
-                        <input 
-                            type="email" 
-                            name="email" 
-                            value={props.user.email} 
-                            onChange={props.handleChange}
-                                    className="form-input"
-                                    placeholder="Email Address"
-                                    required
-                        />
-                    </div>
+                                <div className="input-wrapper">
+                                    <svg className="input-icon" xmlns="http://www.w3.org/2000/svg" height="20px" viewBox="0 -960 960 960" width="20px" fill="currentColor">
+                                        <path d="M480-480q-66 0-113-47t-47-113q0-66 47-113t113-47q66 0 113 47t47 113q0 66-47 113t-113 47ZM160-160v-112q0-34 17.5-62.5T224-378q62-31 126-46.5T480-440q66 0 130 15.5T736-378q29 15 46.5 43.5T800-272v112H160Zm80-80h480v-32q0-11-5.5-20T700-306q-54-27-109-40.5T480-360q-56 0-111 13.5T260-306q-9 5-14.5 14t-5.5 20v32Zm240-320q33 0 56.5-23.5T560-640q0-33-23.5-56.5T480-720q-33 0-56.5 23.5T400-640q0 33 23.5 56.5T480-560Zm0-80Zm0 400Z"/>
+                                    </svg>
+                                    <input 
+                                        type="text" 
+                                        name="name" 
+                                        value={props.user.name} 
+                                        onChange={handleChange}
+                                        className={`form-input ${fieldErrors.name ? 'error' : ''}`}
+                                        placeholder="Name"
+                                    />
+                                </div>
+                            </div>
                             
                             <div className="form-group">
                                 <div className="input-wrapper">
-                        <input 
+                                    <svg className="input-icon" xmlns="http://www.w3.org/2000/svg" height="20px" viewBox="0 -960 960 960" width="20px" fill="currentColor">
+                                        <path d="M160-160q-33 0-56.5-23.5T80-240v-480q0-33 23.5-56.5T160-800h640q33 0 56.5 23.5T880-720v480q0 33-23.5 56.5T800-160H160Zm320-280L160-640v400h640v-400L480-440Zm0-80 320-200H160l320 200ZM160-640v-80 480-400Z"/>
+                                    </svg>
+                                    <input 
+                                        type="text" 
+                                        name="email" 
+                                        value={props.user.email} 
+                                        onChange={handleChange}
+                                        className={`form-input ${fieldErrors.email ? 'error' : ''}`}
+                                        placeholder="Email Address"
+                                    />
+                                </div>
+                            </div>
+                            
+                            <div className="form-group">
+                                <div className="input-wrapper">
+                                    <svg className="input-icon" xmlns="http://www.w3.org/2000/svg" height="20px" viewBox="0 -960 960 960" width="20px" fill="currentColor">
+                                        <path d="M240-80q-33 0-56.5-23.5T160-160v-400q0-33 23.5-56.5T240-640h40v-80q0-83 58.5-141.5T480-920q83 0 141.5 58.5T680-720v80h40q33 0 56.5 23.5T800-560v400q0 33-23.5 56.5T720-80H240Zm240-200q33 0 56.5-23.5T560-360q0-33-23.5-56.5T480-440q-33 0-56.5 23.5T400-360q0 33 23.5 56.5T480-280ZM360-640h240v-80q0-50-35-85t-85-35q-50 0-85 35t-35 85v80Z"/>
+                                    </svg>
+                                    <input 
                                         type={showPassword ? "text" : "password"}
-                            name="password" 
-                            value={props.user.password} 
-                            onChange={props.handleChange}
-                                        className="form-input"
+                                        name="password" 
+                                        value={props.user.password} 
+                                        onChange={handleChange}
+                                        className={`form-input ${fieldErrors.password ? 'error' : ''}`}
                                         placeholder="Password"
-                                        required
                                     />
                                     <button 
                                         type="button"
@@ -95,18 +206,20 @@ export default function Signup(props) {
                                         </svg>
                                     </button>
                                 </div>
-                    </div>
+                            </div>
                             
                             <div className="form-group">
                                 <div className="input-wrapper">
-                        <input 
+                                    <svg className="input-icon" xmlns="http://www.w3.org/2000/svg" height="20px" viewBox="0 -960 960 960" width="20px" fill="currentColor">
+                                        <path d="M240-80q-33 0-56.5-23.5T160-160v-400q0-33 23.5-56.5T240-640h40v-80q0-83 58.5-141.5T480-920q83 0 141.5 58.5T680-720v80h40q33 0 56.5 23.5T800-560v400q0 33-23.5 56.5T720-80H240Zm240-200q33 0 56.5-23.5T560-360q0-33-23.5-56.5T480-440q-33 0-56.5 23.5T400-360q0 33 23.5 56.5T480-280ZM360-640h240v-80q0-50-35-85t-85-35q-50 0-85 35t-35 85v80Z"/>
+                                    </svg>
+                                    <input 
                                         type={showConfirmPassword ? "text" : "password"}
-                            name="password_confirmation" 
-                            value={props.user.password_confirmation} 
-                            onChange={props.handleChange}
-                                        className="form-input"
+                                        name="password_confirmation" 
+                                        value={props.user.password_confirmation} 
+                                        onChange={handleChange}
+                                        className={`form-input ${fieldErrors.password_confirmation ? 'error' : ''}`}
                                         placeholder="Confirm Password"
-                                        required
                                     />
                                     <button 
                                         type="button"
@@ -126,6 +239,7 @@ export default function Signup(props) {
                             
                             <div className="terms-agreement">
                                 <p>By signing up, you agree to our <button 
+                                    type="button"
                                     className="link-button" 
                                     onClick={() => navigate('/terms')}
                                 >

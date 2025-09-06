@@ -1,20 +1,22 @@
 import '../App.css';
 import React, { useState, useEffect } from 'react';
-import { useNavigate, Routes, Route } from 'react-router-dom';
+import { Routes, Route } from 'react-router-dom';
 import api from "../services/api";
 import Home from './Home';
 import Welcome from './Welcome';
 import Signup from './Signup';
 import Login from './Login';
 import TermsOfService from './TermsOfService';
+import PrivacyPolicy from './PrivacyPolicy';
 import HowItWorks from './HowItWorks';
+import SignupSuccess from './SignupSuccess';
 
 function App() {
-  const navigate = useNavigate();
+  // const navigate = useNavigate(); // Unused for now
   const [auth, setAuth] = useState({ currentUser: {} });
   const [loading, setLoading] = useState(true);
   const [signup, setSignup] = useState(false);
-  const [error, setError] = useState(false);
+  const [error, setError] = useState(null);
   const [user, setUser] = useState({
     name: "",
     email: "",
@@ -85,15 +87,14 @@ function App() {
   };
 
   const handleSubmit = (event) => {
+    console.log('Form submit triggered!');
     event.preventDefault();
+    console.log('Current user state:', user);
     setSignup(true);
     createNewUser({ user });
   };
 
   const createNewUser = (userData) => {
-    console.log('Sending signup data:', userData.user);
-    console.log('Full userData object:', userData);
-    
     // Try different data structures that the backend might expect
     const userInfo = userData.user;
     
@@ -102,7 +103,7 @@ function App() {
       .then((response) => {
         console.log('Signup response:', response);
         if (response.error) {
-          setError(true);
+          setError(response.error);
         } else {
           console.log('Signup successful:', response);
           
@@ -114,12 +115,8 @@ function App() {
             password_confirmation: ''
           });
           
-          // Show success message and redirect to login
-          alert('Signup successful! Please log in with your new account.');
-          
-          // Reset signup state to show login form
-          setSignup(false);
-          setError(false);
+          // Navigate to success page
+          window.location.href = '/signup-success';
         }
       })
       .catch((error) => {
@@ -131,7 +128,7 @@ function App() {
           .then((response) => {
             console.log('Alternative signup response:', response);
             if (response.error) {
-              setError(true);
+              setError(response.error);
             } else {
               console.log('Alternative signup successful:', response);
               
@@ -143,17 +140,13 @@ function App() {
                 password_confirmation: ''
               });
               
-              // Show success message and redirect to login
-              alert('Signup successful! Please log in with your new account.');
-              
-              // Reset signup state to show login form
-              setSignup(false);
-              setError(false);
+              // Navigate to success page
+              window.location.href = '/signup-success';
             }
           })
           .catch((altError) => {
             console.error('Alternative signup also failed:', altError);
-            setError(true);
+            setError('general');
           });
       });
   };
@@ -206,16 +199,23 @@ function App() {
                           handleChange={handleChange} 
                           handleSubmit={handleSubmit}
                           error={error}
+                          setError={setError}
                         />
                       } />
                       <Route path="/login" element={
                         <Login handleLogin={handleLogin} />
                       } />
                       <Route path="/terms" element={
-                        <TermsOfService />
+                        <TermsOfService currentUser={auth.currentUser} />
+                      } />
+                      <Route path="/privacy" element={
+                        <PrivacyPolicy currentUser={auth.currentUser} />
                       } />
                       <Route path="/how-it-works" element={
-                        <HowItWorks />
+                        <HowItWorks currentUser={auth.currentUser} />
+                      } />
+                      <Route path="/signup-success" element={
+                        <SignupSuccess />
                       } />
                     </Routes>
       )}

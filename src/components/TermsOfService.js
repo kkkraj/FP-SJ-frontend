@@ -1,90 +1,144 @@
 import React from 'react';
+import { useNavigate } from 'react-router-dom';
 
-export default function TermsOfService() {
+export default function TermsOfService(props) {
+    const navigate = useNavigate();
+    const isLoggedIn = props.currentUser && props.currentUser.id;
+
     return (
         <div className="terms-container">
-            <div className="terms-content">
-                <h1 className="terms-title">Terms of Service</h1>
-                <p className="terms-last-updated">Last updated: {new Date().toLocaleDateString()}</p>
+            {/* Navigation Bar */}
+            <nav className="terms-navbar">
+                <div className="terms-nav-content">
+                    <div className="terms-nav-left">
+                        <img src={require('../images/logo.png')} alt="Space Journal Logo" className="terms-nav-logo" />
+                    </div>
+                    <div className="terms-nav-right">
+                        {!isLoggedIn && (
+                            <>
+                                <button 
+                                    className="terms-nav-button" 
+                                    onClick={() => navigate('/login')}
+                                >
+                                    Login
+                                </button>
+                                <button 
+                                    className="terms-nav-button" 
+                                    onClick={() => navigate('/signup')}
+                                >
+                                    Sign Up
+                                </button>
+                                <button 
+                                    className="terms-nav-button" 
+                                    onClick={() => navigate('/how-it-works')}
+                                >
+                                    How it works
+                                </button>
+                            </>
+                        )}
+                    </div>
+                </div>
+                <div className="terms-nav-divider"></div>
+            </nav>
+
+            <div className="terms-content-wrapper">
+                <div className="terms-content">
+                    <h1 className="terms-title">Terms of Service</h1>
+                    <p className="terms-last-updated">Last updated: {new Date().toLocaleDateString('en-US', { year: 'numeric', month: 'long', day: 'numeric' })}</p>
                 
+                <div className="terms-section">
+                    <p>
+                        Welcome to Space Journal. These Terms of Service ("Terms") govern your access to and use of our website, web app, and related services (collectively, the "Service"). Please read them carefully.
+                    </p>
+                    <p>
+                        By creating an account or using the Service, you agree to these Terms. If you do not agree, please do not use Space Journal.
+                    </p>
+                </div>
+
                 <div className="terms-section">
                     <h2>1. Acceptance of Terms</h2>
                     <p>
-                        By accessing and using Space Journal ("the Service"), you accept and agree to be bound by the terms and provision of this agreement. If you do not agree to abide by the above, please do not use this service.
+                        By accessing or using Space Journal, you accept and agree to be bound by these Terms.
                     </p>
                 </div>
 
                 <div className="terms-section">
-                    <h2>2. Use License</h2>
+                    <h2>2. License to Use</h2>
                     <p>
-                        Permission is granted to temporarily download one copy of Space Journal per device for personal, non-commercial transitory viewing only. This is the grant of a license, not a transfer of title, and under this license you may not:
+                        We grant you a personal, limited, non-exclusive, non-transferable license to use the Service for your own personal, non-commercial purposes in accordance with these Terms.
                     </p>
+                    <p>You may not:</p>
                     <ul>
-                        <li>modify or copy the materials</li>
-                        <li>use the materials for any commercial purpose or for any public display</li>
-                        <li>attempt to reverse engineer any software contained on the website</li>
-                        <li>remove any copyright or other proprietary notations from the materials</li>
+                        <li>Copy, modify, or distribute the Service or its content.</li>
+                        <li>Use the Service for commercial purposes without permission.</li>
+                        <li>Attempt to reverse engineer or disrupt the Service.</li>
+                        <li>Remove or alter copyright or proprietary notices.</li>
                     </ul>
                 </div>
 
                 <div className="terms-section">
-                    <h2>3. Privacy Policy</h2>
-                    <p>
-                        Your privacy is important to us. Our Privacy Policy explains how we collect, use, and protect your information when you use our service. By using our service, you agree to the collection and use of information in accordance with this policy.
-                    </p>
-                </div>
-
-                <div className="terms-section">
-                    <h2>4. User Accounts</h2>
-                    <p>
-                        When you create an account with us, you must provide information that is accurate, complete, and current at all times. You are responsible for safeguarding the password and for all activities that occur under your account.
-                    </p>
-                </div>
-
-                <div className="terms-section">
-                    <h2>5. Content</h2>
-                    <p>
-                        Our service allows you to post, link, store, share and otherwise make available certain information, text, graphics, videos, or other material ("Content"). You are responsible for the Content that you post to the service, including its legality, reliability, and appropriateness.
-                    </p>
-                </div>
-
-                <div className="terms-section">
-                    <h2>6. Prohibited Uses</h2>
-                    <p>You may not use our service:</p>
+                    <h2>3. User Accounts</h2>
                     <ul>
-                        <li>For any unlawful purpose or to solicit others to perform unlawful acts</li>
-                        <li>To violate any international, federal, provincial, or state regulations, rules, laws, or local ordinances</li>
-                        <li>To infringe upon or violate our intellectual property rights or the intellectual property rights of others</li>
-                        <li>To harass, abuse, insult, harm, defame, slander, disparage, intimidate, or discriminate</li>
-                        <li>To submit false or misleading information</li>
+                        <li>You must provide accurate and current information when creating an account.</li>
+                        <li>You are responsible for maintaining the confidentiality of your login credentials.</li>
+                        <li>You are responsible for any activity that occurs under your account.</li>
                     </ul>
                 </div>
 
                 <div className="terms-section">
-                    <h2>7. Termination</h2>
+                    <h2>4. Your Content</h2>
+                    <p><strong>Ownership:</strong> You retain ownership of the text, images, and other content you create ("Your Content").</p>
+                    <p><strong>License to Us:</strong> By using the Service, you grant us a limited license to store and display Your Content solely as needed to operate the Service.</p>
+                    <p><strong>Responsibility:</strong> You are responsible for Your Content and must ensure it does not violate laws or infringe the rights of others.</p>
+                </div>
+
+                <div className="terms-section">
+                    <h2>5. Prohibited Uses</h2>
+                    <p>You agree not to use the Service:</p>
+                    <ul>
+                        <li>For any unlawful purpose or to encourage unlawful activity.</li>
+                        <li>To upload harmful, offensive, or misleading content.</li>
+                        <li>To infringe intellectual property rights.</li>
+                        <li>To harass, abuse, or harm others.</li>
+                        <li>To attempt to interfere with or disrupt the Service.</li>
+                    </ul>
+                </div>
+
+                <div className="terms-section">
+                    <h2>6. Termination</h2>
                     <p>
-                        We may terminate or suspend your account and bar access to the service immediately, without prior notice or liability, under our sole discretion, for any reason whatsoever and without limitation, including but not limited to a breach of the Terms.
+                        We may suspend or terminate your account if you violate these Terms or misuse the Service. You may stop using Space Journal at any time by closing your account.
                     </p>
                 </div>
 
                 <div className="terms-section">
-                    <h2>8. Disclaimer</h2>
+                    <h2>7. Disclaimers</h2>
                     <p>
-                        The information on this service is provided on an "as is" basis. To the fullest extent permitted by law, this Company excludes all representations, warranties, conditions and terms relating to our service and the use of this service.
+                        Space Journal is provided on an "as is" and "as available" basis. We do not guarantee uninterrupted or error-free service.
+                    </p>
+                    <p>
+                        Space Journal supports personal reflection and well-being, but it is not a substitute for medical, psychological, or professional advice. Always seek the guidance of a qualified professional if you have concerns about your health or safety.
+                    </p>
+                </div>
+
+                <div className="terms-section">
+                    <h2>8. Limitation of Liability</h2>
+                    <p>
+                        To the fullest extent permitted by law, Space Journal and its creators shall not be liable for any indirect, incidental, or consequential damages arising from your use of the Service.
                     </p>
                 </div>
 
                 <div className="terms-section">
                     <h2>9. Governing Law</h2>
                     <p>
-                        These Terms shall be interpreted and governed by the laws of the jurisdiction in which our company operates, without regard to its conflict of law provisions.
+                        These Terms shall be governed by and interpreted under the laws of the jurisdiction in which our company operates, without regard to conflict of law principles.
                     </p>
                 </div>
 
                 <div className="terms-section">
                     <h2>10. Changes to Terms</h2>
                     <p>
-                        We reserve the right, at our sole discretion, to modify or replace these Terms at any time. If a revision is material, we will provide at least 30 days notice prior to any new terms taking effect.
+                        We may update these Terms from time to time. If we make material changes, we will notify you (for example, by email or through the Service). Your continued use of the Service after changes take effect means you accept the revised Terms.
                     </p>
                 </div>
 
@@ -94,9 +148,9 @@ export default function TermsOfService() {
                         If you have any questions about these Terms of Service, please contact us at:
                     </p>
                     <p>
-                        Email: support@spacejournal.com<br />
-                        Address: [Your Company Address]
+                        Email: support@spacejournal.io<br />
                     </p>
+                </div>
                 </div>
             </div>
         </div>

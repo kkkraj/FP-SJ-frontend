@@ -19,6 +19,10 @@ export default function Login(props) {
         email: "",
         password: ""
     });
+    const [fieldErrors, setFieldErrors] = useState({
+        email: false,
+        password: false
+    });
 
     // Debug OAuth configuration on component mount
     useEffect(() => {
@@ -58,10 +62,36 @@ export default function Login(props) {
         setUserInfo(prevInfo => ({ ...prevInfo, [name]: value }));
         // Clear error when user starts typing
         if (error) setError(null);
+        // Clear field error when user starts typing
+        if (fieldErrors[name]) {
+            setFieldErrors(prev => ({
+                ...prev,
+                [name]: false
+            }));
+        }
     };
 
     const handleSubmit = (event) => {
         event.preventDefault();
+        
+        // Reset field errors
+        setFieldErrors({ email: false, password: false });
+        
+        // Check if email is empty
+        if (!userInfo.email) {
+            setError('Please enter your email address');
+            setFieldErrors(prev => ({ ...prev, email: true }));
+            return;
+        }
+        
+        // Check if password is empty
+        if (!userInfo.password) {
+            setError('Please enter your password');
+            setFieldErrors(prev => ({ ...prev, password: true }));
+            return;
+        }
+        
+        // If validation passes, proceed with login
         loginUser(userInfo);
     };
 
@@ -193,9 +223,9 @@ export default function Login(props) {
     };
 
     const loginUser = (userInfo) => {
-        // Convert email to username for API compatibility
+        // Send email directly to backend
         const loginData = {
-            username: userInfo.email,
+            email: userInfo.email,
             password: userInfo.password
         };
         
@@ -211,8 +241,11 @@ export default function Login(props) {
           })
           .catch((error) => {
             console.error('Login error:', error);
+            console.log('Error status:', error.status);
+            console.log('Error message:', error.message);
             
-            if (error.status === 404) {
+            // Check if error message contains "User not found" or status is 404
+            if ((error.message && error.message.includes('User not found')) || error.status === 404) {
               setError('user_not_found');
             } else {
               setError('general');
@@ -222,9 +255,12 @@ export default function Login(props) {
 
     const getErrorMessage = () => {
         if (error === 'user_not_found') {
-            return "That email isn't in our system. Want to try again?";
+            return "We couldn't find an account with this email";
         } else if (error === 'general') {
             return "Incorrect email or password, please try again";
+        } else if (typeof error === 'string') {
+            // Handle validation errors (like "Please enter your email address")
+            return error;
         }
         return null;
     };
@@ -237,7 +273,7 @@ export default function Login(props) {
                     <h1 className="login-title">Welcome back!</h1>
                     <p className="login-instruction">Sign in to access your journal</p>
                     
-                    {error && <div className="error-message">{getErrorMessage()}</div>}
+                    {error && !error.includes('Please enter') && <div className="error-message">{getErrorMessage()}</div>}
                     
                     <form onSubmit={handleSubmit} className="login-form">
                         <div className="input-group">
@@ -247,13 +283,13 @@ export default function Login(props) {
                                     <path d="M160-160q-33 0-56.5-23.5T80-240v-480q0-33 23.5-56.5T160-800h640q33 0 56.5 23.5T880-720v480q0 33-23.5 56.5T800-160H160Zm320-280L160-640v400h640v-400L480-440Zm0-80 320-200H160l320 200ZM160-640v-80 480-400Z"/>
                                 </svg>
                                 <input 
-                                    type="email" 
+                                    type="text" 
                                     id="email"
                                     name="email" 
                                     value={userInfo.email} 
                                     onChange={handleChange}
                                     placeholder="Enter your email"
-                                    className="form-input"
+                                    className={`form-input ${fieldErrors.email ? 'error' : ''}`}
                                 />
                             </div>
                         </div>
@@ -271,7 +307,7 @@ export default function Login(props) {
                                     value={userInfo.password} 
                                     onChange={handleChange}
                                     placeholder="Enter your password"
-                                    className="form-input"
+                                    className={`form-input ${fieldErrors.password ? 'error' : ''}`}
                                 />
                                 <button 
                                     type="button"
@@ -408,7 +444,7 @@ export default function Login(props) {
                                                     <path d="M160-160q-33 0-56.5-23.5T80-240v-480q0-33 23.5-56.5T160-800h640q33 0 56.5 23.5T880-720v480q0 33-23.5 56.5T800-160H160Zm320-280L160-640v400h640v-400L480-440Zm0-80 320-200H160l320 200ZM160-640v-80 480-400Z"/>
                                                 </svg>
                                                 <input 
-                                                    type="email" 
+                                                    type="text" 
                                                     id="forgot-email"
                                                     name="forgot-email" 
                                                     value={forgotPasswordEmail} 

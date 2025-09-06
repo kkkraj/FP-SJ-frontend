@@ -15,14 +15,14 @@ const signup = (userInfo) => {
     const dataFormats = [
         userInfo, // Original format
         { user: userInfo }, // Wrapped in 'user' key
-                    {
-                user: {
-                    name: userInfo.name,
-                    email: userInfo.email,
-                    password: userInfo.password
-                    // Removed password_confirmation to see if that's the issue
-                }
+        {
+            user: {
+                name: userInfo.name,
+                email: userInfo.email,
+                password: userInfo.password,
+                password_confirmation: userInfo.password_confirmation
             }
+        }
     ];
     
     // Try each format until one works
@@ -45,6 +45,18 @@ const signup = (userInfo) => {
             if (!response.ok) {
                 const text = await response.text();
                 console.log(`API: Format ${formatIndex + 1} error response body:`, text);
+                
+                // Try to parse error response as JSON
+                try {
+                    const errorData = JSON.parse(text);
+                    
+                    // If it's a validation error (422), return the error data instead of throwing
+                    if (response.status === 422 && errorData.error) {
+                        return errorData; // Return the error response so it can be handled in .then()
+                    }
+                } catch (parseError) {
+                    // Could not parse error response as JSON
+                }
                 
                 if (formatIndex < dataFormats.length - 1) {
                     console.log(`API: Format ${formatIndex + 1} failed, trying next format...`);
