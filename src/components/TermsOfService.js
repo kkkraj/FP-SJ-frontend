@@ -1,5 +1,6 @@
 import React from 'react';
 import { useNavigate } from 'react-router-dom';
+import Navbar from './Navbar';
 
 export default function TermsOfService(props) {
     const navigate = useNavigate();
@@ -8,42 +9,42 @@ export default function TermsOfService(props) {
     return (
         <div className="terms-container">
             {/* Navigation Bar */}
-            <nav className="terms-navbar">
-                <div className="terms-nav-content">
-                    <div className="terms-nav-left">
-                        <img src={require('../images/logo.png')} alt="Space Journal Logo" className="terms-nav-logo" />
+            {isLoggedIn ? (
+                <Navbar currentUser={props.currentUser} handleLogout={props.handleLogout} />
+            ) : (
+                <nav className="terms-navbar">
+                    <div className="terms-nav-content">
+                        <div className="terms-nav-left">
+                            <img src={require('../images/logo.png')} alt="Space Journal Logo" className="terms-nav-logo" />
+                        </div>
+                        <div className="terms-nav-right">
+                            <button 
+                                className="terms-nav-button" 
+                                onClick={() => navigate('/login')}
+                            >
+                                Login
+                            </button>
+                            <button 
+                                className="terms-nav-button" 
+                                onClick={() => navigate('/signup')}
+                            >
+                                Sign Up
+                            </button>
+                            <button 
+                                className="terms-nav-button" 
+                                onClick={() => navigate('/how-it-works')}
+                            >
+                                How it works
+                            </button>
+                        </div>
                     </div>
-                    <div className="terms-nav-right">
-                        {!isLoggedIn && (
-                            <>
-                                <button 
-                                    className="terms-nav-button" 
-                                    onClick={() => navigate('/login')}
-                                >
-                                    Login
-                                </button>
-                                <button 
-                                    className="terms-nav-button" 
-                                    onClick={() => navigate('/signup')}
-                                >
-                                    Sign Up
-                                </button>
-                                <button 
-                                    className="terms-nav-button" 
-                                    onClick={() => navigate('/how-it-works')}
-                                >
-                                    How it works
-                                </button>
-                            </>
-                        )}
-                    </div>
-                </div>
-                <div className="terms-nav-divider"></div>
-            </nav>
+                    <div className="terms-nav-divider"></div>
+                </nav>
+            )}
 
             <div className="terms-content-wrapper">
-                <div className="terms-content">
-                    <h1 className="terms-title">Terms of Service</h1>
+            <div className="terms-content">
+                <h1 className="terms-title">Terms of Service</h1>
                     <p className="terms-last-updated">Last updated: {new Date().toLocaleDateString('en-US', { year: 'numeric', month: 'long', day: 'numeric' })}</p>
                 
                 <div className="terms-section">
@@ -54,7 +55,7 @@ export default function TermsOfService(props) {
                         By creating an account or using the Service, you agree to these Terms. If you do not agree, please do not use Space Journal.
                     </p>
                 </div>
-
+                
                 <div className="terms-section">
                     <h2>1. Acceptance of Terms</h2>
                     <p>

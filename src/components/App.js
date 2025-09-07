@@ -164,7 +164,13 @@ function App() {
       {loggedIn ? (
         <Routes>
           <Route path="/how-it-works" element={
-            <HowItWorks currentUser={auth.currentUser} />
+            <HowItWorks currentUser={auth.currentUser} handleLogout={handleLogout} />
+          } />
+          <Route path="/terms" element={
+            <TermsOfService currentUser={auth.currentUser} handleLogout={handleLogout} />
+          } />
+          <Route path="/privacy" element={
+            <PrivacyPolicy currentUser={auth.currentUser} handleLogout={handleLogout} />
           } />
           <Route path="/*" element={
             <Welcome 
@@ -213,13 +219,13 @@ function App() {
                         <Login handleLogin={handleLogin} />
                       } />
                       <Route path="/terms" element={
-                        <TermsOfService currentUser={auth.currentUser} />
+                        <TermsOfService currentUser={auth.currentUser} handleLogout={handleLogout} />
                       } />
                       <Route path="/privacy" element={
-                        <PrivacyPolicy currentUser={auth.currentUser} />
+                        <PrivacyPolicy currentUser={auth.currentUser} handleLogout={handleLogout} />
                       } />
                       <Route path="/how-it-works" element={
-                        <HowItWorks currentUser={auth.currentUser} />
+                        <HowItWorks currentUser={auth.currentUser} handleLogout={handleLogout} />
                       } />
                       <Route path="/signup-success" element={
                         <SignupSuccess />

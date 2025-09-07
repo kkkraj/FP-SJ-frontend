@@ -18,14 +18,14 @@ export default function Welcome(props) {
 
     return (
         <div>
-            <Navbar handleLogout={props.handleLogout} />
+            <Navbar currentUser={props.currentUser} handleLogout={props.handleLogout} />
             <br/>
             <Routes>
                 <Route path="/about" element={<About currentUser={props.currentUser} />} />
                 <Route path="/diary" element={<Diary currentUser={props.currentUser} />} />
                 <Route path="/entries" element={<Entries currentUser={props.currentUser} />} />
                 <Route path="/charts" element={<Charts currentUserId={props.currentUser.id} />} />
-                <Route path="/profile" element={<Profile key={`${props.currentUser.id}-${props.currentUser.name || 'unknown'}`} currentUser={props.currentUser} handleDeleteUser={props.handleDeleteUser} onAccountUpdate={props.onAccountUpdate} />} />
+                <Route path="/profile" element={<Profile key={`${props.currentUser.id}-${props.currentUser.name || 'unknown'}`} currentUser={props.currentUser} handleDeleteUser={props.handleDeleteUser} onAccountUpdate={props.onAccountUpdate} handleLogout={props.handleLogout} />} />
                 <Route path="/" element={<Navigate to="/about" replace />} />
             </Routes>
         </div>

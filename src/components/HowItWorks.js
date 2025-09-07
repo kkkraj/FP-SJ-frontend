@@ -1,5 +1,6 @@
 import React from 'react';
 import { useNavigate } from 'react-router-dom';
+import Navbar from './Navbar';
 
 export default function HowItWorks(props) {
     const navigate = useNavigate();
@@ -8,35 +9,35 @@ export default function HowItWorks(props) {
     return (
         <div className="terms-container">
             {/* Navigation Bar */}
-            <nav className="terms-navbar">
-                <div className="terms-nav-content">
-                    <div className="terms-nav-left">
-                        <img src={require('../images/logo.png')} alt="Space Journal Logo" className="terms-nav-logo" />
+            {isLoggedIn ? (
+                <Navbar currentUser={props.currentUser} handleLogout={props.handleLogout} />
+            ) : (
+                <nav className="terms-navbar">
+                    <div className="terms-nav-content">
+                        <div className="terms-nav-left">
+                            <img src={require('../images/logo.png')} alt="Space Journal Logo" className="terms-nav-logo" />
                         </div>
-                    <div className="terms-nav-right">
-                        {!isLoggedIn && (
-                            <>
-                                <button 
-                                    className="terms-nav-button" 
-                                    onClick={() => navigate('/login')}
-                                >
-                                    Login
-                                </button>
-                                <button 
-                                    className="terms-nav-button" 
-                                    onClick={() => navigate('/signup')}
-                                >
-                                    Sign Up
-                                </button>
-                            </>
-                        )}
+                        <div className="terms-nav-right">
+                            <button 
+                                className="terms-nav-button" 
+                                onClick={() => navigate('/login')}
+                            >
+                                Login
+                            </button>
+                            <button 
+                                className="terms-nav-button" 
+                                onClick={() => navigate('/signup')}
+                            >
+                                Sign Up
+                            </button>
+                        </div>
                     </div>
-                        </div>
-                <div className="terms-nav-divider"></div>
-            </nav>
+                    <div className="terms-nav-divider"></div>
+                </nav>
+            )}
 
             <div className="terms-content-wrapper">
-                <div className="how-it-works-content">
+            <div className="how-it-works-content">
                     {/* Steps Section - White Background */}
                     <div className="steps-section">
                         <h2 className="section-title">Your Recent Reflections</h2>
@@ -84,8 +85,8 @@ export default function HowItWorks(props) {
                                     <span className="tag">Family</span>
                                     <span className="tag">Friends</span>
                                     <span className="tag">Cooking</span>
-                                </div>
-                            </div>
+                        </div>
+                    </div>
 
                             <div className="step-card">
                                 <div className="step-header">

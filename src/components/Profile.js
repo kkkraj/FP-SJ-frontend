@@ -1,4 +1,5 @@
 import React, { useState } from 'react';
+import { useNavigate } from 'react-router-dom';
 import UpdateAccount from './UpdateAccount';
 import ConfirmationModal from './ConfirmationModal';
 import float from '../images/float.png';
@@ -8,6 +9,7 @@ import {Container, Row, Col, Image} from 'react-bootstrap';
 export default function Profile(props) {
     const [updateClick, setUpdateClick] = useState(false);
     const [showDeleteModal, setShowDeleteModal] = useState(false);
+    const navigate = useNavigate();
 
     // Add debugging to see when props change
     console.log('Profile component rendered with currentUser:', props.currentUser);
@@ -69,11 +71,21 @@ export default function Profile(props) {
                     </table>
                     <br/><br/>
                     <button 
-                        style={{backgroundColor: 'LightSalmon'}} 
+                        style={{backgroundColor: 'LightSalmon', marginRight: '10px'}} 
                         className="waves-effect waves-light btn-small" 
                         onClick={handleDeleteClick}
                     >
                         Delete Account
+                    </button>
+                    <button 
+                        style={{backgroundColor: '#2c3e50'}} 
+                        className="waves-effect waves-light btn-small" 
+                        onClick={() => {
+                            props.handleLogout();
+                            navigate('/login');
+                        }}
+                    >
+                        Log Out
                     </button>
                 </Col>
                 <Col xs={12} md={1}></Col>

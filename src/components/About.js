@@ -15,7 +15,7 @@ export default class About extends Component {
     render () {
         return (
             <div id="about">
-                <h4 id="hello">{`Hello, ${this.props.currentUser.name}`}</h4>
+                <h4 id="hello">{`Hello, ${this.props.currentUser.name}!`}</h4>
                 <br/>
                 <Container>
                     <Row>
