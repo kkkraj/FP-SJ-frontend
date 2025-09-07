@@ -1305,7 +1305,7 @@ button.apple-button {
 
 .view-all {
   text-align: center;
-  margin-top: 40px;
+  margin-top: 60px;
 }
 
 .view-all-btn {
@@ -1335,10 +1335,11 @@ button.apple-button {
 
 .prompts-action {
   text-align: center;
+  margin-top: 60px;
 }
 
 .start-writing-btn {
-  background-color: #f8f9fa;
+  background-color: white;
   color: #6c757d;
   border: 1px solid #e9ecef;
   padding: 12px 24px;
@@ -1413,7 +1414,6 @@ button.apple-button {
   border-radius: 12px;
   padding: 40px;
   text-align: center;
-  margin-top: 40px;
 }
 
 .cta-block p {
@@ -1439,6 +1439,23 @@ button.apple-button {
   transform: translateY(-1px);
 }
 
+.cta-primary-howitworks {
+  background-color: #f8f9fa;
+  color: #6c757d;
+  border: none;
+  padding: 12px 24px;
+  border-radius: 8px;
+  font-size: 16px;
+  font-weight: 600;
+  cursor: pointer;
+  transition: all 0.3s ease;
+}
+
+.cta-primary-howitworks:hover {
+  color: rgb(104, 187, 183);
+  transform: translateY(-1px);
+}
+
 /* Features Layout */
 .features-layout {
   display: grid;
@@ -1451,7 +1468,7 @@ button.apple-button {
 .features-grid {
   display: grid;
   grid-template-columns: repeat(2, 1fr);
-  gap: 24px;
+  gap: 16px;
 }
 
 .feature-item {
@@ -1658,7 +1675,6 @@ button.apple-button {
 }
 
 .features-section {
-  margin-bottom: 80px;
 }
 
 .features-section h2 {
@@ -1673,7 +1689,7 @@ button.apple-button {
 .features-grid {
   display: grid;
   grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
-  gap: 30px;
+  gap: 16px;
 }
 
 .feature-card {
