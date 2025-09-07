@@ -171,15 +171,132 @@ const deleteUser = (user) => {
 };
 
 const updateUser = (user) => {
-    return fetch(`${API_ROOT}/users/${user.id}`, {
-        method: "PATCH",
-        headers: headers(),
-        body: JSON.stringify(user)
+    console.log('API: Attempting to update user with data:', user);
+    
+    // Try different data formats that Rails APIs commonly expect
+    const dataFormats = [
+        user, // Original format
+        { user: user }, // Wrapped in 'user' key
+        {
+            user: {
+                name: user.name,
+                email: user.email
+            }
+        }
+    ];
+    
+    // Try each format until one works
+    const tryUpdate = async (format, formatIndex) => {
+        console.log(`API: Trying update data format ${formatIndex + 1}:`, format);
+        
+        try {
+            const response = await fetch(`${API_ROOT}/users/${user.id}`, {
+                method: "PATCH",
+                headers: headers(),
+                body: JSON.stringify(format)
+            });
+            
+            console.log(`API: Update format ${formatIndex + 1} response status:`, response.status);
+            
+            if (!response.ok) {
+                const text = await response.text();
+                console.log(`API: Update format ${formatIndex + 1} error response body:`, text);
+                console.log(`API: Update format ${formatIndex + 1} response status:`, response.status);
+                console.log(`API: Update format ${formatIndex + 1} response statusText:`, response.statusText);
+                
+                // Try to parse error response as JSON
+                try {
+                    const errorData = JSON.parse(text);
+                    console.log(`API: Parsed error data:`, errorData);
+                    
+                    // If it's a validation error (422), return the error data instead of throwing
+                    if (response.status === 422 && errorData.error) {
+                        throw new Error(errorData.error);
+                    }
+                } catch (parseError) {
+                    console.log(`API: Could not parse error response as JSON:`, parseError);
+                }
+                
+                if (formatIndex < dataFormats.length - 1) {
+                    console.log(`API: Update format ${formatIndex + 1} failed, trying next format...`);
+                    return tryUpdate(dataFormats[formatIndex + 1], formatIndex + 1);
+                } else {
+                    const error = new Error(`All update formats failed. Last error: ${response.status} ${response.statusText} - ${text}`);
+                    error.status = response.status;
+                    error.responseBody = text;
+                    throw error;
+                }
+            }
+            
+            const data = await response.json();
+            console.log(`API: Update format ${formatIndex + 1} success:`, data);
+            return data;
+            
+        } catch (error) {
+            console.log(`API: Update format ${formatIndex + 1} error:`, error);
+            if (formatIndex < dataFormats.length - 1) {
+                console.log(`API: Update format ${formatIndex + 1} failed, trying next format...`);
+                return tryUpdate(dataFormats[formatIndex + 1], formatIndex + 1);
+            } else {
+                throw error;
+            }
+        }
+    };
+    
+    return tryUpdate(dataFormats[0], 0);
+};
+
+const uploadProfilePicture = (formData) => {
+    return fetch(`${API_ROOT}/users/upload_photo`, {
+        method: 'POST',
+        headers: {
+            'Authorization': `Bearer ${token()}`
+        },
+        body: formData
     }).then((response) => {
         if (!response.ok) {
-            throw new Error(`Failed to update user: ${response.status} ${response.statusText}`);
+            throw new Error(`Failed to upload profile picture: ${response.status} ${response.statusText}`);
         }
         return response.json();
+    });
+};
+
+const deleteProfilePicture = () => {
+    return fetch(`${API_ROOT}/users/delete_photo`, {
+        method: 'DELETE',
+        headers: {
+            'Authorization': `Bearer ${token()}`
+        }
+    }).then((response) => {
+        if (!response.ok) {
+            throw new Error(`Failed to delete profile picture: ${response.status} ${response.statusText}`);
+        }
+        return response.json();
+    });
+};
+
+const updatePassword = (passwordData) => {
+    console.log('API: Attempting to update password');
+    
+    return fetch(`${API_ROOT}/update_password`, {
+        method: 'PATCH',
+        headers: headers(),
+        body: JSON.stringify(passwordData)
+    }).then((response) => {
+        console.log('API: Update password response status:', response.status);
+        
+        return response.json().then(data => {
+            if (!response.ok) {
+                console.log('API: Update password error response body:', data);
+                throw new Error(data.error || data.message || `Failed to update password: ${response.status}`);
+            }
+            
+            console.log('API: Update password success:', data);
+            return data;
+        });
+    }).catch(error => {
+        console.error('API: Update password error:', error);
+        throw error;
     });
 };
 
@@ -191,6 +308,9 @@ const api = {
         getCurrentUser: getCurrentUser,
         deleteUser: deleteUser,
         updateUser: updateUser,
+        updatePassword: updatePassword,
+        uploadProfilePicture: uploadProfilePicture,
+        deleteProfilePicture: deleteProfilePicture,
         forgotPassword: (email) => {
             console.log('API: Attempting forgot password for email:', email);
             

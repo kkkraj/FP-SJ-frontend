@@ -1,10 +1,56 @@
-import React from 'react';
+import React, { useEffect, useRef } from 'react';
 import { useNavigate } from 'react-router-dom';
 import Navbar from './Navbar';
 
 export default function HowItWorks(props) {
     const navigate = useNavigate();
     const isLoggedIn = props.currentUser && props.currentUser.id;
+    const promptCardsRef = useRef([]);
+
+    useEffect(() => {
+        const observerOptions = {
+            threshold: 0.2,
+            rootMargin: '0px 0px -100px 0px'
+        };
+
+        const observer = new IntersectionObserver((entries) => {
+            entries.forEach((entry) => {
+                console.log('Card intersecting:', entry.isIntersecting, entry.target);
+                if (entry.isIntersecting) {
+                    // Reset the animation by removing and re-adding the class
+                    entry.target.classList.remove('animate-in');
+                    // Force a reflow to ensure the class removal is processed
+                    void entry.target.offsetHeight;
+                    // Add the animation class
+                    entry.target.classList.add('animate-in');
+                    console.log('Added animate-in class to card');
+                } else {
+                    // Reset when out of view to ensure animation can trigger again
+                    entry.target.classList.remove('animate-in');
+                }
+            });
+        }, observerOptions);
+
+        // Use setTimeout to ensure refs are populated after render
+        const timeoutId = setTimeout(() => {
+            console.log('Setting up observers for cards:', promptCardsRef.current);
+            promptCardsRef.current.forEach((card, index) => {
+                if (card) {
+                    console.log(`Observing card ${index}:`, card);
+                    observer.observe(card);
+                }
+            });
+        }, 200);
+
+        return () => {
+            clearTimeout(timeoutId);
+            promptCardsRef.current.forEach((card) => {
+                if (card) {
+                    observer.unobserve(card);
+                }
+            });
+        };
+    }, []);
 
     return (
         <div className="terms-container">
@@ -124,37 +170,55 @@ export default function HowItWorks(props) {
                             <p className="section-subtitle">Choose from our guided prompts or start with a blank page. Every journey begins with a single word.</p>
                             
                             <div className="prompts-grid">
-                            <div className="prompt-card">
+                            <div 
+                                className="prompt-card" 
+                                ref={(el) => promptCardsRef.current[0] = el}
+                            >
                                 <div className="prompt-icon">✍️</div>
                                 <h3>Free Writing</h3>
                                 <p>Let your thoughts flow freely without judgment or structure.</p>
                             </div>
 
-                            <div className="prompt-card">
+                            <div 
+                                className="prompt-card" 
+                                ref={(el) => promptCardsRef.current[1] = el}
+                            >
                                 <div className="prompt-icon">💚</div>
                                 <h3>Gratitude Entry</h3>
                                 <p>Focus on the positive aspects of your day and life.</p>
                             </div>
 
-                            <div className="prompt-card">
+                            <div 
+                                className="prompt-card" 
+                                ref={(el) => promptCardsRef.current[2] = el}
+                            >
                                 <div className="prompt-icon">🎯</div>
                                 <h3>Goal Setting</h3>
                                 <p>Reflect on your aspirations and plan your next steps.</p>
                             </div>
 
-                            <div className="prompt-card">
+                            <div 
+                                className="prompt-card" 
+                                ref={(el) => promptCardsRef.current[3] = el}
+                            >
                                 <div className="prompt-icon">💡</div>
                                 <h3>Ideas & Insights</h3>
                                 <p>Capture your creative thoughts and breakthrough moments.</p>
                             </div>
 
-                            <div className="prompt-card">
+                            <div 
+                                className="prompt-card" 
+                                ref={(el) => promptCardsRef.current[4] = el}
+                            >
                                 <div className="prompt-icon">☕</div>
                                 <h3>Morning Pages</h3>
                                 <p>Start your day with stream-of-consciousness writing.</p>
                             </div>
 
-                            <div className="prompt-card">
+                            <div 
+                                className="prompt-card" 
+                                ref={(el) => promptCardsRef.current[5] = el}
+                            >
                                 <div className="prompt-icon">🌙</div>
                                 <h3>Evening Reflection</h3>
                                 <p>Process your day and prepare for restful sleep.</p>

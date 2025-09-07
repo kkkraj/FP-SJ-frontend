@@ -28,9 +28,20 @@ function App() {
     const token = localStorage.getItem("token");
     if (token) {
       api.auth.getCurrentUser().then((data) => {
+        console.log('getCurrentUser response:', data);
+        console.log('User data from getCurrentUser:', data.user);
+        
+        // Check for stored photo URL in localStorage
+        const storedPhoto = localStorage.getItem('user_photo');
+        if (storedPhoto && !data.user.photo) {
+          console.log('Found stored photo URL:', storedPhoto);
+          data.user.photo = storedPhoto;
+        }
+        
         setAuth({ currentUser: data.user });
         setLoading(false);
-      }).catch(() => {
+      }).catch((error) => {
+        console.error('getCurrentUser error:', error);
         setLoading(false);
       });
     } else {
@@ -40,12 +51,22 @@ function App() {
 
   const handleLogin = (user) => {
     console.log('handleLogin called with user:', user);
+    console.log('Login response structure:', JSON.stringify(user, null, 2));
     // Extract the actual user data from the nested response
     const userData = user.user || user;
+    
+    // Check for stored photo URL in localStorage
+    const storedPhoto = localStorage.getItem('user_photo');
+    if (storedPhoto && !userData.photo) {
+      console.log('Found stored photo URL during login:', storedPhoto);
+      userData.photo = storedPhoto;
+    }
+    
     const currentUser = { currentUser: userData };
     localStorage.setItem("token", user.token || user.jwt);
     setAuth(currentUser);
     console.log('Auth state updated, currentUser:', userData);
+    console.log('User photo in login response:', userData.photo);
   };
 
   const handleLogout = () => {
@@ -60,9 +81,13 @@ function App() {
   };
 
   const handleAccountUpdate = (updatedUserData) => {
-    // Update the auth state with the new user data
-    // The backend might return only the updated field, so merge with existing data
+    // Extract user data from response
     const userData = updatedUserData.user || updatedUserData;
+    
+    // Check if we have valid user data
+    if (!userData || (!userData.name && !userData.email)) {
+      return;
+    }
     
     // Merge the updated data with existing user data to preserve all fields
     const mergedUserData = {
@@ -77,8 +102,6 @@ function App() {
     
     const currentUser = { currentUser: mergedUserData };
     setAuth(currentUser);
-    console.log('Account updated, new user data:', mergedUserData);
-    console.log('Auth state after update:', currentUser);
   };
 
   const handleChange = (event) => {

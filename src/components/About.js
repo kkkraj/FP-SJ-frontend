@@ -1,4 +1,4 @@
-import React, {Component} from 'react';
+import React from 'react';
 import Weather from './Weather';
 import MyClock from './MyClock';
 import moment from 'moment';
@@ -11,11 +11,12 @@ const month = moment().format('MMMM');
 const year = moment().format('YYYY');
 const time = moment().format('LT');
 
-export default class About extends Component {
-    render () {
-        return (
-            <div id="about">
-                <h4 id="hello">{`Hello, ${this.props.currentUser.name}!`}</h4>
+export default function About(props) {
+    console.log('About component rendered with currentUser:', props.currentUser);
+    
+    return (
+        <div id="about">
+            <h4 id="hello">{`Hello, ${props.currentUser.name}!`}</h4>
                 <br/>
                 <Container>
                     <Row>
@@ -43,6 +44,5 @@ export default class About extends Component {
                     </Row>
                 </Container>
             </div>
-        )
+        );
     }
-}
