@@ -5,7 +5,9 @@ const headers = () => ({
     Authorization: `Bearer ${token()}`
 });
 
-const API_ROOT = `http://localhost:3000/api/v1`;
+const API_ROOT = process.env.NODE_ENV === 'production' 
+    ? 'https://space-journal-backend.herokuapp.com/api/v1'
+    : 'http://localhost:3000/api/v1';
 
 const signup = (userInfo) => {
     console.log('API: Attempting signup with data:', userInfo);

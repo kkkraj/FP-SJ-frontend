@@ -1,16 +1,16 @@
 {
   "files": {
-    "main.css": "/FP-SJ-frontend/static/css/main.153e9eec.css",
-    "main.js": "/FP-SJ-frontend/static/js/main.c3a89e3f.js",
-    "static/media/bg.png": "/FP-SJ-frontend/static/media/bg.e80952073d509011a97e.png",
-    "static/media/login-img.png": "/FP-SJ-frontend/static/media/login-img.803b2c807512cb27a32f.png",
-    "static/media/logo.png": "/FP-SJ-frontend/static/media/logo.705deee9d18de9d5b667.png",
-    "index.html": "/FP-SJ-frontend/index.html",
-    "main.153e9eec.css.map": "/FP-SJ-frontend/static/css/main.153e9eec.css.map",
-    "main.c3a89e3f.js.map": "/FP-SJ-frontend/static/js/main.c3a89e3f.js.map"
+    "main.css": "/static/css/main.153e9eec.css",
+    "main.js": "/static/js/main.6e529e12.js",
+    "static/media/bg.png": "/static/media/bg.e80952073d509011a97e.png",
+    "static/media/login-img.png": "/static/media/login-img.803b2c807512cb27a32f.png",
+    "static/media/logo.png": "/static/media/logo.705deee9d18de9d5b667.png",
+    "index.html": "/index.html",
+    "main.153e9eec.css.map": "/static/css/main.153e9eec.css.map",
+    "main.6e529e12.js.map": "/static/js/main.6e529e12.js.map"
   },
   "entrypoints": [
     "static/css/main.153e9eec.css",
-    "static/js/main.c3a89e3f.js"
+    "static/js/main.6e529e12.js"
   ]
 }
