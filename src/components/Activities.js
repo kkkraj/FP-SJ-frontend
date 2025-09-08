@@ -109,15 +109,14 @@ export default function Activities(props) {
 
     return (
         <div style={{textAlign: 'center'}}>
-            <div className="actvdiv" style={{textAlign: 'center', display: 'grid', gridTemplateColumns: 'repeat(8, 1fr)'}}>
+            <div className="actvdiv" style={{textAlign: 'center', display: 'grid', gridTemplateColumns: 'repeat(6, 1fr)', gap: '20px'}}>
                 {activities.map((activity) => {
                     const isSelected = selectedActivities.has(activity.id);
                     return (
                         <div 
-                            className="actvs" 
+                            className={`actvs activity-item ${isSelected ? 'selected' : ''}`}
                             key={activity.id} 
                             style={{
-                                paddingTop: '7.5px',
                                 cursor: 'pointer',
                                 transition: 'all 0.3s ease'
                             }}
@@ -129,8 +128,7 @@ export default function Activities(props) {
                                     height: 'auto', 
                                     border: '2px solid black', 
                                     borderRadius: '100px',
-                                    transition: 'all 0.3s ease',
-                                    boxShadow: isSelected ? '0 4px 12px rgba(255, 127, 80, 0.4)' : 'none'
+                                    transition: 'all 0.3s ease'
                                 }} 
                                 src={activity.activity_url} 
                                 alt={activity.activity_name}
@@ -140,7 +138,7 @@ export default function Activities(props) {
                                 paddingTop: '11px', 
                                 marginBottom: '0',
                                 fontWeight: isSelected ? 'bold' : 'normal',
-                                color: isSelected ? 'coral' : 'inherit'
+                                color: isSelected ? 'rgb(87, 177, 172)' : 'inherit'
                             }}>
                                 {activity.activity_name}
                             </p>

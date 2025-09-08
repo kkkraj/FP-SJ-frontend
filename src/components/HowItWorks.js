@@ -232,7 +232,7 @@ export default function HowItWorks(props) {
                             >
                                 Start Writing →
                             </button>
-                        </div>
+                    </div>
 
                         </div>
                     </div>
@@ -242,8 +242,7 @@ export default function HowItWorks(props) {
                         <h2 className="section-title">Everything you need for mindful writing</h2>
                         <p className="section-subtitle">Space Journal combines the simplicity of pen and paper with the power of modern technology. <br />Connect with yourself and focus on your thoughts, not the tools.</p>
                         
-                        <div className="features-layout">
-                            <div className="features-grid">
+                        <div className="features-grid">
                                 <div className="feature-item">
                                     <div className="feature-icon">
                                         <svg xmlns="http://www.w3.org/2000/svg" height="48px" viewBox="0 -960 960 960" width="48px" fill="#1f1f1f">
@@ -303,20 +302,6 @@ export default function HowItWorks(props) {
                                     <h3>Daily Affirmation</h3>
                                     <p>Keep your thoughts aligned with positivity through daily affirmations and reminders. Stay grounded, build resilience, strengthen your self-esteem, and bring more calm and clarity to your day.</p>
                                 </div>
-                            </div>
-
-                            <div className="features-image">
-                                <div className="image-placeholder">
-                                    <div className="journal-mockup">
-                                        <div className="journal-page">
-                                            <div className="journal-lines"></div>
-                                            <div className="journal-text">Today I realized...</div>
-                                        </div>
-                                        <div className="pen"></div>
-                                        <div className="coffee"></div>
-                        </div>
-                    </div>
-                </div>
                         </div>
 
                         <div className="additional-features">

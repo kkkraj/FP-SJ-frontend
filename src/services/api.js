@@ -15,14 +15,14 @@ const signup = (userInfo) => {
     const dataFormats = [
         userInfo, // Original format
         { user: userInfo }, // Wrapped in 'user' key
-        {
-            user: {
-                name: userInfo.name,
-                email: userInfo.email,
+                    {
+                user: {
+                    name: userInfo.name,
+                    email: userInfo.email,
                 password: userInfo.password,
                 password_confirmation: userInfo.password_confirmation
+                }
             }
-        }
     ];
     
     // Try each format until one works
@@ -191,8 +191,8 @@ const updateUser = (user) => {
         
         try {
             const response = await fetch(`${API_ROOT}/users/${user.id}`, {
-                method: "PATCH",
-                headers: headers(),
+        method: "PATCH",
+        headers: headers(),
                 body: JSON.stringify(format)
             });
             
@@ -576,6 +576,178 @@ const api = {
             }).then((response) => {
                 if (!response.ok) {
                     throw new Error(`Failed to fetch user activities: ${response.status} ${response.statusText}`);
+                }
+                return response.json();
+            });
+        }
+    },
+    affirmations: {
+        getRandom: () => {
+            // Fallback affirmations array for when external APIs are not available
+            const fallbackAffirmations = [
+                "You are capable of amazing things.",
+                "Every day is a fresh start.",
+                "You have the power to create positive change.",
+                "Believe in yourself and all that you are.",
+                "Your potential is limitless.",
+                "You are stronger than you know.",
+                "Every challenge is an opportunity to grow.",
+                "You deserve happiness and success.",
+                "Your dreams are valid and achievable.",
+                "You are worthy of love and respect.",
+                "Today is full of possibilities.",
+                "You have everything you need to succeed.",
+                "Your positive energy attracts positive outcomes.",
+                "You are exactly where you need to be right now.",
+                "Every step forward is progress.",
+                "You are braver than you believe and stronger than you seem.",
+                "Your journey is unique and valuable.",
+                "You have the courage to overcome any obstacle.",
+                "Success is not final, failure is not fatal: it is the courage to continue that counts.",
+                "You are the author of your own story."
+            ];
+            
+            // Try external API first, fallback to local affirmations
+            return fetch(`https://api.allorigins.win/raw?url=${encodeURIComponent('https://www.affirmations.dev/')}`, {
+                headers: {
+                    'Content-Type': 'application/json',
+                    'Accept': 'application/json'
+                }
+            }).then((response) => {
+                if (!response.ok) {
+                    throw new Error(`Failed to fetch affirmation: ${response.status} ${response.statusText}`);
+                }
+                return response.json();
+            }).catch((error) => {
+                console.log('External API failed, using fallback affirmations:', error);
+                // Return a random affirmation from our fallback array
+                const randomIndex = Math.floor(Math.random() * fallbackAffirmations.length);
+                return { affirmation: fallbackAffirmations[randomIndex] };
+            });
+        },
+        // Note: Public API only provides random affirmations
+        // These methods are kept for future use when you deploy your own API
+        getAll: () => {
+            return Promise.resolve({ message: 'Public API only provides random affirmations' });
+        },
+        getByCategory: (category) => {
+            return Promise.resolve({ message: 'Public API only provides random affirmations' });
+        },
+        getCategories: () => {
+            return Promise.resolve({ message: 'Public API only provides random affirmations' });
+        }
+    },
+    goals: {
+        getAll: () => {
+            return fetch(`http://localhost:3000/goals/`, {
+                headers: headers(),
+            }).then((response) => {
+                if (!response.ok) {
+                    throw new Error(`Failed to fetch goals: ${response.status} ${response.statusText}`);
+                }
+                return response.json();
+            });
+        },
+        createUserGoal: (userGoalData) => {
+            return fetch(`http://localhost:3000/user_goals/`, {
+                method: 'POST',
+                headers: headers(),
+                body: JSON.stringify({ user_goal: userGoalData })
+            }).then((response) => {
+                if (!response.ok) {
+                    throw new Error(`Failed to create user goal: ${response.status} ${response.statusText}`);
+                }
+                return response.json();
+            });
+        },
+        getUserGoals: (userId) => {
+            const today = new Date().toISOString().split('T')[0]; // Format: YYYY-MM-DD
+            return fetch(`http://localhost:3000/user_goals/?user_id=${userId}&date=${today}`, {
+                headers: headers(),
+            }).then((response) => {
+                if (!response.ok) {
+                    throw new Error(`Failed to fetch user goals: ${response.status} ${response.statusText}`);
+                }
+                return response.json();
+            });
+        },
+        updateUserGoal: (userGoalId, userGoalData) => {
+            return fetch(`http://localhost:3000/user_goals/${userGoalId}`, {
+                method: 'PATCH',
+                headers: headers(),
+                body: JSON.stringify({ user_goal: userGoalData })
+            }).then((response) => {
+                if (!response.ok) {
+                    throw new Error(`Failed to update user goal: ${response.status} ${response.statusText}`);
+                }
+                return response.json();
+            });
+        },
+        deleteUserGoal: (userGoalId) => {
+            return fetch(`http://localhost:3000/user_goals/${userGoalId}`, {
+                method: 'DELETE',
+                headers: headers(),
+            }).then((response) => {
+                if (!response.ok) {
+                    throw new Error(`Failed to delete user goal: ${response.status} ${response.statusText}`);
+                }
+                return response.json();
+            });
+        }
+    },
+    gratitudes: {
+        getAll: () => {
+            return fetch(`http://localhost:3000/gratitudes/`, {
+                headers: headers(),
+            }).then((response) => {
+                if (!response.ok) {
+                    throw new Error(`Failed to fetch gratitudes: ${response.status} ${response.statusText}`);
+                }
+                return response.json();
+            });
+        },
+        createUserGratitude: (userGratitudeData, userId) => {
+            return fetch(`http://localhost:3000/user_gratitudes/?user_id=${userId}`, {
+                method: 'POST',
+                headers: headers(),
+                body: JSON.stringify({ user_gratitude: userGratitudeData })
+            }).then((response) => {
+                if (!response.ok) {
+                    throw new Error(`Failed to create user gratitude: ${response.status} ${response.statusText}`);
+                }
+                return response.json();
+            });
+        },
+        getUserGratitudes: (userId) => {
+            const today = new Date().toISOString().split('T')[0]; // Format: YYYY-MM-DD
+            return fetch(`http://localhost:3000/user_gratitudes/?user_id=${userId}&date=${today}`, {
+                headers: headers(),
+            }).then((response) => {
+                if (!response.ok) {
+                    throw new Error(`Failed to fetch user gratitudes: ${response.status} ${response.statusText}`);
+                }
+                return response.json();
+            });
+        },
+        updateUserGratitude: (userGratitudeId, userGratitudeData) => {
+            return fetch(`http://localhost:3000/user_gratitudes/${userGratitudeId}`, {
+                method: 'PATCH',
+                headers: headers(),
+                body: JSON.stringify({ user_gratitude: userGratitudeData })
+            }).then((response) => {
+                if (!response.ok) {
+                    throw new Error(`Failed to update user gratitude: ${response.status} ${response.statusText}`);
+                }
+                return response.json();
+            });
+        },
+        deleteUserGratitude: (userGratitudeId) => {
+            return fetch(`http://localhost:3000/user_gratitudes/${userGratitudeId}`, {
+                method: 'DELETE',
+                headers: headers(),
+            }).then((response) => {
+                if (!response.ok) {
+                    throw new Error(`Failed to delete user gratitude: ${response.status} ${response.statusText}`);
                 }
                 return response.json();
             });

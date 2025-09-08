@@ -43,24 +43,27 @@ function Navbar(props) {
                     <div className="main-nav-left">
                         <NavLink to="/about">
                             <img src="/static/media/logo.705deee9d18de9d5b667.png" alt="Space Journal Logo" className="main-nav-logo" />
-                        </NavLink>
+                </NavLink>
                     </div>
                     <div className="main-nav-right">
-                        <NavLink to="/diary">
-                            New Entry
-                        </NavLink>
+                        <NavLink to="/diary" className="new-entry-btn">
+                            <svg xmlns="http://www.w3.org/2000/svg" height="16px" viewBox="0 -960 960 960" width="16px" fill="currentColor" style={{ marginRight: '6px' }}>
+                                <path d="M440-440H200v-80h240v-240h80v240h240v80H520v240h-80v-240Z"/>
+                            </svg>
+                    New Entry
+                </NavLink>
 
                         <NavLink to="/entries">
                             My Entries
-                        </NavLink>
+                </NavLink>
 
                         <NavLink to="/charts">
-                            Overview
-                        </NavLink>
+                            Insights
+                </NavLink>
 
                         <NavLink to="/how-it-works">
                             How It Works
-                        </NavLink>
+                </NavLink>
 
                         <div className="user-photo-container" ref={dropdownRef}>
                             <div className="user-photo-link" onClick={handleUserPhotoClick}>

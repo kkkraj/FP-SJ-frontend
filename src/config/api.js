@@ -10,7 +10,8 @@ const API_CONFIG = {
     MOODS: '/moods',
     USER_MOODS: '/user_moods',
     ACTIVITIES: '/activities',
-    USER_ACTIVITIES: '/user_activities'
+    USER_ACTIVITIES: '/user_activities',
+    AFFIRMATIONS: '/affirmations'
   }
 };
 

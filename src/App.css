@@ -1343,8 +1343,11 @@ button.apple-button {
 }
 
 .view-all-btn:hover {
-  background-color: #e9ecef;
-  color: #495057;
+  background: linear-gradient(135deg, #9ee4e0 0%, #79ede3 50%, #bce3ff 100%);
+  color: #2c3e50;
+  border: none;
+  transform: translateY(-2px);
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.15);
 }
 
 /* Prompts Grid */
@@ -1373,9 +1376,11 @@ button.apple-button {
 }
 
 .start-writing-btn:hover {
-  background-color: #e9ecef;
-  color: #495057;
-  border-color: #dee2e6;
+  background: linear-gradient(135deg, #9ee4e0 0%, #79ede3 50%, #bce3ff 100%);
+  color: #2c3e50;
+  border: none;
+  transform: translateY(-2px);
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.15);
 }
 
 .prompt-card {
@@ -1509,7 +1514,7 @@ button.apple-button {
 
 .features-grid {
   display: grid;
-  grid-template-columns: repeat(2, 1fr);
+  grid-template-columns: repeat(3, 1fr);
   gap: 16px;
 }
 
@@ -1629,7 +1634,8 @@ button.apple-button {
 .additional-features {
   display: grid;
   grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
-  gap: 24px;
+  gap: 40px;
+  margin-top: 60px;
 }
 
 .feature-card {
@@ -1716,8 +1722,6 @@ button.apple-button {
   margin: 0;
 }
 
-.features-section {
-}
 
 .features-section h2 {
   font-family: 'Poppins', sans-serif;
@@ -1730,7 +1734,7 @@ button.apple-button {
 
 .features-grid {
   display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+  grid-template-columns: repeat(3, 1fr);
   gap: 16px;
 }
 
@@ -1902,7 +1906,7 @@ button.apple-button {
   }
   
   .features-grid {
-    grid-template-columns: 1fr;
+    grid-template-columns: repeat(2, 1fr);
   }
   
   .cta-buttons {
@@ -2319,6 +2323,9 @@ button.waves-effect.waves-light.btn {
 
 #nav {
   padding: 20px 0;
+  position: relative;
+  z-index: 1000;
+  background: white;
 }
 
 #nav .nav-wrapper {
@@ -2375,6 +2382,12 @@ button.waves-effect.waves-light.btn {
 
 .main-nav-right a:hover {
   color: rgb(104, 187, 183);
+  background-color: #f8f9fa;
+}
+
+/* New Entry button specific hover - salmon color */
+.new-entry-btn:hover {
+  color: salmon !important;
   background-color: #f8f9fa;
 }
 
@@ -2518,7 +2531,6 @@ button.waves-effect.waves-light.btn {
 }
 
 #diary {
-  padding-top: 40px;
   text-align: center;
 }
 
@@ -2544,6 +2556,512 @@ button.waves-effect.waves-light.btn {
   text-align: center;
 }
 
+/* About page card styling */
+.about-card-wrapper {
+  background-color: rgba(255, 255, 255, 0.95) !important;
+  border: none !important;
+  border-radius: 10px !important;
+  padding: 12px !important;
+  box-shadow: 0 2px 8px rgba(88, 153, 150, 0.1) !important;
+  margin: 0 !important;
+  min-height: 70px !important;
+  display: flex !important;
+  flex-direction: column !important;
+  justify-content: center !important;
+  height: 100% !important;
+  width: 100% !important;
+}
+
+.about-card-content {
+  width: 100% !important;
+  height: 100% !important;
+  display: flex !important;
+  flex-direction: column !important;
+  justify-content: center !important;
+  align-items: center !important;
+}
+
+/* Datetime specific styling */
+#datetime {
+  padding-top: 0 !important;
+  font-size: inherit !important;
+  color: inherit !important;
+  width: 100% !important;
+  height: auto !important;
+  box-shadow: none !important;
+  border-radius: 0 !important;
+}
+
+.datetime-day {
+  font-weight: bold;
+  color: rgb(88, 153, 150);
+  letter-spacing: 0.5px;
+  margin-bottom: 4px;
+  font-size: 0.7rem;
+}
+
+.datetime-date {
+  font-size: 1.5rem;
+  font-weight: bold;
+  color: coral;
+  letter-spacing: 0.5px;
+  margin-bottom: 4px;
+}
+
+.datetime-month {
+  font-weight: bold;
+  color: rgb(88, 153, 150);
+  margin-bottom: 4px;
+  font-size: 0.7rem;
+}
+
+.datetime-time {
+  color: rgb(41, 41, 41);
+  font-size: 0.7rem;
+  margin-bottom: 0;
+}
+
+/* Weather specific styling */
+#weather {
+  width: 100% !important;
+  height: 100% !important;
+  display: flex !important;
+  flex-direction: column !important;
+  justify-content: center !important;
+  align-items: center !important;
+}
+
+.weather-city {
+  font-weight: bold;
+  color: rgb(88, 153, 150);
+  letter-spacing: 0.5px;
+  margin-bottom: 4px;
+  font-size: 0.7rem;
+}
+
+.weather-icon {
+  border-radius: 50px;
+  width: 30px;
+  height: 30px;
+  margin-bottom: 4px;
+}
+
+.weather-description {
+  font-size: 0.7rem;
+  margin-bottom: 4px;
+}
+
+.weather-temp {
+  font-weight: bold;
+  color: coral;
+  margin-bottom: 4px;
+  font-size: 0.7rem;
+}
+
+.weather-details {
+  font-size: 0.7rem;
+  margin-bottom: 0;
+  color: rgb(41, 41, 41);
+}
+
+/* Affirmation specific styling */
+.affirmation-card {
+  width: 100% !important;
+  height: 100% !important;
+  display: flex !important;
+  flex-direction: column !important;
+  justify-content: center !important;
+  align-items: center !important;
+}
+
+.affirmation-title {
+  color: rgb(88, 153, 150);
+  font-size: 0.7rem;
+  font-weight: bold;
+  margin-bottom: 4px;
+}
+
+.affirmation-text {
+  font-size: 0.7rem;
+  color: #333;
+  line-height: 1.3;
+  margin-bottom: 0;
+}
+
+/* ========================================
+   DASHBOARD DESIGN STYLES
+   ======================================== */
+
+/* Dashboard Container */
+.dashboard-container {
+  min-height: 100vh;
+  padding: 16px;
+  max-width: 1200px;
+  margin: 0 auto;
+}
+
+/* Dashboard Header */
+.dashboard-header {
+  margin-bottom: 20px;
+  text-align: center;
+}
+
+.dashboard-greeting {
+  font-size: 2.4rem;
+  font-weight: bold;
+  margin-bottom: 6px;
+  color: #6ad7eb;
+}
+
+.dashboard-subtitle {
+  color: #6b7280;
+  font-size: 15px;
+  margin-bottom: 32px;
+}
+
+/* Dashboard Grid */
+.dashboard-grid {
+  display: grid;
+  gap: 20px;
+  margin-bottom: 32px;
+}
+
+.dashboard-grid-3 {
+  grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+}
+
+.dashboard-grid-4 {
+  grid-template-columns: repeat(auto-fit, minmax(160px, 1fr));
+  gap: 16px;
+}
+
+/* Dashboard Cards */
+.dashboard-card {
+  background: rgba(255, 255, 255, 0.8);
+  backdrop-filter: blur(10px);
+  border-radius: 16px;
+  padding: 16px;
+  box-shadow: 0 8px 20px rgba(0, 0, 0, 0.1);
+  border: 1px solid rgba(255, 255, 255, 0.2);
+  transition: all 0.3s ease;
+  display: flex;
+  flex-direction: column;
+}
+
+.dashboard-card:hover {
+  box-shadow: 0 20px 40px rgba(0, 0, 0, 0.15);
+  transform: translateY(-4px);
+}
+
+.dashboard-card-header {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  margin-bottom: 12px;
+}
+
+.dashboard-card-header h3 {
+  font-size: 0.9rem;
+  font-weight: 600;
+  color: #1f2937;
+  margin: 0;
+}
+
+.dashboard-icon {
+  font-size: 1.2rem;
+}
+
+/* Dashboard Affirmation Card */
+.dashboard-affirmation-card {
+  background:
+    radial-gradient(ellipse at 10% 90%, #fff9db 0%, transparent 40%),
+    radial-gradient(circle at 90% 10%, #bce3ff 0%, transparent 60%),
+    radial-gradient(ellipse at 60% 20%, #9ee4e0 0%, transparent 45%),
+    radial-gradient(circle at 30% 60%, #79ede3 0%, transparent 55%),
+    radial-gradient(ellipse at 80% 80%, #fff9db 0%, transparent 35%),
+    linear-gradient(45deg, #fff9db 0%, #9ee4e0 25%, #79ede3 50%, #bce3ff 75%, #fff9db 100%);
+  color: #333;
+  border-radius: 16px;
+  padding: 16px;
+  box-shadow: 0 8px 20px rgba(0, 0, 0, 0.1);
+  transition: all 0.3s ease;
+  display: flex;
+  flex-direction: column;
+}
+
+.dashboard-affirmation-card:hover {
+  box-shadow: 0 20px 40px rgba(0, 0, 0, 0.15);
+  transform: translateY(-4px);
+}
+
+.dashboard-affirmation-card .dashboard-card-header h3 {
+  color: #333;
+  text-shadow: 0 1px 2px rgba(255, 255, 255, 0.8);
+}
+
+/* Dashboard Date and Time */
+.dashboard-datetime-content {
+  text-align: center;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  flex: 1;
+}
+
+.dashboard-date-text {
+  color: #6b7280;
+  line-height: 1.4;
+  margin-bottom: 6px;
+  font-size: 14px;
+}
+
+.dashboard-time-display {
+  font-size: 1.4rem;
+  font-weight: bold;
+  color: #1f2937;
+}
+
+/* Dashboard Small Cards */
+.dashboard-small-card {
+  background: rgba(255, 255, 255, 0.6);
+  backdrop-filter: blur(10px);
+  border-radius: 12px;
+  padding: 16px;
+  min-height: 120px;
+  box-shadow: 0 3px 12px rgba(0, 0, 0, 0.05);
+  border: 1px solid rgba(255, 255, 255, 0.2);
+  text-align: center;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+}
+
+.dashboard-small-card:hover {
+  box-shadow: 0 8px 25px rgba(0, 0, 0, 0.1);
+  transform: translateY(-3px);
+}
+
+.dashboard-icon-container {
+  width: 36px;
+  height: 36px;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin: 0 auto 12px;
+  transition: all 0.3s ease;
+}
+
+/* Icon background colors are preserved on hover */
+
+.dashboard-emoji {
+  font-size: 1.2rem;
+}
+
+.dashboard-small-card h4 {
+  font-weight: 600;
+  color: #374151;
+  margin-bottom: 8px;
+  font-size: 14px;
+}
+
+.dashboard-small-card p {
+  font-size: 14px;
+  color: #6b7280;
+  margin: 0;
+}
+
+/* Icon Background Colors */
+.mood-icon-bg {
+  background-color: hsl(104, 91%, 85%);
+}
+
+.goals-icon-bg {
+  background-color: hsl(149, 93%, 80%);
+}
+
+.gratitude-icon-bg {
+  background-color: hsl(173, 77%, 80%);
+}
+
+.entry-icon-bg {
+  background-color: hsl(213, 97%, 85%);
+}
+
+/* Personal Affirmation Section */
+.dashboard-personal-affirmation {
+  margin-bottom: 40px;
+}
+
+/* Personal Affirmation Card - Your Daily Affirmation */
+.dashboard-personal-affirmation .dashboard-card {
+  background-color: hsla(204, 0%, 100%, 1);
+  background-image: 
+    radial-gradient(circle at 0% 0%, hsla(295.99999999999994, 77%, 74%, 0.35) 3.1210986267166043%, transparent 40%), 
+    radial-gradient(circle at 20% 0%, hsla(236.91176470588243, 77%, 74%, 0.35) 3.1210986267166043%, transparent 40%), 
+    radial-gradient(circle at 40% 0%, hsla(186.61764705882354, 77%, 74%, 0.35) 3.1210986267166043%, transparent 40%), 
+    radial-gradient(circle at 60% 0%, hsla(127.0588235294118, 77%, 74%, 0.35) 3.1210986267166043%, transparent 40%), 
+    radial-gradient(circle at 80% 0%, hsla(62.20588235294117, 77%, 74%, 0.35) 3.1210986267166043%, transparent 40%), 
+    radial-gradient(circle at 100% 0%, hsla(23.823529411764703, 77%, 74%, 0.35) 3%, transparent 40%);
+  background-blend-mode: normal, normal, normal, normal, normal, normal;
+  min-height: 220px;
+}
+
+/* Call to Action */
+.dashboard-cta-section {
+  text-align: center;
+  margin-top: 70px;
+  margin-bottom: 40px;
+}
+
+.dashboard-cta-button {
+  background: 
+    radial-gradient(circle at 30% 70%, #bce3ff 0%, transparent 50%),
+    radial-gradient(circle at 70% 30%, #9ee4e0 0%, transparent 50%),
+    radial-gradient(circle at 50% 50%, hsl(173, 77%, 60%) 0%, transparent 50%),
+    linear-gradient(135deg, #bce3ff 0%, hsl(173, 77%, 60%) 50%, #9ee4e0 100%);
+  color: white;
+  padding: 10px 24px;
+  border-radius: 40px;
+  font-weight: 600;
+  text-decoration: none;
+  display: inline-block;
+  box-shadow: 0 8px 20px rgba(0, 0, 0, 0.1);
+  transition: all 0.3s ease;
+  border: none;
+  cursor: pointer;
+  font-size: 0.9rem;
+}
+
+.dashboard-cta-button:hover {
+  box-shadow: 0 20px 40px rgba(0, 0, 0, 0.15);
+  transform: scale(1.05);
+  color: white;
+}
+
+/* Dashboard Weather Content */
+.dashboard-weather-content {
+  text-align: center;
+  margin-top: -10px;
+}
+
+.dashboard-weather-icon {
+  width: 70px;
+  height: 70px;
+}
+
+.dashboard-weather-temp {
+  font-size: 1.2rem;
+  font-weight: bold;
+  color: #1f2937;
+  margin-bottom: 6px;
+}
+
+.dashboard-weather-condition {
+  color: #6b7280;
+  margin: 6px 0;
+  font-size: 14px;
+}
+
+.dashboard-weather-note {
+  font-size: 14px;
+  color: #9ca3af;
+  margin: 0;
+}
+
+/* Dashboard Affirmation Content */
+.dashboard-affirmation-content {
+  text-align: center;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  flex: 1;
+  margin-top: 10px;
+}
+
+.reminder-text {
+  font-size: 14px;
+  line-height: 1.4;
+  font-weight: 500;
+  opacity: 0.95;
+  margin: 0;
+  color: #333;
+  text-shadow: 0 1px 2px rgba(255, 255, 255, 0.8);
+}
+
+.affirmation-text {
+  font-size: 18px;
+  line-height: 1.4;
+  font-weight: 500;
+  font-style: normal;
+  opacity: 0.95;
+  margin: 0;
+  color: #333;
+  text-shadow: 0 1px 2px rgba(255, 255, 255, 0.8);
+}
+
+/* Loading dots animation */
+.loading-dots {
+  font-weight: bold;
+  display: inline-block;
+}
+
+.loading-dots::after {
+  content: '';
+  animation: loading-dots 1.5s infinite;
+}
+
+@keyframes loading-dots {
+  0%, 20% {
+    content: '.';
+  }
+  40% {
+    content: '.  .';
+  }
+  60%, 100% {
+    content: '.  .  .';
+  }
+}
+
+/* Responsive Design */
+@media (max-width: 768px) {
+  .dashboard-greeting {
+    font-size: 2rem;
+  }
+  
+  .dashboard-container {
+    padding: 16px;
+  }
+  
+  .dashboard-grid-3, .dashboard-grid-4 {
+    grid-template-columns: 1fr;
+  }
+  
+  .dashboard-card {
+    padding: 16px;
+  }
+  
+  .dashboard-small-card {
+    padding: 12px;
+  }
+  
+  .dashboard-weather-temp {
+    font-size: 2.5rem;
+  }
+  
+  .reminder-text {
+    font-size: 1rem;
+  }
+  
+  .affirmation-text {
+    font-size: 1.2rem;
+  }
+}
+
 #aboutimg {
   width: 62%;
   height: auto;
@@ -2555,27 +3073,7 @@ button.waves-effect.waves-light.btn {
   border-radius: 15px;
 }
 
-#datetime {
-  padding-top: 20px;
-  font-size: larger;
-  color: darkblue;
-  width: 400px;
-  height: 295px;
-  box-shadow: 10px 15px 20px rgb(187, 187, 187);
-  border-radius: 15px;
-}
 
-div#weather {
-  width: 400px;
-  height: 295px;
-  box-shadow: 10px 15px 20px rgb(187, 187, 187);
-  border-radius: 15px;
-  padding-top: 20px;
-  display: block;
-  margin-left: auto;
-  margin-right: auto;
-  text-align: center;
-}
 
 #myclock {
   margin-left: auto;
@@ -2588,15 +3086,13 @@ textarea::placeholder {
 }
 
 .diaryheader {
-  font-family: 'Raleway', sans-serif;
+  font-family: 'Avenir Next', sans-serif;
   font-weight: bold;
-  color: rgb(87, 177, 172);
+  color: #bce3ff;
   letter-spacing: 1px;
   margin: 0px 0px 0px;
-  padding: 3px 0px 3px 0px;
-  background-color: WhiteSmoke;
-  /* box-shadow: 1px 1px 5px rgb(211, 211, 211); */
-  border-radius: 15px;
+  padding: 10px 0px 10px 0px;
+  font-size: 20px;
 }
 
 .moodsdiv {
@@ -2661,15 +3157,19 @@ li#diary-content {
   font-family: 'Raleway', sans-serif;
 }
 
-.chart-header {
+.charts .chart-header {
   color:rgb(104, 187, 183);
   font-weight: bold;
   letter-spacing: 1px;
+  font-family: 'Avenir Next', sans-serif !important;
+}
+
+.charts .row:has(.chart-header) {
+  margin-top: 40px;
 }
 
 #monthly {
-  background-color: WhiteSmoke;
-  color: salmon;
+  color: rgb(17, 81, 146);
   border-radius: 15px;
   font-weight: bold;
   letter-spacing: 1px;
@@ -3350,5 +3850,1251 @@ button.delete-photo-btn .material-icons:hover,
   .info-details {
     max-width: 100%;
   }
+}
+
+/* Diary Sidebar Styles */
+.diary-sidebar {
+  background: white;
+  box-shadow: 0 8px 32px rgba(0, 0, 0, 0.12);
+  border-radius: 16px;
+  height: calc(100vh - 140px);
+  position: absolute;
+  left: 20px;
+  top: 20px;
+  width: 300px;
+  z-index: 100;
+  overflow-y: auto;
+  padding: 20px 0;
+  border: 1px solid rgba(255, 255, 255, 0.2);
+  backdrop-filter: blur(10px);
+  animation: slideInLeft 0.5s ease-out;
+  /* Firefox scrollbar */
+  scrollbar-width: thin;
+  scrollbar-color: rgba(87, 177, 172, 0.3) transparent;
+}
+
+/* Custom scrollbar for sidebar */
+.diary-sidebar::-webkit-scrollbar {
+  width: 2px;
+  height: 2px; /* Sets the thickness for horizontal scrollbars */
+}
+
+.diary-sidebar::-webkit-scrollbar-track {
+  background: transparent;
+  border-radius: 2px;
+}
+
+.diary-sidebar::-webkit-scrollbar-thumb {
+  background: rgba(87, 177, 172, 0.15);
+  border-radius: 1px;
+  border: 2px solid transparent;
+  background-clip: content-box;
+}
+
+.diary-sidebar::-webkit-scrollbar-thumb:hover {
+  background: rgba(87, 177, 172, 0.4);
+}
+
+
+@keyframes slideInLeft {
+  from {
+    transform: translateX(-100%);
+    opacity: 0;
+  }
+  to {
+    transform: translateX(0);
+    opacity: 1;
+  }
+}
+
+
+.sidebar-nav {
+  padding: 0;
+  margin: 0;
+}
+
+.sidebar-nav-item {
+  margin: 2px 20px;
+}
+
+.sidebar-nav-link {
+  display: flex;
+  align-items: center;
+  padding: 16px 20px;
+  color: #333;
+  text-decoration: none;
+  transition: all 0.3s ease;
+  border: none;
+  background: none;
+  width: 100%;
+  text-align: left;
+  position: relative;
+}
+
+.sidebar-nav-link:visited {
+  color: #333;
+}
+
+.sidebar-nav-link:focus {
+  outline: none;
+  box-shadow: none;
+}
+
+.sidebar-nav-link:hover {
+  color: #57b1ac;
+  text-decoration: none;
+  background: none !important;
+  background-color: transparent !important;
+}
+
+/* Override nav-item hover for sidebar */
+.sidebar-nav-item:hover {
+  background-color: transparent !important;
+}
+
+.sidebar-nav-item .sidebar-nav-link:hover {
+  background: none !important;
+  background-color: transparent !important;
+}
+
+.sidebar-nav-link.active {
+  background: linear-gradient(135deg, rgba(87, 177, 172, 0.1), rgba(87, 177, 172, 0.05));
+  color: #57b1ac;
+  transform: translateX(4px);
+  border: none;
+}
+
+.sidebar-nav-link.active:hover {
+  background: linear-gradient(135deg, rgba(87, 177, 172, 0.1), rgba(87, 177, 172, 0.05)) !important;
+  color: #57b1ac !important;
+  transform: translateX(4px) !important;
+}
+
+
+.nav-icon {
+  margin-right: 12px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 24px;
+  height: 24px;
+}
+
+.nav-icon i {
+  font-size: 20px;
+}
+
+.nav-content {
+  flex: 1;
+}
+
+.nav-label {
+  font-weight: 500;
+  font-size: 14px;
+  margin-bottom: 2px;
+}
+
+.nav-description {
+  font-size: 12px;
+  color: #666;
+  line-height: 1.3;
+}
+
+/* Main content area adjustment for sidebar */
+.diary-main-content {
+  margin-left: 340px;
+  padding: 20px;
+  min-height: calc(100vh - 60px);
+  background-color: white;
+  margin-top: 0;
+  /* Custom scrollbar */
+  scrollbar-width: thin;
+  scrollbar-color: rgba(87, 177, 172, 0.3) transparent;
+}
+
+/* Custom scrollbar for main content */
+.diary-main-content::-webkit-scrollbar {
+  width: 2px;
+  height: 2px; /* Sets the thickness for horizontal scrollbars */
+}
+
+.diary-main-content::-webkit-scrollbar-track {
+  background: transparent;
+  border-radius: 2px;
+}
+
+.diary-main-content::-webkit-scrollbar-thumb {
+  background: rgba(87, 177, 172, 0.15);
+  border-radius: 1px;
+  border: 2px solid transparent;
+  background-clip: content-box;
+}
+
+.diary-main-content::-webkit-scrollbar-thumb:hover {
+  background: rgba(87, 177, 172, 0.4);
+}
+
+/* Diary page background */
+#diary {
+  background-color: white;
+  min-height: 100vh;
+  position: relative;
+  max-width: 1200px;
+  margin: 0 auto;
+}
+
+/* Responsive adjustments */
+@media (max-width: 768px) {
+  .diary-sidebar {
+    width: calc(100% - 40px);
+    height: auto;
+    position: relative;
+    top: 0;
+    left: 20px;
+    margin: 20px 0;
+    box-shadow: 0 8px 32px rgba(0, 0, 0, 0.12);
+    border-radius: 16px;
+  }
+  
+  .diary-main-content {
+    margin-left: 0;
+    margin-top: 0;
+    padding: 15px;
+    min-height: auto;
+  }
+  
+  .nav-label {
+    font-size: 13px;
+  }
+  
+  .nav-description {
+    font-size: 11px;
+  }
+}
+
+/* Diary Card Styles */
+.diary-card {
+  border: none;
+  box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+  border-radius: 16px;
+  margin-bottom: 20px;
+}
+
+.diary-card.card {
+  border-radius: 16px;
+  border: none;
+  height: calc(100vh - 140px);
+  display: flex;
+  flex-direction: column;
+}
+
+.diary-card .card-header {
+  background: transparent;
+  color: #333;
+  border: none;
+  border-radius: 16px 16px 0 0;
+  padding: 30px 25px;
+}
+
+.diary-card .card-header .diaryheader {
+  margin: 0;
+  font-weight: 600;
+  font-size: 20px;
+  color: #555;
+}
+
+.diary-card .card-body {
+  background: white;
+  border-radius: 0 0 16px 16px;
+  padding: 0 25px 30px 25px;
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  overflow-y: auto;
+}
+
+.diary-content-wrapper {
+  max-width: 100%;
+  border-radius: 16px;
+  border: none;
+}
+
+/* Diary Content Styles */
+.diary-choice-header {
+  text-align: center;
+  margin-bottom: 30px;
+}
+
+.diary-choice-icon {
+  margin-bottom: 15px;
+}
+
+.diary-choice-title {
+  color: #333;
+  margin-bottom: 10px;
+  font-size: 18px;
+}
+
+.diary-choice-description {
+  color: #666;
+  font-size: 14px;
+}
+
+.diary-choice-grid {
+  display: grid;
+  gap: 20px;
+  max-width: 600px;
+  margin: 0 auto;
+}
+
+.diary-choice-card {
+  padding: 25px;
+  background-color: #f8f9fa;
+  border-radius: 12px;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  text-align: center;
+}
+
+.diary-choice-card:hover {
+  background-color: #e8f5f4;
+  transform: translateY(-2px);
+  box-shadow: 0 4px 12px rgba(87, 177, 172, 0.2);
+}
+
+.diary-choice-icon-small {
+  font-size: 32px;
+  color: #212529;
+  margin-bottom: 10px;
+}
+
+.diary-choice-card-title {
+  color: #333;
+  margin: 0 0 8px 0;
+  font-size: 18px;
+  font-weight: 600;
+}
+
+.diary-choice-card-description {
+  color: #666;
+  margin: 0;
+  font-size: 14px;
+  background: transparent;
+}
+
+.diary-header-with-button {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.diary-back-button {
+  background: none;
+  border: none;
+  border-radius: 6px;
+  padding: 6px 12px;
+  font-size: 12px;
+  color: #666;
+  cursor: pointer;
+  transition: all 0.3s ease;
+}
+
+.diary-back-button:hover {
+  background-color: WhiteSmoke;
+  color: #333;
+}
+
+.diary-writing-ideas-content {
+  padding: 20px;
+}
+
+.diary-prompts-grid {
+  display: grid;
+  gap: 15px;
+}
+
+.diary-prompt-card {
+  padding: 20px;
+  background-color: #f8f9fa;
+  border-radius: 12px;
+  cursor: pointer;
+  transition: all 0.3s ease;
+}
+
+.diary-prompt-card:hover {
+  background-color: #e8f5f4;
+  transform: translateX(5px);
+}
+
+.diary-prompt-title {
+  color: #333;
+  margin: 0;
+  font-size: 16px;
+  font-weight: 600;
+}
+
+.diary-prompt-description {
+  color: #666;
+  margin: 0;
+  font-size: 14px;
+}
+
+.diary-journal-textarea {
+  height: 300px;
+  width: 100%;
+  border: 1px solid #ddd;
+  border-radius: 8px;
+  resize: none;
+  padding: 15px;
+  font-size: 14px;
+  font-family: 'Raleway', sans-serif;
+  line-height: 1.6;
+}
+
+.diary-submit-button {
+  background-color: WhiteSmoke;
+  margin-top: 25px;
+  padding: 10px 20px;
+  border: none;
+  border-radius: 4px;
+  color: #333;
+  font-weight: 500;
+  font-size: 14px;
+  transition: all 0.3s ease;
+}
+
+.diary-submit-button:hover {
+  background: linear-gradient(45deg, #fff9db 0%, #9ee4e0 25%, #79ede3 50%, #bce3ff 75%, #fff9db 100%);
+  border: none;
+  color: white;
+  transform: translateY(-1px);
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+}
+
+.diary-success-message {
+  color: rgb(87, 177, 172);
+  font-size: 14px;
+  margin-top: 15px;
+  font-family: 'Raleway', sans-serif;
+}
+
+/* Selected prompt display */
+.diary-selected-prompt {
+  margin-bottom: 20px;
+  padding: 15px;
+  background-color: #e8f5f4;
+  border-radius: 8px;
+}
+
+.diary-selected-prompt-title {
+  margin: 0;
+  font-size: 16px;
+  font-weight: 600;
+  color: #333;
+}
+
+/* Coming soon sections */
+.diary-coming-soon-container {
+  text-align: center;
+  padding: 40px;
+}
+
+.diary-coming-soon-icon {
+  font-size: 64px;
+  color: #57b1ac;
+  margin-bottom: 20px;
+}
+
+.diary-coming-soon-title {
+  margin-bottom: 10px;
+}
+
+.diary-coming-soon-description {
+  color: #666;
+}
+
+/* Upload memory section */
+.diary-upload-container {
+  text-align: center;
+  padding: 20px;
+}
+
+.diary-upload-dropzone {
+  padding: 20px;
+  margin-bottom: 15px;
+  min-height: 200px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  border: 2px dashed #ccc;
+  border-radius: 10px;
+  background-color: #f9f9f9;
+  transition: all 0.3s ease;
+}
+
+.diary-upload-preview-grid {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 8px;
+  margin-bottom: 15px;
+  max-height: 300px;
+  overflow-y: auto;
+  padding: 5px;
+  width: 100%;
+  box-sizing: border-box;
+}
+
+.diary-upload-preview-item {
+  position: relative;
+  width: 100%;
+  height: 100px;
+  overflow: hidden;
+  border-radius: 8px;
+}
+
+.diary-upload-preview-image {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  border-radius: 8px;
+  border: 2px solid #eee;
+  box-sizing: border-box;
+}
+
+.diary-upload-remove-button {
+  position: absolute;
+  top: -5px;
+  right: -5px;
+  width: 24px;
+  height: 24px;
+  border-radius: 50%;
+  border: none;
+  background-color: red;
+  color: white;
+  font-size: 12px;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 10;
+  box-shadow: 0 2px 4px rgba(0,0,0,0.3);
+}
+
+.diary-upload-button-container {
+  margin-bottom: 10px;
+}
+
+.diary-upload-button {
+  background-color: WhiteSmoke;
+  margin-right: 10px;
+  padding: 10px 20px;
+  border: none;
+  border-radius: 4px;
+  color: #333;
+  font-weight: 500;
+  font-size: 14px;
+  transition: all 0.3s ease;
+  cursor: pointer;
+}
+
+.diary-upload-button:hover {
+  background: linear-gradient(45deg, #fff9db 0%, #9ee4e0 25%, #79ede3 50%, #bce3ff 75%, #fff9db 100%);
+  border: none;
+  color: white;
+  transform: translateY(-1px);
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+}
+
+.diary-upload-cancel-button {
+  background-color: WhiteSmoke;
+  padding: 10px 20px;
+  border: none;
+  border-radius: 4px;
+  color: #333;
+  font-weight: 500;
+  font-size: 14px;
+  transition: all 0.3s ease;
+  cursor: pointer;
+}
+
+.diary-upload-cancel-button:hover {
+  background-color: #ff6b6b;
+  color: white;
+  transform: translateY(-1px);
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+}
+
+.diary-upload-progress-container {
+  width: 100%;
+  height: 4px;
+  background-color: #eee;
+  border-radius: 2px;
+  margin-top: 10px;
+}
+
+.diary-upload-progress-bar {
+  height: 100%;
+  background-color: LightSalmon;
+  border-radius: 2px;
+  transition: width 0.3s ease;
+}
+
+.diary-upload-placeholder-icon {
+  font-size: 48px;
+  color: #ccc;
+  margin-bottom: 10px;
+}
+
+.diary-upload-placeholder-text {
+  color: #666;
+  margin-bottom: 15px;
+  font-size: 14px;
+}
+
+.diary-upload-select-button {
+  background-color: WhiteSmoke;
+  padding: 10px 20px;
+  border: none;
+  border-radius: 4px;
+  color: #333;
+  font-weight: 500;
+  font-size: 14px;
+  transition: all 0.3s ease;
+  cursor: pointer;
+}
+
+.diary-upload-select-button:hover {
+  background: linear-gradient(45deg, #fff9db 0%, #9ee4e0 25%, #79ede3 50%, #bce3ff 75%, #fff9db 100%);
+  border: none;
+  color: white;
+  transform: translateY(-1px);
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+}
+
+.diary-upload-success-message {
+  color: rgb(87, 177, 172);
+  font-size: 14px;
+  font-family: 'Raleway', sans-serif;
+  font-weight: bold;
+}
+
+/* Default welcome section */
+.diary-welcome-container {
+  text-align: center;
+  padding: 40px;
+}
+
+.diary-welcome-icon {
+  font-size: 64px;
+  color: #57b1ac;
+  margin-bottom: 20px;
+}
+
+.diary-welcome-description {
+  color: #666;
+}
+
+/* Mood hover popup effect */
+.mood-item {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  padding: 10px;
+  border-radius: 12px;
+  transition: all 0.3s ease;
+}
+
+.mood-item:hover {
+  transform: translateY(-8px) scale(1.05);
+}
+
+.mood-item img {
+  transition: all 0.3s ease;
+}
+
+.mood-item:hover img {
+  transform: scale(1.1);
+}
+
+.mood-item p {
+  transition: all 0.3s ease;
+}
+
+.mood-item:hover p {
+  color: #57b1ac;
+  font-weight: 600;
+}
+
+/* Selected mood indicator */
+.mood-item.selected {
+  position: relative;
+  padding-bottom: 10px;
+}
+
+.mood-item.selected::after {
+  content: '';
+  position: absolute;
+  bottom: 0;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 40px;
+  height: 2px;
+  background-color: #57b1ac;
+  border-radius: 1px;
+}
+
+/* Activity hover and selection effects */
+.activity-item {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  padding: 10px;
+  border-radius: 12px;
+  transition: all 0.3s ease;
+}
+
+.activity-item:hover {
+  transform: translateY(-8px) scale(1.05);
+}
+
+.activity-item img {
+  transition: all 0.3s ease;
+}
+
+.activity-item:hover img {
+  transform: scale(1.1);
+}
+
+.activity-item p {
+  transition: all 0.3s ease;
+}
+
+.activity-item:hover p {
+  color: #57b1ac;
+  font-weight: 600;
+}
+
+/* Selected activity indicator */
+.activity-item.selected {
+  position: relative;
+  padding-bottom: 10px;
+}
+
+.activity-item.selected::after {
+  content: '';
+  position: absolute;
+  bottom: 0;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 40px;
+  height: 2px;
+  background-color: #57b1ac;
+  border-radius: 1px;
+}
+
+  /* Goals/Intentions styles */
+  .goals-container {
+    padding: 0 25px 30px 25px;
+  }
+
+.goals-create-form {
+  margin-bottom: 30px;
+}
+
+.goals-input-group {
+  display: flex;
+  gap: 10px;
+  align-items: center;
+}
+
+.goals-input {
+  flex: 1;
+  padding: 12px 16px;
+  border: 2px solid #e9ecef;
+  border-radius: 8px;
+  font-size: 14px;
+  font-family: 'Raleway', sans-serif;
+  transition: border-color 0.3s ease;
+}
+
+.goals-input:focus {
+  outline: none;
+  border-color: #57b1ac;
+}
+
+.goals-add-button {
+  background: #57b1ac;
+  color: white;
+  border: none;
+  border-radius: 8px;
+  padding: 12px;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  min-width: 44px;
+  height: 44px;
+}
+
+.goals-add-button:hover {
+  background: #4a9b96;
+}
+
+.goals-list {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+
+.goals-empty {
+  text-align: center;
+  padding: 40px 20px;
+  color: #666;
+}
+
+.goals-empty-icon {
+  width: 48px;
+  height: 48px;
+  margin: 0 auto 16px auto;
+  display: block;
+}
+
+.goals-item {
+  background: #f8f9fa;
+  border-radius: 12px;
+  padding: 16px;
+  transition: all 0.3s ease;
+}
+
+.goals-item:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 4px 12px rgba(87, 177, 172, 0.15);
+}
+
+.goals-item-content {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 12px;
+}
+
+.goals-item-left {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  flex: 1;
+}
+
+.goals-item-icon {
+  width: 28px;
+  height: 28px;
+  flex-shrink: 0;
+}
+
+.goals-item-text {
+  margin: 0;
+  font-size: 16px;
+  line-height: 1.5;
+  color: #333;
+}
+
+.goals-item-actions {
+  display: flex;
+  gap: 8px;
+}
+
+.goals-edit-button,
+.goals-delete-button {
+  background: none;
+  border: none;
+  color: #666;
+  cursor: pointer;
+  padding: 8px;
+  border-radius: 6px;
+  transition: all 0.3s ease;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.goals-edit-button:hover {
+  background: #e3f2fd;
+  color: #1976d2;
+}
+
+.goals-delete-button:hover {
+  background: #ffebee;
+  color: #d32f2f;
+}
+
+.goals-edit-form {
+  display: flex;
+  gap: 10px;
+  align-items: center;
+}
+
+.goals-edit-input {
+  flex: 1;
+  padding: 8px 12px;
+  border: 2px solid #57b1ac;
+  border-radius: 6px;
+  font-size: 14px;
+  font-family: 'Raleway', sans-serif;
+}
+
+.goals-edit-input:focus {
+  outline: none;
+}
+
+.goals-edit-actions {
+  display: flex;
+  gap: 8px;
+}
+
+.goals-save-button,
+.goals-cancel-button {
+  background: none;
+  border: none;
+  cursor: pointer;
+  padding: 8px;
+  border-radius: 6px;
+  transition: all 0.3s ease;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.goals-save-button {
+  color: #4caf50;
+}
+
+.goals-save-button:hover {
+  background: #e8f5e8;
+}
+
+.goals-cancel-button {
+  color: #f44336;
+}
+
+.goals-cancel-button:hover {
+  background: #ffebee;
+}
+
+.goals-error {
+  text-align: center;
+  padding: 40px 20px;
+  color: #d32f2f;
+}
+
+.goals-error i {
+  font-size: 48px;
+  margin-bottom: 16px;
+  display: block;
+}
+
+.goals-retry-button {
+  background: #57b1ac;
+  color: white;
+  border: none;
+  border-radius: 8px;
+  padding: 10px 20px;
+  cursor: pointer;
+  margin-top: 16px;
+  transition: background-color 0.3s ease;
+}
+
+.goals-retry-button:hover {
+  background: #4a9b96;
+}
+
+  /* Gratitude styles - same as goals but with gratitude-specific classes */
+  .gratitude-container {
+    padding: 0 25px 30px 25px;
+  }
+
+.gratitude-create-form {
+  margin-bottom: 30px;
+}
+
+.gratitude-input-group {
+  display: flex;
+  gap: 10px;
+  align-items: center;
+}
+
+.gratitude-input {
+  flex: 1;
+  padding: 12px 16px;
+  border: 2px solid #e9ecef;
+  border-radius: 8px;
+  font-size: 14px;
+  font-family: 'Raleway', sans-serif;
+  transition: border-color 0.3s ease;
+}
+
+.gratitude-input:focus {
+  outline: none;
+  border-color: #57b1ac;
+}
+
+.gratitude-select {
+  flex: 1;
+  padding: 12px 16px;
+  border: 2px solid #e9ecef;
+  border-radius: 8px;
+  font-size: 14px;
+  font-family: 'Raleway', sans-serif;
+  transition: border-color 0.3s ease;
+  background-color: white;
+  cursor: pointer;
+}
+
+.gratitude-select:focus {
+  outline: none;
+  border-color: #57b1ac;
+}
+
+.gratitude-add-button {
+  background: #57b1ac;
+  color: white;
+  border: none;
+  border-radius: 8px;
+  padding: 12px;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  min-width: 44px;
+  height: 44px;
+}
+
+.gratitude-add-button:hover {
+  background: #4a9b96;
+}
+
+.gratitude-list {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 12px;
+  align-items: flex-start;
+  justify-content: flex-start;
+}
+
+.gratitude-empty {
+  text-align: center;
+  padding: 40px 20px;
+  color: #666;
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+}
+
+.gratitude-empty-icon {
+  width: 48px;
+  height: 48px;
+  margin: 0 auto 16px auto;
+  display: block;
+  fill: #666;
+}
+
+.gratitude-item {
+  background: #f8f9fa;
+  border-radius: 12px;
+  padding: 8px 12px;
+  transition: all 0.3s ease;
+  display: inline-block;
+  width: fit-content;
+  min-width: 200px;
+  max-width: 100%;
+  position: relative;
+}
+
+.gratitude-item:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 4px 12px rgba(87, 177, 172, 0.15);
+}
+
+.gratitude-item-content {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+  gap: 12px;
+}
+
+.gratitude-item-left {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  flex: 1;
+}
+
+.gratitude-item-icon {
+  width: 28px;
+  height: 28px;
+  flex-shrink: 0;
+}
+
+.gratitude-item-text {
+  margin: 0;
+  font-size: 14px;
+  line-height: 1.4;
+  color: #333;
+  flex: 1;
+  padding-right: 20px;
+}
+
+.gratitude-title {
+  margin: 0 0 4px 0;
+  font-size: 16px;
+  font-weight: 600;
+  color: #333;
+}
+
+.gratitude-notes {
+  margin: 0;
+  font-size: 14px;
+  color: #666;
+  font-style: italic;
+}
+
+.gratitude-item-actions {
+  display: flex;
+  gap: 8px;
+}
+
+.gratitude-delete-x {
+  background: none;
+  border: none;
+  color: #999;
+  font-size: 18px;
+  font-weight: bold;
+  cursor: pointer;
+  padding: 4px;
+  border-radius: 4px;
+  transition: all 0.2s ease;
+  position: absolute;
+  top: 4px;
+  right: 4px;
+  width: 24px;
+  height: 24px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.gratitude-delete-x:hover {
+  color: #ff4444;
+  background-color: #ffe6e6;
+}
+
+.gratitude-edit-button,
+.gratitude-delete-button {
+  background: none;
+  border: none;
+  color: #666;
+  cursor: pointer;
+  padding: 8px;
+  border-radius: 6px;
+  transition: all 0.3s ease;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.gratitude-edit-button:hover {
+  background: #e3f2fd;
+  color: #1976d2;
+}
+
+.gratitude-delete-button:hover {
+  background: #ffebee;
+  color: #d32f2f;
+}
+
+.gratitude-edit-form {
+  display: flex;
+  gap: 10px;
+  align-items: center;
+}
+
+.gratitude-edit-input {
+  flex: 1;
+  padding: 8px 12px;
+  border: 2px solid #57b1ac;
+  border-radius: 6px;
+  font-size: 14px;
+  font-family: 'Raleway', sans-serif;
+}
+
+.gratitude-edit-input:focus {
+  outline: none;
+}
+
+.gratitude-edit-actions {
+  display: flex;
+  gap: 8px;
+}
+
+.gratitude-save-button,
+.gratitude-cancel-button {
+  background: none;
+  border: none;
+  cursor: pointer;
+  padding: 8px;
+  border-radius: 6px;
+  transition: all 0.3s ease;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.gratitude-save-button {
+  color: #4caf50;
+}
+
+.gratitude-save-button:hover {
+  background: #e8f5e8;
+}
+
+.gratitude-cancel-button {
+  color: #f44336;
+}
+
+.gratitude-cancel-button:hover {
+  background: #ffebee;
+}
+
+.gratitude-error {
+  text-align: center;
+  padding: 40px 20px;
+  color: #d32f2f;
+}
+
+.gratitude-error i {
+  font-size: 48px;
+  margin-bottom: 16px;
+  display: block;
+}
+
+.gratitude-retry-button {
+  background: #57b1ac;
+  color: white;
+  border: none;
+  border-radius: 8px;
+  padding: 10px 20px;
+  cursor: pointer;
+  margin-top: 16px;
+  transition: background-color 0.3s ease;
+}
+
+.gratitude-retry-button:hover {
+  background: #4a9b96;
 }
 

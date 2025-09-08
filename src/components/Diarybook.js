@@ -11,6 +11,10 @@ export default function Diarybook(props) {
     const [activitiesList, setActivitiesList] = useState([]);
     const [userActivities, setUserActivities] = useState([]);
     const [photos, setPhotos] = useState([]);
+    const [goalsList, setGoalsList] = useState([]);
+    const [userGoals, setUserGoals] = useState([]);
+    const [gratitudesList, setGratitudesList] = useState([]);
+    const [userGratitudes, setUserGratitudes] = useState([]);
     const [loading, setLoading] = useState(true);
     const [error, setError] = useState(null);
     const [showDeleteModal, setShowDeleteModal] = useState(false);
@@ -23,13 +27,17 @@ export default function Diarybook(props) {
         const fetchData = async () => {
             try {
                 // Fetch all data in parallel
-                const [diariesData, userMoodsData, moodsListData, activitiesData, userActivitiesData, photosData] = await Promise.all([
+                const [diariesData, userMoodsData, moodsListData, activitiesData, userActivitiesData, photosData, goalsData, userGoalsData, gratitudesData, userGratitudesData] = await Promise.all([
                     api.diary.getAll(),
                     api.userMoods.getAll(currentUserId),
                     api.moods.getAll(),
                     api.activities.getAll(),
                     api.userActivities.getAll(currentUserId),
-                    api.diary.getPhotos(currentUserId)
+                    api.diary.getPhotos(currentUserId),
+                    api.goals.getAll(),
+                    api.goals.getUserGoals(currentUserId),
+                    api.gratitudes.getAll(),
+                    api.gratitudes.getUserGratitudes(currentUserId)
                 ]);
 
                 console.log('=== DEBUGGING DATA FETCH ===');
@@ -41,6 +49,10 @@ export default function Diarybook(props) {
                 console.log('All Activities:', activitiesData);
                 console.log('All User Activities:', userActivitiesData);
                 console.log('All Photos:', photosData);
+                console.log('All Goals:', goalsData);
+                console.log('All User Goals:', userGoalsData);
+                console.log('All Gratitudes:', gratitudesData);
+                console.log('All User Gratitudes:', userGratitudesData);
 
                 setDiaries(diariesData);
                 setUserMoods(userMoodsData);
@@ -48,6 +60,10 @@ export default function Diarybook(props) {
                 setActivitiesList(activitiesData);
                 setUserActivities(userActivitiesData);
                 setPhotos(photosData);
+                setGoalsList(goalsData);
+                setUserGoals(userGoalsData);
+                setGratitudesList(gratitudesData);
+                setUserGratitudes(userGratitudesData);
                 setLoading(false);
             } catch (error) {
                 console.error('Error fetching data:', error);
@@ -207,6 +223,36 @@ export default function Diarybook(props) {
         }).filter(Boolean); // Remove any undefined activities
     };
 
+    // Get goals for the selected date with timestamps
+    const getGoalsForDate = () => {
+        console.log('Selected date:', props.selectedDate);
+        console.log('All user goals:', userGoals);
+        
+        const dateGoals = userGoals.filter(userGoal => {
+            const formatted = formatDate(userGoal.created_at);
+            console.log('User goal date:', userGoal.created_at, 'Formatted:', formatted, 'Selected:', props.selectedDate);
+            return userGoal.user_id === currentUserId && formatted === props.selectedDate;
+        });
+
+        console.log('Filtered date goals:', dateGoals);
+        return dateGoals;
+    };
+
+    // Get gratitudes for the selected date with timestamps
+    const getGratitudesForDate = () => {
+        console.log('Selected date:', props.selectedDate);
+        console.log('All user gratitudes:', userGratitudes);
+        
+        const dateGratitudes = userGratitudes.filter(userGratitude => {
+            const formatted = formatDate(userGratitude.created_at);
+            console.log('User gratitude date:', userGratitude.created_at, 'Formatted:', formatted, 'Selected:', props.selectedDate);
+            return userGratitude.user_id === currentUserId && formatted === props.selectedDate;
+        });
+
+        console.log('Filtered date gratitudes:', dateGratitudes);
+        return dateGratitudes;
+    };
+
     // Get sorted diaries for the selected date (oldest to newest)
     const getSortedDiariesForDate = () => {
         const dateDiaries = diaries.filter(diary => {
@@ -320,6 +366,8 @@ export default function Diarybook(props) {
     const uniqueMoods = getUniqueMoodsForDate();
     const uniqueActivities = getUniqueActivitiesForDate();
     const datePhotos = getPhotosForDate();
+    const dateGoals = getGoalsForDate();
+    const dateGratitudes = getGratitudesForDate();
     
     console.log('=== COMPONENT RENDER ===');
     console.log('Current photos state:', photos);
@@ -329,7 +377,7 @@ export default function Diarybook(props) {
     return (
         <div className="text">
             <div className="detail-header">
-                <h4 className="booheaders">Photos</h4>
+                <h4 className="booheaders">{datePhotos.length === 1 ? 'Photo' : 'Photos'}</h4>
                 {datePhotos.length > 0 ? (
                     <>
                         <div 
@@ -457,7 +505,10 @@ export default function Diarybook(props) {
             </div>
             <br/>
             <div className="detail-header">
-                <h4 className="booheaders">Journal</h4>
+                <h4 className="booheaders">{(() => {
+                    const sortedDiaries = getSortedDiariesForDate();
+                    return sortedDiaries.length === 1 ? 'Entry' : 'Entries';
+                })()}</h4>
                 {(() => {
                     const sortedDiaries = getSortedDiariesForDate();
                     return sortedDiaries.length > 0 ? (
@@ -512,7 +563,7 @@ export default function Diarybook(props) {
             </div>
             <br/>
             <div className="detail-header">
-                <h4 className="booheaders">Moods</h4>
+                <h4 className="booheaders">{uniqueMoods.length === 1 ? 'Mood' : 'Moods'}</h4>
                 {uniqueMoods.length > 0 ? (
                     <ul style={{listStyle: 'none', padding: 0}}>
                         {uniqueMoods.map((mood) => (
@@ -537,7 +588,7 @@ export default function Diarybook(props) {
             </div>
             <br/>
             <div className="detail-header">
-                <h4 className="booheaders">Activities</h4>
+                <h4 className="booheaders">{uniqueActivities.length === 1 ? 'Activity' : 'Activities'}</h4>
                 {uniqueActivities.length > 0 ? (
                     <ul style={{listStyle: 'none', padding: 0}}>
                         {uniqueActivities.map((activity) => (
@@ -558,6 +609,60 @@ export default function Diarybook(props) {
                     </ul>
                 ) : (
                     <p style={{color: 'gray', fontStyle: 'italic'}}>No entry for this day.</p>
+                )}
+            </div>
+            <br/>
+            <div className="detail-header">
+                <h4 className="booheaders">{dateGoals.length === 1 ? 'Intention' : 'Intentions'}</h4>
+                {dateGoals.length > 0 ? (
+                    <ul style={{listStyle: 'none', padding: 0}}>
+                        {dateGoals.map((goal) => (
+                            <li key={goal.id} style={{display: 'flex', alignItems: 'center', justifyContent: 'space-between', marginBottom: '10px'}}>
+                                <div style={{display: 'flex', alignItems: 'center'}}>
+                                    <svg xmlns="http://www.w3.org/2000/svg" height="20px" viewBox="0 -960 960 960" width="20px" fill="#1f1f1f" style={{marginRight: '10px'}}>
+                                        <path d="M480-390Zm-132-53 55 37 77-39 77 39 53-35-40-79H386l-38 77ZM209-160h541L646-369l-83 55-83-41-83 41-85-56-103 210ZM80-80l234-475q10-20 29.5-32.5T386-600h54v-280h280l-40 80 40 80H520v120h50q23 0 42 12t30 32L880-80H80Z"/>
+                                    </svg>
+                                    {sanitizeContent(goal.goal_text)}
+                                </div>
+                                <span style={{
+                                    color: 'gray',
+                                    fontSize: '12px',
+                                    fontStyle: 'italic'
+                                }}>
+                                    {formatTime(goal.created_at)}
+                                </span>
+                            </li>
+                        ))}
+                    </ul>
+                ) : (
+                    <p style={{color: 'gray', fontStyle: 'italic'}}>No intentions for this day.</p>
+                )}
+            </div>
+            <br/>
+            <div className="detail-header">
+                <h4 className="booheaders">Gratitude</h4>
+                {dateGratitudes.length > 0 ? (
+                    <ul style={{listStyle: 'none', padding: 0}}>
+                        {dateGratitudes.map((gratitude) => (
+                            <li key={gratitude.id} style={{display: 'flex', alignItems: 'center', justifyContent: 'space-between', marginBottom: '10px'}}>
+                                <div style={{display: 'flex', alignItems: 'center'}}>
+                                    <svg xmlns="http://www.w3.org/2000/svg" height="20px" viewBox="0 -960 960 960" width="20px" fill="#1f1f1f" style={{marginRight: '10px'}}>
+                                        <path d="M620-320v-109l-45-81q-7 5-11 13t-4 17v229L663-80h-93l-90-148v-252q0-31 15-57t41-43l-56-99q-20-38-17.5-80.5T495-832l68-68 276 324 41 496h-80l-39-464-203-238-6 6q-10 10-11.5 23t4.5 25l155 278v130h-80Zm-360 0v-130l155-278q6-12 4.5-25T408-776l-6-6-203 238-39 464H80l41-496 276-324 68 68q30 30 32.5 72.5T480-679l-56 99q26 17 41 43t15 57v252L390-80h-93l103-171v-229q0-9-4-17t-11-13l-45 81v109h-80Z"/>
+                                    </svg>
+                                    {sanitizeContent(gratitude.gratitude_text)}
+                                </div>
+                                <span style={{
+                                    color: 'gray',
+                                    fontSize: '12px',
+                                    fontStyle: 'italic'
+                                }}>
+                                    {formatTime(gratitude.created_at)}
+                                </span>
+                            </li>
+                        ))}
+                    </ul>
+                ) : (
+                    <p style={{color: 'gray', fontStyle: 'italic'}}>No gratitudes for this day.</p>
                 )}
             </div>
             <ConfirmationModal

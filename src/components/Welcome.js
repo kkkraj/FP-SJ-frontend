@@ -6,6 +6,7 @@ import Profile from './Profile';
 import Diary from './Diary';
 import Entries from './Entries';
 import Charts from './Charts';
+import Moods from './Moods';
 
 export default function Welcome(props) {
     if (props.loading) {
@@ -25,6 +26,7 @@ export default function Welcome(props) {
                 <Route path="/diary" element={<Diary currentUser={props.currentUser} />} />
                 <Route path="/entries" element={<Entries currentUser={props.currentUser} />} />
                 <Route path="/charts" element={<Charts currentUserId={props.currentUser.id} />} />
+                <Route path="/moods" element={<Moods currentUserId={props.currentUser.id} />} />
                 <Route path="/profile" element={<Profile currentUser={props.currentUser} handleDeleteUser={props.handleDeleteUser} onAccountUpdate={props.onAccountUpdate} handleLogout={props.handleLogout} />} />
                 <Route path="/" element={<Navigate to="/about" replace />} />
             </Routes>

@@ -8,6 +8,19 @@ export default function Moods(props) {
     const [loading, setLoading] = useState(true);
     const [error, setError] = useState(null);
 
+    // Function to map mood names for display
+    const getDisplayName = (moodName) => {
+        const nameMap = {
+            'Good': 'Content',
+            'good': 'Content',
+            'Cool': 'Neutral',
+            'cool': 'Neutral',
+            'Angry': 'Frustrated',
+            'angry': 'Frustrated'
+        };
+        return nameMap[moodName] || moodName;
+    };
+
     useEffect(() => {
         const fetchMoods = async () => {
             try {
@@ -115,7 +128,7 @@ export default function Moods(props) {
                     const isSelected = selectedMoods.has(mood.id);
                     return (
                         <div 
-                            className="moods" 
+                            className={`moods mood-item ${isSelected ? 'selected' : ''}`}
                             key={mood.id}
                             style={{
                                 cursor: 'pointer',
@@ -128,8 +141,7 @@ export default function Moods(props) {
                                     width: '70px', 
                                     height: 'auto', 
                                     borderRadius: '100px',
-                                    transition: 'all 0.3s ease',
-                                    boxShadow: isSelected ? '0 4px 12px rgba(87, 177, 172, 0.4)' : 'none'
+                                    transition: 'all 0.3s ease'
                                 }} 
                                 src={mood.mood_url} 
                                 alt={mood.mood_name}
@@ -141,7 +153,7 @@ export default function Moods(props) {
                                 fontWeight: isSelected ? 'bold' : 'normal',
                                 color: isSelected ? 'rgb(87, 177, 172)' : 'inherit'
                             }}>
-                                {mood.mood_name}
+                                {getDisplayName(mood.mood_name)}
                             </p>
                         </div>
                     );
